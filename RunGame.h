@@ -8,11 +8,11 @@ public:
     ~RunGame();
 private:
     void Start();
-    void WarpPlayer();
-    void PlayerControls();
-    void Update();
-    void Draw();
-    
-    Rectangle player;
-
+    static void WarpPlayer();
+    static void PlayerControls();
+    static void Update();
+    static void Draw();
+    void DrawVersion() const;
+    static void CheckCollisions();
+    float version{};
 };
