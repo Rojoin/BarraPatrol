@@ -24,10 +24,10 @@ RunGame::~RunGame()
 
 void RunGame::Start()
 {
-    RunGame::player.x = static_cast<float>(GetScreenWidth())/2.0f;
-    RunGame::player.y = static_cast<float>(GetScreenHeight())/2.0f;
-    RunGame::player.width = static_cast<float>(GetScreenWidth())/30.0f;
-    RunGame::player.height = static_cast<float>(GetScreenHeight())/20.0f;
+    player.x = static_cast<float>(GetScreenWidth())/2.0f;
+    player.y = static_cast<float>(GetScreenHeight())/2.0f;
+    player.width = static_cast<float>(GetScreenWidth())/30.0f;
+    player.height = static_cast<float>(GetScreenHeight())/20.0f;
 }
 void RunGame::Update()
 {
@@ -40,6 +40,7 @@ void RunGame::Draw()
     BeginDrawing();
     ClearBackground(BLACK);
     DrawRectangleRec(RunGame::player, WHITE);
+    DrawLine(0, static_cast<int>(GetScreenHeight() / 1.5f+player.height), GetScreenWidth(), static_cast<int>(GetScreenHeight() / 1.5f+player.height), WHITE);
     EndDrawing();
 }
 
@@ -49,12 +50,16 @@ void RunGame::WarpPlayer()
     {
         RunGame::player.y = static_cast<float>(GetScreenHeight()) / 1.5f;
     }
+    else
+    {
+        player.y += GetFrameTime() * 200.0f; 
+    }
 }
 
 void RunGame::PlayerControls()
 {
-    if(IsKeyPressed('d'))
-    {
-        RunGame::player.x += GetFrameTime() * 40;        
-    }
+    if(IsKeyDown(KEY_D)) player.x += GetFrameTime() * 400.0f;
+    if(IsKeyDown(KEY_A)) player.x -= GetFrameTime() * 400.0f;
+    if(IsKeyDown(KEY_SPACE)) player.y -= GetFrameTime() * 400.0f;
+    
 }
