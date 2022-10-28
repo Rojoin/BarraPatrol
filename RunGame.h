@@ -8,7 +8,7 @@ public:
     ~RunGame();
 private:
     void Start();
-    static void WarpPlayer();
+    static void PlayerGravity();
     static void PlayerControls();
     static void Update();
     static void Draw();

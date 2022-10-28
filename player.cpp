@@ -36,7 +36,7 @@ void Player::MoveLeft()
     body.x -= speed*GetFrameTime();
 }
 
-void Player::MoveUp()
+void Player::MoveUp() //BUSCAR MEJOR IMPLEMENTACION DE SALTO
 {
     body.y -= speed*GetFrameTime();
 }
