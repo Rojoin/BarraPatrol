@@ -13,7 +13,10 @@ Player::Player(Rectangle body, std::string name, float speed)
 
 Player::Player()
 {
-    speed;
+    isJumping = false;
+    isGrounded = false;
+    jumpTimer = 0;
+    speed = 400.0f;
     isAlive = true;
     hp = 3;
 }
@@ -39,6 +42,11 @@ void Player::MoveLeft()
 void Player::MoveUp() //BUSCAR MEJOR IMPLEMENTACION DE SALTO
 {
     body.y -= speed*GetFrameTime();
+    if(isGrounded == true && IsKeyDown(KEY_SPACE))
+    {
+        isJumping = true;
+        jumpTimer = jumpTime;
+    }
 }
 
 void Player::MoveDown()
