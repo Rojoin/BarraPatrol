@@ -21,10 +21,10 @@ private:
     int hp;
     bool isAlive;
     bool isJumping;
-    bool isGrounded;
-    float jumpTime = 0.35f; 
+    float jumpTime = 0.14f; 
     float jumpTimer; 
     float speed;
+    bool IsGrounded();
     Rectangle body{};
     std::string name;
 };

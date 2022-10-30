@@ -14,7 +14,6 @@ Player::Player(Rectangle body, std::string name, float speed)
 Player::Player()
 {
     isJumping = false;
-    isGrounded = false;
     jumpTimer = 0;
     speed = 400.0f;
     isAlive = true;
@@ -41,17 +40,34 @@ void Player::MoveLeft()
 
 void Player::MoveUp() //BUSCAR MEJOR IMPLEMENTACION DE SALTO
 {
-    body.y -= speed*GetFrameTime();
-    if(isGrounded == true && IsKeyDown(KEY_SPACE))
+    if(IsGrounded() && IsKeyPressed(KEY_SPACE))
     {
         isJumping = true;
         jumpTimer = jumpTime;
     }
+    if(IsKeyDown(KEY_SPACE))
+    {
+        if (jumpTimer > 0)
+        {        
+            
+            body.y -= speed*GetFrameTime()*1.5f;
+            jumpTimer -= GetFrameTime();
+        }
+    }
+    if (IsKeyReleased(KEY_SPACE))
+    {
+        isJumping = false;
+    }
+}
+bool Player::IsGrounded()
+{
+    extern float florLevel;
+    return static_cast<int>(florLevel) == static_cast<int>(body.y);
 }
 
 void Player::MoveDown()
 {
-    body.y += speed/2*GetFrameTime();
+    body.y += speed/1.5f*GetFrameTime();
 }
 
 void Player::SetY(float y_)

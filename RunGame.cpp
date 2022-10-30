@@ -10,7 +10,7 @@ void InitPlayerBody();
 bool CheckPlaObstCol();
 static Player player;
 static Rectangle obstacle;
-static float florLevel;
+float florLevel;
 
 RunGame::RunGame()
 {
@@ -46,11 +46,12 @@ void InitPlayerBody()
     playerBody.height = static_cast<float>(GetScreenHeight()) / 20.0f;
     player = {playerBody, "santi", 400.0f};
 }
-
+static int counter = 0;
 void RunGame::Update()
 {
     PlayerControls();
     PlayerGravity();
+    if(player.GetBody().y > florLevel) counter++;
     obstacle.x -= 200.0f * GetFrameTime();
     if (obstacle.x< 0 -obstacle.width/3) obstacle.x = static_cast<float>(GetScreenWidth());
 }
