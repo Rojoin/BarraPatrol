@@ -5,18 +5,20 @@
 #include "player.h"
 #include "raylib.h"
 
-bool RecRecCollision(Rectangle r1, Rectangle r2);
+#pragma region delarations
+void ObstacleBehaviour();
 void InitPlayerBody();
 bool CheckPlaObstCol();
+bool RecRecCollision(Rectangle r1, Rectangle r2);
+
 static Player player;
 static Rectangle obstacle;
 float florLevel;
+#pragma endregion
 
 RunGame::RunGame()
 {
-    InitWindow(720, 480, "MoonLander");
     Start();
-
     while (!WindowShouldClose())
     {
         Update();
@@ -31,10 +33,13 @@ RunGame::~RunGame()
 
 void RunGame::Start()
 {
+    InitWindow(720, 480, "Moon Patrol");
     InitPlayerBody();
-    florLevel =static_cast<float>(GetScreenHeight()) / 1.5f;
-        this->version = 0.2f;
-    obstacle = {static_cast<float>(GetScreenWidth()) * 0.75f, static_cast<float>(GetScreenHeight()) / 1.5f, player.GetBody().width, player.GetBody().height};
+    florLevel = static_cast<float>(GetScreenHeight()) / 1.5f;
+    this->version = 0.1f;
+    obstacle = {
+        static_cast<float>(GetScreenWidth()) * 0.75f, florLevel, player.GetBody().width, player.GetBody().height
+    };
 }
 
 void InitPlayerBody()
@@ -46,30 +51,36 @@ void InitPlayerBody()
     playerBody.height = static_cast<float>(GetScreenHeight()) / 20.0f;
     player = {playerBody, "santi", 400.0f};
 }
-static int counter = 0;
+
 void RunGame::Update()
 {
     PlayerControls();
     PlayerGravity();
-    if(player.GetBody().y > florLevel) counter++;
-    obstacle.x -= 200.0f * GetFrameTime();
-    if (obstacle.x< 0 -obstacle.width/3) obstacle.x = static_cast<float>(GetScreenWidth());
+    ObstacleBehaviour();
 }
 
-void RunGame::Draw()
+//TODO CREATE OBSTACLE OBJECT
+void ObstacleBehaviour()
+{
+    obstacle.x -= 145.0f * GetFrameTime();
+    if (obstacle.x < 0 - obstacle.width / 3) obstacle.x = static_cast<float>(GetScreenWidth());
+}
+
+void RunGame::Draw() const
 {
     BeginDrawing();
     ClearBackground(BLACK);
     player.DrawPlayer(); // ??? esta bien esto asi?
-    DrawLine(0, static_cast<int>(florLevel + player.GetBody().height), GetScreenWidth(), static_cast<int>(florLevel + player.GetBody().height), WHITE);
+    DrawLine(0, static_cast<int>(florLevel + player.GetBody().height), GetScreenWidth(),
+             static_cast<int>(florLevel + player.GetBody().height), WHITE);
     DrawRectangleLinesEx(obstacle, 3, CheckPlaObstCol() ? RED : WHITE);
-
+    DrawVersion();
     EndDrawing();
 }
 
 void RunGame::DrawVersion() const
 {
-    DrawText(TextFormat("v %02.01f", version),
+    DrawText(TextFormat("v%02.01f", version),
              GetScreenWidth() - MeasureText(TextFormat("v %02.01f", version), GetScreenWidth() / 25),
              GetScreenHeight() / 100, GetScreenWidth() / 25, WHITE);
 }
@@ -85,14 +96,10 @@ bool CheckPlaObstCol()
 
 bool RecRecCollision(Rectangle r1, Rectangle r2)
 {
-    if (r1.x + r1.width >= r2.x && 
-        r1.x <= r2.x + r2.width && 
+    return r1.x + r1.width >= r2.x &&
+        r1.x <= r2.x + r2.width &&
         r1.y + r1.height >= r2.y &&
-        r1.y <= r2.y + r2.height)
-    {
-        return true;
-    }
-    return false;
+        r1.y <= r2.y + r2.height;
 }
 
 void RunGame::PlayerGravity()
@@ -111,5 +118,5 @@ void RunGame::PlayerControls()
 {
     if (IsKeyDown(KEY_D)) player.MoveRight();
     if (IsKeyDown(KEY_A)) player.MoveLeft();
-    if (IsKeyDown(KEY_SPACE)) player.MoveUp();
+    if (IsKeyDown(KEY_SPACE)) player.Jump();
 }

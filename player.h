@@ -10,7 +10,7 @@ public:
     ~Player();
     void MoveRight();
     void MoveLeft();
-    void MoveUp();
+    void Jump();
     void MoveDown();
     void SetY(float y_);
     Rectangle GetBody() const;
@@ -21,10 +21,10 @@ private:
     int hp;
     bool isAlive;
     bool isJumping;
-    float jumpTime = 0.14f; 
+    float jumpTime = 0.18f; 
     float jumpTimer; 
     float speed;
-    bool IsGrounded();
+    bool IsGrounded() const;
     Rectangle body{};
     std::string name;
 };

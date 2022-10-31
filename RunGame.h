@@ -11,8 +11,8 @@ private:
     static void PlayerGravity();
     static void PlayerControls();
     static void Update();
-    static void Draw();
+    void Draw() const;
     void DrawVersion() const;
-    static void CheckCollisions();
+    void CheckCollisions();
     float version{};
 };

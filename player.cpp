@@ -7,6 +7,8 @@ Player::Player(Rectangle body, std::string name, float speed)
     this->body = body;
     this->name = name;
     this->speed = speed;
+    isJumping = false;
+    jumpTimer = 0;
     isAlive = true;
     hp = 3;
 }
@@ -25,9 +27,6 @@ Player::~Player()
     std::cout << "Player has been destroyed." << std::endl;
 }
 
-//SetX, SetY
-//ModifyX(float xModifier), ModifyY(float yModifier)
-//or MoveLeft, MoveRight, MoveUp
 void Player::MoveRight()
 {
     body.x += speed * GetFrameTime();
@@ -35,23 +34,27 @@ void Player::MoveRight()
 
 void Player::MoveLeft()
 {
-    body.x -= speed*GetFrameTime();
+    body.x -= speed * GetFrameTime();
 }
 
-void Player::MoveUp() //BUSCAR MEJOR IMPLEMENTACION DE SALTO
+void Player::Jump() //BUSCAR MEJOR IMPLEMENTACION DE SALTO
 {
-    if(IsGrounded() && IsKeyPressed(KEY_SPACE))
+    if (IsGrounded() && IsKeyPressed(KEY_SPACE))
     {
         isJumping = true;
         jumpTimer = jumpTime;
+        body.y -= speed * GetFrameTime() * 1.5f;
     }
-    if(IsKeyDown(KEY_SPACE))
+    if (IsKeyDown(KEY_SPACE) && isJumping)
     {
         if (jumpTimer > 0)
-        {        
-            
-            body.y -= speed*GetFrameTime()*1.5f;
+        {
+            body.y -= speed * GetFrameTime() * 1.5f;
             jumpTimer -= GetFrameTime();
+        }
+        else
+        {
+            isJumping = false;
         }
     }
     if (IsKeyReleased(KEY_SPACE))
@@ -59,15 +62,33 @@ void Player::MoveUp() //BUSCAR MEJOR IMPLEMENTACION DE SALTO
         isJumping = false;
     }
 }
-bool Player::IsGrounded()
+
+bool lineLine(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4)
+{
+    // calculate the distance to intersection point
+    float uA = ((x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3)) / ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1));
+    float uB = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1));
+
+    // if uA and uB are between 0-1, lines are colliding
+    return uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1;
+}
+
+bool Player::IsGrounded() const
 {
     extern float florLevel;
+    /*
+    bool bot =  lineLine(0, florLevel,static_cast<float>(GetScreenWidth()),florLevel, body.x,body.y+body.height, body.x+body.width,body.y+body.height);
+    bool left =   lineLine(0, florLevel,static_cast<float>(GetScreenWidth()),florLevel, body.x,body.y,body.x, body.y+body.height);
+    bool right =  lineLine(0, florLevel,static_cast<float>(GetScreenWidth()),florLevel, body.x+body.width,body.y, body.x+body.width,body.y+body.height);
+    bool top =    lineLine(0, florLevel,static_cast<float>(GetScreenWidth()),florLevel, body.x,body.y, body.x+body.width,body.y);
+     return left || right || top || bot;
+    */
     return static_cast<int>(florLevel) == static_cast<int>(body.y);
 }
 
 void Player::MoveDown()
 {
-    body.y += speed/1.5f*GetFrameTime();
+    body.y += speed / 1.5f * GetFrameTime();
 }
 
 void Player::SetY(float y_)
@@ -84,6 +105,7 @@ void Player::SetHp(int hpModifier)
 {
     this->hp += hpModifier;
 }
+
 void Player::SetSpeed(float speed_)
 {
     this->speed = speed_;
