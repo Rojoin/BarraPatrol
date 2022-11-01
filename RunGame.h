@@ -8,8 +8,10 @@ public:
     ~RunGame();
 private:
     void Start();
+    static void PlayerBehaviour();
     static void PlayerGravity();
     static void PlayerControls();
+    static void PlayerWarp();
     static void Update();
     void Draw() const;
     void DrawVersion() const;

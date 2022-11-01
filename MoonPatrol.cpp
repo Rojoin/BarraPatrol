@@ -3,8 +3,7 @@
 
 int main()
 {
-    //auto runGame = new RunGame;
-    
-    RunGame();
-    return 0;
+	RunGame();
+
+	return 0;
 }

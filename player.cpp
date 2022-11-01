@@ -37,7 +37,7 @@ void Player::MoveLeft()
     body.x -= speed * GetFrameTime();
 }
 
-void Player::Jump() //BUSCAR MEJOR IMPLEMENTACION DE SALTO
+void Player::Jump()
 {
     if (IsGrounded() && IsKeyPressed(KEY_SPACE))
     {
@@ -45,6 +45,7 @@ void Player::Jump() //BUSCAR MEJOR IMPLEMENTACION DE SALTO
         jumpTimer = jumpTime;
         body.y -= speed * GetFrameTime() * 1.5f;
     }
+
     if (IsKeyDown(KEY_SPACE) && isJumping)
     {
         if (jumpTimer > 0)
@@ -57,7 +58,8 @@ void Player::Jump() //BUSCAR MEJOR IMPLEMENTACION DE SALTO
             isJumping = false;
         }
     }
-    if (IsKeyReleased(KEY_SPACE))
+ 
+    if (IsKeyUp(KEY_SPACE))
     {
         isJumping = false;
     }
@@ -96,6 +98,11 @@ void Player::SetY(float y_)
     this->body.y = y_;
 }
 
+void Player::SetX(float x_)
+{
+    this->body.x = x_;
+}
+
 Rectangle Player::GetBody() const
 {
     return body;
@@ -113,5 +120,5 @@ void Player::SetSpeed(float speed_)
 
 void Player::DrawPlayer() const
 {
-    DrawRectangleRec(GetBody(), WHITE);
+    DrawRectangleRec(GetBody(), BLACK);
 }

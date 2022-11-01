@@ -13,6 +13,7 @@ public:
     void Jump();
     void MoveDown();
     void SetY(float y_);
+    void SetX(float x_);
     Rectangle GetBody() const;
     void SetHp(int hpModifier);
     void SetSpeed(float speed_);
