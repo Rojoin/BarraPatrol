@@ -6,14 +6,27 @@
 #include "raylib.h"
 
 #pragma region delarations
+
+enum Paralax
+{
+    Background,
+    Midground,
+    Foreground
+};
+
 void ObstacleBehaviour();
 void InitPlayerBody();
 bool CheckPlaObstCol();
 bool RecRecCollision(Rectangle r1, Rectangle r2);
 void LoadTextures();
 void UpdateBackground();
+void BackgroundScrolling(float& scroll, int scrollSpeed, Texture2D texture, Paralax paralax);
 void DrawBackground();
 void UnloadTextures();
+void DrawTextureParalax(Texture2D texture, Rectangle textRectangle, Vector2 pos1, Vector2 pos2, Color color);
+Rectangle TextureToRectange(Texture2D texture);
+void PrintTexture(Texture2D texture, float scrollSpeed);
+void SinusoidalMovement();
 
 
 static Player player;
@@ -27,6 +40,7 @@ Texture2D foreground;
 static float scrollingBack = 0.0f;
 static float scrollingMid = 0.0f;
 static float scrollingFore = 0.0f;
+static bool debugMode = false;
 #pragma endregion
 
 RunGame::RunGame()
@@ -45,23 +59,35 @@ RunGame::~RunGame()
     std::cout << "Game finished." << std::endl;
 }
 
+static constexpr bool fullScreen = true;
+
 void RunGame::Start()
 {
-    InitWindow(720, 480, "Moon Patrol");
+    constexpr int width = fullScreen ? 1920 : 720;
+    constexpr int height = fullScreen ? 1080 : 480;
+
+    InitWindow(width, height, "Moon Patrol");
     LoadTextures();
     InitPlayerBody();
-    florLevel =  (float)foreground.height* 0.792f;
-    this->version = 0.1f;
-    obstacle = {
-        static_cast<float>(GetScreenWidth()) * 0.75f, florLevel, player.GetBody().width, player.GetBody().height
-    };
+    florLevel = static_cast<float>(foreground.height) * 0.792f;
+    this->version = 0.2;
+    obstacle = player.GetBody();
+    obstacle.y = static_cast<float>(GetScreenHeight())/2;
 }
 
-void LoadTextures() 
+void LoadTextures()
 {
-    background = LoadTexture("res/pixel_background2.png");
+    if (!fullScreen)
+    {
+        background = LoadTexture("res/pixel_background_2.png");
+        foreground = LoadTexture("res/pixel_foreground_2.png");
+    }
+    else
+    {
+        background = LoadTexture("res/pixel_background_4.png");
+        foreground = LoadTexture("res/pixel_foreground_3.png"); 
+    }
     midground = LoadTexture("res/pixel_middleground.png");
-    foreground = LoadTexture("res/pixel_foreground2.png");
 }
 
 void InitPlayerBody()
@@ -84,58 +110,72 @@ void RunGame::Update()
 //TODO CREATE OBSTACLE OBJECT
 void ObstacleBehaviour()
 {
-    obstacle.x -= 145.0f * GetFrameTime();
-    if (obstacle.x < 0 - obstacle.width / 3) obstacle.x = static_cast<float>(GetScreenWidth());
+    obstacle.x -= 100.0f * GetFrameTime();
+    if (obstacle.x < 0 - obstacle.width *2)
+    {
+        obstacle.x = static_cast<float>(GetScreenWidth());
+        obstacle.y = static_cast<float>(GetScreenHeight())/2;
+    }
+        SinusoidalMovement();
+}
+
+void SinusoidalMovement()
+{
+    obstacle.y += sin(obstacle.x/10) * GetFrameTime() * 600.f;
 }
 
 void UpdateBackground()
 {
-    int backgroundSpeed = 5;
-    scrollingBack -= backgroundSpeed * GetFrameTime();
-    scrollingMid -= backgroundSpeed * 5.f * GetFrameTime();
-    scrollingFore -= backgroundSpeed * 10.f * GetFrameTime();
+    constexpr int scrollSpeed = 10;
+    BackgroundScrolling(scrollingFore, scrollSpeed, foreground, Foreground);
+    BackgroundScrolling(scrollingMid, scrollSpeed, midground, Midground);
+    BackgroundScrolling(scrollingBack, scrollSpeed, background, Background);
+}
 
-    if (scrollingBack <= -background.width) scrollingBack = 0;
-    if (scrollingMid <= -midground.width) scrollingMid = 0;
-    if (scrollingFore <= -foreground.width) scrollingFore = 0;
+void BackgroundScrolling(float& scroll, int scrollSpeed, Texture2D texture, Paralax paralax)
+{
+    const float paralaxSpeed = (paralax != Background ? 5.0f * static_cast<float>(paralax) : 1);
+    scroll -= static_cast<float>(scrollSpeed) * GetFrameTime() * paralaxSpeed;
+    if (scroll <= -static_cast<float>(texture.width)) scroll = 0;
 }
 
 void RunGame::Draw() const
 {
     BeginDrawing();
+
     DrawBackground();
     player.DrawPlayer(); // ??? esta bien esto asi?
-    //DrawLine(0, static_cast<int>(florLevel + player.GetBody().height), GetScreenWidth(),
-             //static_cast<int>(florLevel + player.GetBody().height), WHITE);
-    DrawRectangleLinesEx(obstacle, 3, CheckPlaObstCol() ? RED : WHITE);
+
+    const int florHeight = static_cast<int>(florLevel + player.GetBody().height);
+    if (debugMode) DrawLine(0, florHeight, GetScreenWidth(), florHeight, WHITE);
+
+
+    //TODO DRAW OBSTACLES
+    DrawRectangleLinesEx(obstacle, 3, CheckPlaObstCol() ? RED : BLACK);
+
+    PrintTexture(foreground, scrollingFore);
+
     DrawVersion();
     EndDrawing();
 }
 
 void RunGame::DrawVersion() const
 {
+    const int quarterScreen = GetScreenWidth() / 25;
     DrawText(TextFormat("v%02.01f", version),
-             GetScreenWidth() - MeasureText(TextFormat("v %02.01f", version), GetScreenWidth() / 25),
-             GetScreenHeight() / 100, GetScreenWidth() / 25, WHITE);
+             GetScreenWidth() - MeasureText(TextFormat("v %02.01f", version), quarterScreen),
+             GetScreenHeight() / 100, quarterScreen, BLACK);
 }
+
 void DrawBackground()
 {
     ClearBackground(GetColor(0x052c46ff));
-    Vector2 scrolling = { scrollingBack, 0 };
-    Vector2 scrolling2 = { background.width + scrollingBack, 0 };
-    DrawTextureRec(background, { 0, 0, (float)background.width, (float)background.height }, scrolling, RAYWHITE);
-    DrawTextureRec(background, { 0, 0, (float)background.width, (float)background.height }, scrolling2, RAYWHITE);
 
-    Vector2 midgroundImage = { scrollingMid, -(float)GetScreenHeight() / 6.5f };
-    Vector2 midgroundImage2 = { midground.width + scrollingMid, -(float)GetScreenHeight() / 6.5f };
-    DrawTextureRec(midground, { 0, 0, (float)midground.width, (float)midground.height }, midgroundImage, RAYWHITE);
-    DrawTextureRec(midground, { 0, 0, (float)midground.width, (float)midground.height }, midgroundImage2, RAYWHITE);
+    PrintTexture(background, scrollingBack);
 
-    Vector2 foregroundImage = { scrollingFore, (float)(GetScreenHeight() - foreground.height) };
-    Vector2 foregroundImage2 = { foreground.width + scrollingFore, (float)(GetScreenHeight() - foreground.height) };
-    DrawTextureRec(foreground, { 0, 0, (float)foreground.width, (float)foreground.height }, foregroundImage, RAYWHITE);
-    DrawTextureRec(foreground, { 0, 0, (float)foreground.width, (float)foreground.height }, foregroundImage2, RAYWHITE);
+    PrintTexture(midground, scrollingMid);
 }
+
 void RunGame::CheckCollisions()
 {
 }
@@ -179,15 +219,36 @@ void RunGame::PlayerControls()
     player.Jump();
 }
 
-void RunGame::PlayerWarp() 
+void RunGame::PlayerWarp()
 {
-    if (player.GetBody().x < 0.f + player.GetBody().x/2) player.SetX((float)GetScreenWidth());
-    if (player.GetBody().x > (float)GetScreenWidth()) player.SetX(0.f);
+    if (player.GetBody().x < 0.f + player.GetBody().x / 2) player.SetX(static_cast<float>(GetScreenWidth()));
+    if (player.GetBody().x > static_cast<float>(GetScreenWidth())) player.SetX(0.f);
 }
 
-void UnloadTextures() 
+void UnloadTextures()
 {
     UnloadTexture(background);
     UnloadTexture(midground);
     UnloadTexture(foreground);
+}
+
+//DEBERIA PASAR ESTAS FUNCIONES A OTRO ARCHIVO?
+void PrintTexture(Texture2D texture, float scrollSpeed)
+{
+    const Rectangle textureRec = TextureToRectange(texture);
+    const Vector2 leftScrolling = {scrollSpeed, 0};
+    const Vector2 leftScrolling2 = {textureRec.width + scrollSpeed, 0};
+
+    DrawTextureParalax(texture, textureRec, leftScrolling, leftScrolling2, RAYWHITE);
+}
+
+Rectangle TextureToRectange(Texture2D texture)
+{
+    return {0, 0, static_cast<float>(texture.width), static_cast<float>(texture.height)};
+}
+
+void DrawTextureParalax(Texture2D texture, Rectangle textRectangle, Vector2 pos1, Vector2 pos2, Color color)
+{
+    DrawTextureRec(texture, textRectangle, pos1, color);
+    DrawTextureRec(texture, textRectangle, pos2, color);
 }

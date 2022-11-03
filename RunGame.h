@@ -16,5 +16,5 @@ private:
     void Draw() const;
     void DrawVersion() const;
     void CheckCollisions();
-    float version{};
+    double version{};
 };
