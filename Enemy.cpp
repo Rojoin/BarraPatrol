@@ -1,0 +1,90 @@
+﻿#include "Enemy.h"
+
+#include <iostream>
+#include <raylib.h>
+
+Enemy::Enemy()
+{
+    hp = 3;
+    body = {
+        static_cast<float>(GetScreenWidth()) / 2.f, static_cast<float>(GetScreenHeight()) / 2,
+        static_cast<float>(GetScreenWidth()) / 30
+    };
+    isAlive = true;
+    speed = static_cast<float>(GetScreenWidth()) / 7.f;
+    name = "GenericEnemy";
+}
+
+Enemy::Enemy(int hp, Circle body, float speed, std::string name)
+{
+    this->hp = hp;
+    isAlive = true;
+    this->body = body;
+    this->speed = speed;
+    this->name = name;
+}
+
+Enemy::~Enemy()
+{
+    std::cout << "Enemy has been destoyed." << std::endl;
+}
+
+void Enemy::MoveRight()
+{
+    body.x += speed * GetFrameTime();
+}
+
+void Enemy::MoveLeft()
+{
+    body.x -= speed * GetFrameTime();
+}
+
+void Enemy::SinusoidalMovement()
+{
+    body.y += sin(body.x / 6) * GetFrameTime() * static_cast<float>(GetScreenWidth()) / 2;
+}
+
+void Enemy::MoveUp()
+{
+    body.x -= speed * GetFrameTime();
+}
+
+void Enemy::MoveDown()
+{
+    body.y += speed * GetFrameTime();
+}
+
+void Enemy::SetY(float y_)
+{
+    body.y = y_;
+}
+
+void Enemy::SetX(float x_)
+{
+    this->body.x = x_;
+}
+
+void Enemy::SetBody(Circle body_)
+{
+    this->body = body_;
+}
+
+Circle Enemy::GetBody() const
+{
+    return body;
+}
+
+void Enemy::SetHp(int hpModifier)
+{
+    this->hp += hpModifier;
+}
+
+void Enemy::SetSpeed(float speed_)
+{
+    this->speed = speed_;
+}
+
+void Enemy::DrawEnemy() const
+{
+    DrawCircle(static_cast<int>(body.x), static_cast<int>(body.y), body.radius, BLACK);
+}

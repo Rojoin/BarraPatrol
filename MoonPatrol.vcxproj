@@ -160,11 +160,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="MoonPatrol.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="RunGame.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Circle.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="RunGame.h" />
   </ItemGroup>
