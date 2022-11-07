@@ -400,3 +400,9 @@ FodyWeavers.xsd
 *.depend
 bin/
 obj/
+obj/debug/MoonPatrol.ilk
+bin/debug/MoonPatrol.pdb
+obj/debug/MoonPatrol.tlog/CL.read.1.tlog
+obj/debug/MoonPatrol.tlog/CL.write.1.tlog
+obj/debug/vc142.idb
+obj/debug/vc142.pdb
