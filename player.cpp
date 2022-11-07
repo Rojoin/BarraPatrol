@@ -58,7 +58,7 @@ void Player::Jump()
             isJumping = false;
         }
     }
- 
+
     if (IsKeyUp(KEY_SPACE))
     {
         isJumping = false;
@@ -120,5 +120,5 @@ void Player::SetSpeed(float speed_)
 
 void Player::DrawPlayer() const
 {
-    DrawRectangleRec(GetBody(), BLACK);
+    DrawRectangleRec(body, BLACK);
 }

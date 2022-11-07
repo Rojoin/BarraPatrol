@@ -2,6 +2,7 @@
 
 #include <iostream>
 
+#include "Enemy.h"
 #include "player.h"
 #include "raylib.h"
 
@@ -26,11 +27,10 @@ void UnloadTextures();
 void DrawTextureParalax(Texture2D texture, Rectangle textRectangle, Vector2 pos1, Vector2 pos2, Color color);
 Rectangle TextureToRectange(Texture2D texture);
 void PrintTexture(Texture2D texture, float scrollSpeed);
-void SinusoidalMovement();
 
 
 static Player player;
-static Rectangle obstacle;
+static Enemy enemies[30];
 float florLevel;
 
 Texture2D background;
@@ -40,7 +40,9 @@ Texture2D foreground;
 static float scrollingBack = 0.0f;
 static float scrollingMid = 0.0f;
 static float scrollingFore = 0.0f;
+
 static bool debugMode = false;
+static constexpr bool fullScreen = false;
 #pragma endregion
 
 RunGame::RunGame()
@@ -59,8 +61,6 @@ RunGame::~RunGame()
     std::cout << "Game finished." << std::endl;
 }
 
-static constexpr bool fullScreen = true;
-
 void RunGame::Start()
 {
     constexpr int width = fullScreen ? 1920 : 720;
@@ -71,8 +71,8 @@ void RunGame::Start()
     InitPlayerBody();
     florLevel = static_cast<float>(foreground.height) * 0.792f;
     this->version = 0.2;
-    obstacle = player.GetBody();
-    obstacle.y = static_cast<float>(GetScreenHeight())/2;
+    enemies[0].SetBody({player.GetBody().x, static_cast<float>(GetScreenHeight()) / 2.f, player.GetBody().width});
+    enemies[0].SetSpeed(static_cast<float>(GetScreenWidth()) / 7.f);
 }
 
 void LoadTextures()
@@ -85,7 +85,7 @@ void LoadTextures()
     else
     {
         background = LoadTexture("res/pixel_background_4.png");
-        foreground = LoadTexture("res/pixel_foreground_3.png"); 
+        foreground = LoadTexture("res/pixel_foreground_3.png");
     }
     midground = LoadTexture("res/pixel_middleground.png");
 }
@@ -93,11 +93,12 @@ void LoadTextures()
 void InitPlayerBody()
 {
     Rectangle playerBody;
-    playerBody.x = static_cast<float>(GetScreenWidth()) / 2.0f;
+    float halfScreen = static_cast<float>(GetScreenWidth()) / 2.0f;
+    playerBody.x = halfScreen;
     playerBody.y = static_cast<float>(GetScreenHeight()) / 2.0f;
     playerBody.width = static_cast<float>(GetScreenWidth()) / 30.0f;
     playerBody.height = static_cast<float>(GetScreenHeight()) / 20.0f;
-    player = {playerBody, "santi", 400.0f};
+    player = {playerBody, "santi", halfScreen};
 }
 
 void RunGame::Update()
@@ -110,23 +111,18 @@ void RunGame::Update()
 //TODO CREATE OBSTACLE OBJECT
 void ObstacleBehaviour()
 {
-    obstacle.x -= 100.0f * GetFrameTime();
-    if (obstacle.x < 0 - obstacle.width *2)
+    enemies[0].MoveLeft();
+    if (enemies[0].GetBody().x < 0 - enemies[0].GetBody().radius * 2)
     {
-        obstacle.x = static_cast<float>(GetScreenWidth());
-        obstacle.y = static_cast<float>(GetScreenHeight())/2;
+        enemies[0].SetX(static_cast<float>(GetScreenWidth()));
+        enemies[0].SetY(static_cast<float>(GetScreenHeight())/2);
     }
-        SinusoidalMovement();
-}
-
-void SinusoidalMovement()
-{
-    obstacle.y += sin(obstacle.x/10) * GetFrameTime() * 600.f;
+    enemies[0].SinusoidalMovement();
 }
 
 void UpdateBackground()
 {
-    constexpr int scrollSpeed = 10;
+    int scrollSpeed = GetScreenWidth() / 30;
     BackgroundScrolling(scrollingFore, scrollSpeed, foreground, Foreground);
     BackgroundScrolling(scrollingMid, scrollSpeed, midground, Midground);
     BackgroundScrolling(scrollingBack, scrollSpeed, background, Background);
@@ -151,8 +147,8 @@ void RunGame::Draw() const
 
 
     //TODO DRAW OBSTACLES
-    DrawRectangleLinesEx(obstacle, 3, CheckPlaObstCol() ? RED : BLACK);
-
+    //DrawRectangleLinesEx(obstacle, 3, CheckPlaObstCol() ? RED : BLACK);
+    enemies[0].DrawEnemy();
     PrintTexture(foreground, scrollingFore);
 
     DrawVersion();
@@ -161,10 +157,10 @@ void RunGame::Draw() const
 
 void RunGame::DrawVersion() const
 {
-    const int quarterScreen = GetScreenWidth() / 25;
+    const int fontSize = GetScreenWidth() / 25;
     DrawText(TextFormat("v%02.01f", version),
-             GetScreenWidth() - MeasureText(TextFormat("v %02.01f", version), quarterScreen),
-             GetScreenHeight() / 100, quarterScreen, BLACK);
+             GetScreenWidth() - MeasureText(TextFormat("v %02.01f", version), fontSize),
+             GetScreenHeight() / 100, fontSize, BLACK);
 }
 
 void DrawBackground()
@@ -182,7 +178,7 @@ void RunGame::CheckCollisions()
 
 bool CheckPlaObstCol()
 {
-    return RecRecCollision(player.GetBody(), obstacle);
+    return RecRecCollision(player.GetBody(), {enemies[0].GetBody().x, enemies[0].GetBody().y, enemies[0].GetBody().radius, enemies[0].GetBody().radius});
 }
 
 bool RecRecCollision(Rectangle r1, Rectangle r2)
