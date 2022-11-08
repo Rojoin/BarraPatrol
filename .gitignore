@@ -423,3 +423,4 @@ obj/debug/MoonPatrol.tlog/MoonPatrol.lastbuildstate
 obj/debug/vc142.idb
 obj/debug/vc142.pdb
 bin/debug/MoonPatrol.pdb
+*.xml

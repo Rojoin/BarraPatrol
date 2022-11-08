@@ -15,6 +15,6 @@ private:
     static void Update();
     void Draw() const;
     void DrawVersion() const;
-    void CheckCollisions();
+    static void CheckCollisions();
     double version{};
 };

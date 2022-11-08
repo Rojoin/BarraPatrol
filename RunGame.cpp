@@ -18,7 +18,6 @@ enum Paralax
 
 void ObstacleBehaviour();
 void InitPlayerBody();
-bool CheckPlaObstCol();
 bool RecRecCollision(Rectangle r1, Rectangle r2);
 void LoadTextures();
 void UpdateBackground();
@@ -143,17 +142,17 @@ void RunGame::Draw() const
     BeginDrawing();
 
     DrawBackground();
-    //player.DrawPlayer(); // ??? esta bien esto asi?
+
     //TODO DRAW OBSTACLES
-    Rectangle bikeRec = {0,0, static_cast<float>(enemyBike.width), static_cast<float>(enemyBike.height)};
+    const Rectangle bikeRec = {0,0, static_cast<float>(enemyBike.width), static_cast<float>(enemyBike.height)};
     DrawTextureRec(enemyBike, bikeRec, {enemies[0].GetBody().x, enemies[0].GetBody().y-bikeRec.height/2}, RAYWHITE);
     //enemies[0].DrawEnemy();
-    Rectangle carRec = {0,0, static_cast<float>(playerCar.width), static_cast<float>(playerCar.height)};
+
+    const Rectangle carRec = {0,0, static_cast<float>(playerCar.width), static_cast<float>(playerCar.height)};
     DrawTextureRec(playerCar, carRec, {player.GetBody().x, player.GetBody().y-playerCar.height/2}, RAYWHITE);
+    
     const int florHeight = static_cast<int>(florLevel + player.GetBody().height);
     if (debugMode) DrawLine(0, florHeight, GetScreenWidth(), florHeight, WHITE);
-
-
     
     PrintTexture(foreground, scrollingFore);
 
@@ -180,11 +179,7 @@ void DrawBackground()
 
 void RunGame::CheckCollisions()
 {
-}
-
-bool CheckPlaObstCol()
-{
-    return RecRecCollision(player.GetBody(), {enemies[0].GetBody().x, enemies[0].GetBody().y, enemies[0].GetBody().radius, enemies[0].GetBody().radius});
+    RecRecCollision(player.GetBody(), {enemies[0].GetBody().x, enemies[0].GetBody().y, enemies[0].GetBody().radius, enemies[0].GetBody().radius});
 }
 
 bool RecRecCollision(Rectangle r1, Rectangle r2)
