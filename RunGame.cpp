@@ -5,6 +5,7 @@
 #include "Enemy.h"
 #include "player.h"
 #include "raylib.h"
+#include "menu.h"
 
 #pragma region delarations
 
@@ -36,13 +37,16 @@ float florLevel;
 Texture2D background;
 Texture2D midground;
 Texture2D foreground;
+static Texture2D playerCar;
+static Texture2D enemyBike;
 
 static float scrollingBack = 0.0f;
 static float scrollingMid = 0.0f;
 static float scrollingFore = 0.0f;
 
 static bool debugMode = false;
-static constexpr bool fullScreen = false;
+extern bool fullscreen;
+extern MenuOptions menuOptions;
 #pragma endregion
 
 RunGame::RunGame()
@@ -54,6 +58,7 @@ RunGame::RunGame()
         Draw();
     }
     UnloadTextures();
+    menuOptions = MenuOptions::menu;
 }
 
 RunGame::~RunGame()
@@ -63,21 +68,17 @@ RunGame::~RunGame()
 
 void RunGame::Start()
 {
-    constexpr int width = fullScreen ? 1920 : 720;
-    constexpr int height = fullScreen ? 1080 : 480;
-
-    InitWindow(width, height, "Moon Patrol");
     LoadTextures();
     InitPlayerBody();
     florLevel = static_cast<float>(foreground.height) * 0.792f;
     this->version = 0.2;
-    enemies[0].SetBody({player.GetBody().x, static_cast<float>(GetScreenHeight()) / 2.f, player.GetBody().width});
+    enemies[0].SetBody({0, florLevel*.97f, player.GetBody().width});
     enemies[0].SetSpeed(static_cast<float>(GetScreenWidth()) / 7.f);
 }
 
 void LoadTextures()
 {
-    if (!fullScreen)
+    if (!fullscreen)
     {
         background = LoadTexture("res/pixel_background_2.png");
         foreground = LoadTexture("res/pixel_foreground_2.png");
@@ -88,6 +89,8 @@ void LoadTextures()
         foreground = LoadTexture("res/pixel_foreground_3.png");
     }
     midground = LoadTexture("res/pixel_middleground.png");
+    playerCar = LoadTexture("res/entities/player_car.png");
+    enemyBike = LoadTexture("res/entities/enemy_bike.png");
 }
 
 void InitPlayerBody()
@@ -111,13 +114,13 @@ void RunGame::Update()
 //TODO CREATE OBSTACLE OBJECT
 void ObstacleBehaviour()
 {
-    enemies[0].MoveLeft();
+    enemies[0].MoveRight();
     if (enemies[0].GetBody().x < 0 - enemies[0].GetBody().radius * 2)
     {
         enemies[0].SetX(static_cast<float>(GetScreenWidth()));
         enemies[0].SetY(static_cast<float>(GetScreenHeight())/2);
     }
-    enemies[0].SinusoidalMovement();
+    //enemies[0].SinusoidalMovement();
 }
 
 void UpdateBackground()
@@ -140,15 +143,18 @@ void RunGame::Draw() const
     BeginDrawing();
 
     DrawBackground();
-    player.DrawPlayer(); // ??? esta bien esto asi?
-
+    //player.DrawPlayer(); // ??? esta bien esto asi?
+    //TODO DRAW OBSTACLES
+    Rectangle bikeRec = {0,0, static_cast<float>(enemyBike.width), static_cast<float>(enemyBike.height)};
+    DrawTextureRec(enemyBike, bikeRec, {enemies[0].GetBody().x, enemies[0].GetBody().y-bikeRec.height/2}, RAYWHITE);
+    //enemies[0].DrawEnemy();
+    Rectangle carRec = {0,0, static_cast<float>(playerCar.width), static_cast<float>(playerCar.height)};
+    DrawTextureRec(playerCar, carRec, {player.GetBody().x, player.GetBody().y-playerCar.height/2}, RAYWHITE);
     const int florHeight = static_cast<int>(florLevel + player.GetBody().height);
     if (debugMode) DrawLine(0, florHeight, GetScreenWidth(), florHeight, WHITE);
 
 
-    //TODO DRAW OBSTACLES
-    //DrawRectangleLinesEx(obstacle, 3, CheckPlaObstCol() ? RED : BLACK);
-    enemies[0].DrawEnemy();
+    
     PrintTexture(foreground, scrollingFore);
 
     DrawVersion();
