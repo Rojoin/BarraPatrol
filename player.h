@@ -17,7 +17,8 @@ public:
     Rectangle GetBody() const;
     void SetHp(int hpModifier);
     void SetSpeed(float speed_);
-    void DrawPlayer() const;
+    void Draw() const;
+    void Shoot();
 private:
     int hp;
     bool isAlive;

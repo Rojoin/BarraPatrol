@@ -118,7 +118,12 @@ void Player::SetSpeed(float speed_)
     this->speed = speed_;
 }
 
-void Player::DrawPlayer() const
+void Player::Draw() const
 {
     DrawRectangleRec(body, BLACK);
+}
+
+void Player::Shoot()
+{
+    
 }
