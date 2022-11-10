@@ -29,6 +29,7 @@ public:
     void SetHp(int hpModifier);
     void SetSpeed(float speed_);
     void Draw(Texture2D bike) const;
+    EnemyType GetType() const;
 private:
     int hp;
     bool isAlive;

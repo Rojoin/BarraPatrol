@@ -29,8 +29,9 @@ Rectangle TextureToRectange(Texture2D texture);
 void PrintTexture(Texture2D texture, float scrollSpeed);
 void UpdateBullets();
 void PlayerBullets();
+void ObjectDestroyer();
 
-static Player player;
+static Player player; //TODO esta bien así o tiene que ser un puntero?
 static Bullet bullets[30];
 static Enemy enemies[30];
 float florLevel;
@@ -60,6 +61,7 @@ RunGame::RunGame()
         Draw();
     }
     UnloadTextures();
+    ObjectDestroyer();
     menuOptions = MenuOptions::menu;
 }
 
@@ -132,7 +134,6 @@ void PlayerBullets()
     }
 }
 
-//TODO CREATE OBSTACLE OBJECT
 void ObstacleBehaviour()
 {
     enemies[0].MoveRight();
@@ -141,6 +142,7 @@ void ObstacleBehaviour()
         enemies[0].SetX(static_cast<float>(GetScreenWidth()));
         enemies[0].SetY(static_cast<float>(GetScreenHeight()) / 2);
     }
+    //TODO WARP ENEMY?
     //enemies[0].SinusoidalMovement();
 }
 
@@ -164,17 +166,32 @@ void RunGame::Draw() const
     BeginDrawing();
 
     DrawBackground();
+    //TODO Esta bien pasarle la textura por el draw?
+    //o es mejor hacer una variable Texture2D?
+    //y con los varios enemigos hago un switch para cual textura pasarle?f
 
-    enemies[0].Draw(enemyBike);
-
-    player.Draw(playerCar);
-    const float size = player.GetBody().width / 25;
-    const auto frameWidth = static_cast<float>(playerBullet.width);
-    const auto frameHeight = static_cast<float>(playerBullet.height);
-    const Rectangle sourceRec = { 0,0,frameWidth,frameHeight};
-    const Vector2 origin = {0 , 0};
+    for (auto& enemy : enemies)
+    {
+        switch (enemy.GetType())
+        {
+        case Enemy::ground:
+            enemies[0].Draw(enemyBike);
+            break;
+        case Enemy::groundObstacle:
+            //enemies[0].Draw(enemyObstacle);
+            break;
+        case Enemy::air:
+            //enemies[0].Draw(enemyHelicopter);
+            break;
+        case Enemy::airSinusoidal:
+            //enemies[0].Draw(enemyHelicopter);
+            break;
+        default:
+            break;
+        }
+    }
     
-    DrawTexturePro(playerBullet, sourceRec, {static_cast<float>(GetScreenWidth())/2, static_cast<float>(GetScreenHeight())/2, player.GetBody().width*2, player.GetBody().height*2}, origin, 90, RAYWHITE);
+    player.Draw(playerCar);
     for (auto& bullet : bullets)
     {
         if (bullet.IsActive())
@@ -182,6 +199,7 @@ void RunGame::Draw() const
             bullet.Draw(playerBullet);
         }
     }
+    
     const int florHeight = static_cast<int>(florLevel + player.GetBody().height);
     if (debugMode) DrawLine(0, florHeight, GetScreenWidth(), florHeight, WHITE);
 
@@ -287,4 +305,8 @@ void DrawTextureParalax(Texture2D texture, Rectangle textRectangle, Vector2 pos1
 {
     DrawTextureRec(texture, textRectangle, pos1, color);
     DrawTextureRec(texture, textRectangle, pos2, color);
+}
+
+void ObjectDestroyer()
+{
 }

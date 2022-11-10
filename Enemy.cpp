@@ -92,3 +92,8 @@ void Enemy::Draw(Texture2D bike) const
     DrawTextureRec(bike, bikeRec, {body.x, body.y-bikeRec.height/2}, RAYWHITE);
     //DrawCircle(static_cast<int>(body.x), static_cast<int>(body.y), body.radius, BLACK);
 }
+
+Enemy::EnemyType Enemy::GetType() const
+{
+    return type;
+}

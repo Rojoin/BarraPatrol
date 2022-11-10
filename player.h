@@ -14,14 +14,14 @@ public:
     void MoveLeft();
     void Jump();
     void MoveDown();
-    void SetY(float y_);
-    void SetX(float x_);
-    Rectangle GetBody() const;
-    void SetHp(int hpModifier);
-    void SetSpeed(float speed_);
-    void Draw(Texture2D playerTexture) const;
     Bullet ShootUp() const;
     Bullet ShootRight() const;
+    void Draw(Texture2D playerTexture) const;
+    Rectangle GetBody() const;
+    void SetY(float y_);
+    void SetX(float x_);
+    void SetHp(int hpModifier);
+    void SetSpeed(float speed_);
 private:
     int hp;
     bool isAlive;

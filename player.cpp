@@ -131,12 +131,12 @@ Bullet Player::ShootUp() const
 {
     const float size = body.width*1.3f;
     const float bulletSpeed = speed * 1.f;
-    return Bullet(Bullet::player, {0,-1}, {body.x + body.width, body.y}, size, 90.f, bulletSpeed);
+    return Bullet(Bullet::player, {0,-1}, {body.x + body.width/2, body.y}, size, 90.f, bulletSpeed);
 }
 
 Bullet Player::ShootRight() const
 {
     const float size = body.width*1.3f;
     const float bulletSpeed = speed * 1.f;
-    return Bullet(Bullet::player, {1,0}, {body.x, body.y}, size, 0.f, bulletSpeed);
+    return Bullet(Bullet::player, {1,0}, {body.x + body.width/2, body.y}, size, 0.f, bulletSpeed);
 }
