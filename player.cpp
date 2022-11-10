@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include "Bullet.h"
+
 Player::Player(Rectangle body, std::string name, float speed)
 {
     this->body = body;
@@ -118,12 +120,23 @@ void Player::SetSpeed(float speed_)
     this->speed = speed_;
 }
 
-void Player::Draw() const
+void Player::Draw(Texture2D playerTexture) const
 {
-    DrawRectangleRec(body, BLACK);
+    const Rectangle carRec = {0,0, static_cast<float>(playerTexture.width), static_cast<float>(playerTexture.height)};
+    DrawTextureRec(playerTexture, carRec, {body.x, body.y-playerTexture.height/2}, RAYWHITE);
+    //DrawRectangleRec(body, BLACK);
 }
 
-void Player::Shoot()
+Bullet Player::ShootUp() const
 {
-    
+    const float size = body.width*1.3f;
+    const float bulletSpeed = speed * 1.f;
+    return Bullet(Bullet::player, {0,-1}, {body.x + body.width, body.y}, size, 90.f, bulletSpeed);
+}
+
+Bullet Player::ShootRight() const
+{
+    const float size = body.width*1.3f;
+    const float bulletSpeed = speed * 1.f;
+    return Bullet(Bullet::player, {1,0}, {body.x, body.y}, size, 0.f, bulletSpeed);
 }

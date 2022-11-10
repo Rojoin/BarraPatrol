@@ -2,6 +2,8 @@
 #include <raylib.h>
 #include <string>
 
+#include "Bullet.h"
+
 class Player
 {
 public:
@@ -17,8 +19,9 @@ public:
     Rectangle GetBody() const;
     void SetHp(int hpModifier);
     void SetSpeed(float speed_);
-    void Draw() const;
-    void Shoot();
+    void Draw(Texture2D playerTexture) const;
+    Bullet ShootUp() const;
+    Bullet ShootRight() const;
 private:
     int hp;
     bool isAlive;

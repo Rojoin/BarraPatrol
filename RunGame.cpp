@@ -27,16 +27,19 @@ void UnloadTextures();
 void DrawTextureParalax(Texture2D texture, Rectangle textRectangle, Vector2 pos1, Vector2 pos2, Color color);
 Rectangle TextureToRectange(Texture2D texture);
 void PrintTexture(Texture2D texture, float scrollSpeed);
-
+void UpdateBullets();
+void PlayerBullets();
 
 static Player player;
+static Bullet bullets[30];
 static Enemy enemies[30];
 float florLevel;
 
-Texture2D background;
-Texture2D midground;
-Texture2D foreground;
+static Texture2D background;
+static Texture2D midground;
+static Texture2D foreground;
 static Texture2D playerCar;
+static Texture2D playerBullet;
 static Texture2D enemyBike;
 
 static float scrollingBack = 0.0f;
@@ -71,7 +74,7 @@ void RunGame::Start()
     InitPlayerBody();
     florLevel = static_cast<float>(foreground.height) * 0.792f;
     this->version = 0.2;
-    enemies[0].SetBody({0, florLevel*.97f, player.GetBody().width});
+    enemies[0].SetBody({0, florLevel * .97f, player.GetBody().width});
     enemies[0].SetSpeed(static_cast<float>(GetScreenWidth()) / 7.f);
 }
 
@@ -89,6 +92,7 @@ void LoadTextures()
     }
     midground = LoadTexture("res/pixel_middleground.png");
     playerCar = LoadTexture("res/entities/player_car.png");
+    playerBullet = LoadTexture("res/entities/player_bullet.png");
     enemyBike = LoadTexture("res/entities/enemy_bike.png");
 }
 
@@ -106,8 +110,26 @@ void InitPlayerBody()
 void RunGame::Update()
 {
     PlayerBehaviour();
+    UpdateBullets();
     ObstacleBehaviour();
     UpdateBackground();
+}
+
+void UpdateBullets()
+{
+    PlayerBullets();
+}
+
+void PlayerBullets()
+{
+    for (auto& bullet : bullets)
+    {
+        if (bullet.IsActive())
+        {
+            bullet.Move();
+            bullet.IsOutOfBounds();
+        }
+    }
 }
 
 //TODO CREATE OBSTACLE OBJECT
@@ -117,14 +139,14 @@ void ObstacleBehaviour()
     if (enemies[0].GetBody().x < 0 - enemies[0].GetBody().radius * 2)
     {
         enemies[0].SetX(static_cast<float>(GetScreenWidth()));
-        enemies[0].SetY(static_cast<float>(GetScreenHeight())/2);
+        enemies[0].SetY(static_cast<float>(GetScreenHeight()) / 2);
     }
     //enemies[0].SinusoidalMovement();
 }
 
 void UpdateBackground()
 {
-    int scrollSpeed = GetScreenWidth() / 30;
+    const int scrollSpeed = GetScreenWidth() / 30;
     BackgroundScrolling(scrollingFore, scrollSpeed, foreground, Foreground);
     BackgroundScrolling(scrollingMid, scrollSpeed, midground, Midground);
     BackgroundScrolling(scrollingBack, scrollSpeed, background, Background);
@@ -143,17 +165,26 @@ void RunGame::Draw() const
 
     DrawBackground();
 
-    //TODO DRAW OBSTACLES
-    const Rectangle bikeRec = {0,0, static_cast<float>(enemyBike.width), static_cast<float>(enemyBike.height)};
-    DrawTextureRec(enemyBike, bikeRec, {enemies[0].GetBody().x, enemies[0].GetBody().y-bikeRec.height/2}, RAYWHITE);
-    //enemies[0].DrawEnemy();
+    enemies[0].Draw(enemyBike);
 
-    const Rectangle carRec = {0,0, static_cast<float>(playerCar.width), static_cast<float>(playerCar.height)};
-    DrawTextureRec(playerCar, carRec, {player.GetBody().x, player.GetBody().y-playerCar.height/2}, RAYWHITE);
+    player.Draw(playerCar);
+    const float size = player.GetBody().width / 25;
+    const auto frameWidth = static_cast<float>(playerBullet.width);
+    const auto frameHeight = static_cast<float>(playerBullet.height);
+    const Rectangle sourceRec = { 0,0,frameWidth,frameHeight};
+    const Vector2 origin = {0 , 0};
     
+    DrawTexturePro(playerBullet, sourceRec, {static_cast<float>(GetScreenWidth())/2, static_cast<float>(GetScreenHeight())/2, player.GetBody().width*2, player.GetBody().height*2}, origin, 90, RAYWHITE);
+    for (auto& bullet : bullets)
+    {
+        if (bullet.IsActive())
+        {
+            bullet.Draw(playerBullet);
+        }
+    }
     const int florHeight = static_cast<int>(florLevel + player.GetBody().height);
     if (debugMode) DrawLine(0, florHeight, GetScreenWidth(), florHeight, WHITE);
-    
+
     PrintTexture(foreground, scrollingFore);
 
     DrawVersion();
@@ -179,7 +210,10 @@ void DrawBackground()
 
 void RunGame::CheckCollisions()
 {
-    RecRecCollision(player.GetBody(), {enemies[0].GetBody().x, enemies[0].GetBody().y, enemies[0].GetBody().radius, enemies[0].GetBody().radius});
+    RecRecCollision(player.GetBody(), {
+                        enemies[0].GetBody().x, enemies[0].GetBody().y, enemies[0].GetBody().radius,
+                        enemies[0].GetBody().radius
+                    });
 }
 
 bool RecRecCollision(Rectangle r1, Rectangle r2)
@@ -213,6 +247,11 @@ void RunGame::PlayerControls()
 {
     if (IsKeyDown(KEY_D)) player.MoveRight();
     if (IsKeyDown(KEY_A)) player.MoveLeft();
+    if (IsKeyReleased(KEY_W))
+    {
+        bullets[0] = player.ShootUp();
+    }
+    if (IsKeyReleased(KEY_F)) bullets[1] = player.ShootRight();
     player.Jump();
 }
 

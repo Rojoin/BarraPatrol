@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include <raylib.h>
 #include <string>
 
 #include "Circle.h"
@@ -13,7 +14,7 @@ public:
         air,
         airSinusoidal
     };
-    Enemy(int hp, Circle body, float speed, std::string name);
+    Enemy(int hp, Circle body, float speed, std::string name, EnemyType type);
     Enemy();
     ~Enemy();
     void MoveRight();
@@ -27,12 +28,12 @@ public:
     Circle GetBody() const;
     void SetHp(int hpModifier);
     void SetSpeed(float speed_);
-    void DrawEnemy() const;
+    void Draw(Texture2D bike) const;
 private:
     int hp;
     bool isAlive;
     Circle body{};
     float speed;
     std::string name;
-    
+    EnemyType type;
 };

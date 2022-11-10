@@ -13,15 +13,17 @@ Enemy::Enemy()
     isAlive = true;
     speed = static_cast<float>(GetScreenWidth()) / 7.f;
     name = "GenericEnemy";
+    type = ground;
 }
 
-Enemy::Enemy(int hp, Circle body, float speed, std::string name)
+Enemy::Enemy(int hp, Circle body, float speed, std::string name, EnemyType type)
 {
     this->hp = hp;
     isAlive = true;
     this->body = body;
     this->speed = speed;
     this->name = name;
+    this->type = type;
 }
 
 Enemy::~Enemy()
@@ -84,7 +86,9 @@ void Enemy::SetSpeed(float speed_)
     this->speed = speed_;
 }
 
-void Enemy::DrawEnemy() const
+void Enemy::Draw(Texture2D bike) const
 {
-    DrawCircle(static_cast<int>(body.x), static_cast<int>(body.y), body.radius, BLACK);
+    const Rectangle bikeRec = {0,0, static_cast<float>(bike.width), static_cast<float>(bike.height)};
+    DrawTextureRec(bike, bikeRec, {body.x, body.y-bikeRec.height/2}, RAYWHITE);
+    //DrawCircle(static_cast<int>(body.x), static_cast<int>(body.y), body.radius, BLACK);
 }
