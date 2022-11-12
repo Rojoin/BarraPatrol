@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include <raylib.h>
+#include "player.h"
 
 class RunGame
 {
@@ -7,14 +7,16 @@ public:
     RunGame();
     ~RunGame();
 private:
+    Player* player{};
     void Start();
-    static void PlayerBehaviour();
-    static void PlayerGravity();
-    static void PlayerControls();
-    static void PlayerWarp();
-    static void Update();
+    void InitPlayerBody();
+    void PlayerBehaviour() const;
+    void PlayerGravity() const;
+    void PlayerControls() const;
+    void PlayerWarp() const;
+    void Update() const;
     void Draw() const;
     void DrawVersion() const;
-    static void CheckCollisions();
+    void CheckCollisions() const;
     double version{};
 };

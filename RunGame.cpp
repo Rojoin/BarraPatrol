@@ -31,7 +31,6 @@ void UpdateBullets();
 void PlayerBullets();
 void ObjectDestroyer();
 
-static Player player; //TODO esta bien así o tiene que ser un puntero?
 static Bullet bullets[30];
 static Enemy enemies[30];
 float florLevel;
@@ -76,7 +75,7 @@ void RunGame::Start()
     InitPlayerBody();
     florLevel = static_cast<float>(foreground.height) * 0.792f;
     this->version = 0.2;
-    enemies[0].SetBody({0, florLevel * .97f, player.GetBody().width});
+    enemies[0].SetBody({0, florLevel * .97f, player->GetBody().width});
     enemies[0].SetSpeed(static_cast<float>(GetScreenWidth()) / 7.f);
 }
 
@@ -98,18 +97,21 @@ void LoadTextures()
     enemyBike = LoadTexture("res/entities/enemy_bike.png");
 }
 
-void InitPlayerBody()
+void RunGame::InitPlayerBody()
 {
     Rectangle playerBody;
-    float halfScreen = static_cast<float>(GetScreenWidth()) / 2.0f;
-    playerBody.x = halfScreen;
-    playerBody.y = static_cast<float>(GetScreenHeight()) / 2.0f;
-    playerBody.width = static_cast<float>(GetScreenWidth()) / 30.0f;
-    playerBody.height = static_cast<float>(GetScreenHeight()) / 20.0f;
-    player = {playerBody, "santi", halfScreen};
+    const float initialX = static_cast<float>(GetScreenWidth()) / 2.0f;
+    const float initialWidth = static_cast<float>(GetScreenWidth()) / 30.0f;
+    const float initialY = static_cast<float>(GetScreenHeight()) / 2.0f;
+    const float initialHeight = static_cast<float>(GetScreenHeight()) / 20.0f;
+    playerBody.x = initialX;
+    playerBody.y = initialY;
+    playerBody.width = initialWidth;
+    playerBody.height = initialHeight;
+    this->player = new Player(playerBody, "santi", initialX);
 }
 
-void RunGame::Update()
+void RunGame::Update() const
 {
     PlayerBehaviour();
     UpdateBullets();
@@ -191,7 +193,7 @@ void RunGame::Draw() const
         }
     }
     
-    player.Draw(playerCar);
+    player->Draw(playerCar);
     for (auto& bullet : bullets)
     {
         if (bullet.IsActive())
@@ -200,7 +202,7 @@ void RunGame::Draw() const
         }
     }
     
-    const int florHeight = static_cast<int>(florLevel + player.GetBody().height);
+    const int florHeight = static_cast<int>(florLevel + player->GetBody().height);
     if (debugMode) DrawLine(0, florHeight, GetScreenWidth(), florHeight, WHITE);
 
     PrintTexture(foreground, scrollingFore);
@@ -226,9 +228,9 @@ void DrawBackground()
     PrintTexture(midground, scrollingMid);
 }
 
-void RunGame::CheckCollisions()
+void RunGame::CheckCollisions() const
 {
-    RecRecCollision(player.GetBody(), {
+    RecRecCollision(player->GetBody(), {
                         enemies[0].GetBody().x, enemies[0].GetBody().y, enemies[0].GetBody().radius,
                         enemies[0].GetBody().radius
                     });
@@ -242,41 +244,38 @@ bool RecRecCollision(Rectangle r1, Rectangle r2)
         r1.y <= r2.y + r2.height;
 }
 
-void RunGame::PlayerBehaviour()
+void RunGame::PlayerBehaviour() const
 {
     PlayerGravity();
     PlayerControls();
     PlayerWarp();
 }
 
-void RunGame::PlayerGravity()
+void RunGame::PlayerGravity() const
 {
-    if (player.GetBody().y > florLevel)
+    if (player->GetBody().y > florLevel)
     {
-        player.SetY(florLevel);
+        player->SetY(florLevel);
     }
     else
     {
-        player.MoveDown();
+        player->MoveDown();
     }
 }
 
-void RunGame::PlayerControls()
+void RunGame::PlayerControls() const
 {
-    if (IsKeyDown(KEY_D)) player.MoveRight();
-    if (IsKeyDown(KEY_A)) player.MoveLeft();
-    if (IsKeyReleased(KEY_W))
-    {
-        bullets[0] = player.ShootUp();
-    }
-    if (IsKeyReleased(KEY_F)) bullets[1] = player.ShootRight();
-    player.Jump();
+    if (IsKeyDown(KEY_D)) player->MoveRight();
+    if (IsKeyDown(KEY_A)) player->MoveLeft();
+    if (IsKeyReleased(KEY_W)) bullets[0] = player->ShootUp();
+    if (IsKeyReleased(KEY_F)) bullets[1] = player->ShootRight();
+    player->Jump();
 }
 
-void RunGame::PlayerWarp()
+void RunGame::PlayerWarp() const
 {
-    if (player.GetBody().x < 0.f + player.GetBody().x / 2) player.SetX(static_cast<float>(GetScreenWidth()));
-    if (player.GetBody().x > static_cast<float>(GetScreenWidth())) player.SetX(0.f);
+    if (player->GetBody().x < 0.f + player->GetBody().x / 2) player->SetX(static_cast<float>(GetScreenWidth()));
+    if (player->GetBody().x > static_cast<float>(GetScreenWidth())) player->SetX(0.f);
 }
 
 void UnloadTextures()
