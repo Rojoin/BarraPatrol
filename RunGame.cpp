@@ -27,12 +27,9 @@ void UnloadTextures();
 void DrawTextureParalax(Texture2D texture, Rectangle textRectangle, Vector2 pos1, Vector2 pos2, Color color);
 Rectangle TextureToRectange(Texture2D texture);
 void PrintTexture(Texture2D texture, float scrollSpeed);
-void UpdateBullets();
 void PlayerBullets();
 void ObjectDestroyer();
 
-static Bullet bullets[30];
-static Enemy enemies[30];
 float florLevel;
 
 static Texture2D background;
@@ -46,9 +43,8 @@ static float scrollingBack = 0.0f;
 static float scrollingMid = 0.0f;
 static float scrollingFore = 0.0f;
 
-static bool debugMode = false;
-extern bool fullscreen;
-extern MenuOptions menuOptions;
+bool debugMode = false;
+bool fullscreen;
 #pragma endregion
 
 RunGame::RunGame()
@@ -61,7 +57,7 @@ RunGame::RunGame()
     }
     UnloadTextures();
     ObjectDestroyer();
-    menuOptions = MenuOptions::menu;
+    //menuOptions = MenuOptions::menu;
 }
 
 RunGame::~RunGame()
@@ -111,7 +107,7 @@ void RunGame::InitPlayerBody()
     this->player = new Player(playerBody, "santi", initialX);
 }
 
-void RunGame::Update() const
+void RunGame::Update()
 {
     PlayerBehaviour();
     UpdateBullets();
@@ -119,12 +115,12 @@ void RunGame::Update() const
     UpdateBackground();
 }
 
-void UpdateBullets()
+void RunGame::UpdateBullets()
 {
     PlayerBullets();
 }
 
-void PlayerBullets()
+void RunGame::PlayerBullets()
 {
     for (auto& bullet : bullets)
     {
@@ -136,7 +132,7 @@ void PlayerBullets()
     }
 }
 
-void ObstacleBehaviour()
+void RunGame::ObstacleBehaviour()
 {
     enemies[0].MoveRight();
     if (enemies[0].GetBody().x < 0 - enemies[0].GetBody().radius * 2)
@@ -244,7 +240,7 @@ bool RecRecCollision(Rectangle r1, Rectangle r2)
         r1.y <= r2.y + r2.height;
 }
 
-void RunGame::PlayerBehaviour() const
+void RunGame::PlayerBehaviour()
 {
     PlayerGravity();
     PlayerControls();
@@ -263,7 +259,7 @@ void RunGame::PlayerGravity() const
     }
 }
 
-void RunGame::PlayerControls() const
+void RunGame::PlayerControls()
 {
     if (IsKeyDown(KEY_D)) player->MoveRight();
     if (IsKeyDown(KEY_A)) player->MoveLeft();

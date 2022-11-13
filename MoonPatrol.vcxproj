@@ -162,7 +162,7 @@
   <ItemGroup>
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="menu.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MoonPatrol.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="RunGame.cpp" />
@@ -171,7 +171,7 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Circle.h" />
     <ClInclude Include="Enemy.h" />
-    <ClInclude Include="menu.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="RunGame.h" />
   </ItemGroup>

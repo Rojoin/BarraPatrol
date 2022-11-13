@@ -1,46 +1,14 @@
 ﻿#include "menu.h"
 #include <iostream>
 #include "RunGame.h"
-#include "raylib.h"
 
 using namespace std;
 
-#pragma region functions
-void MainMenu();
-void DrawMainMenu(MenuUI menuUI, Rectangle menuRectangles[]);
-void OptionsMenu(int& screenWidth, int& screenHeight);
-void DrawOptions(Rectangle backBackRec, Rectangle screenSizeA, Rectangle screenSizeB, Rectangle bgMusic,
-                 Rectangle soundRec);
-void RulesMenu();
-void DrawRules(Rectangle backRulesRec);
-void CreditsMenu();
-void DrawCredits(Rectangle backCreditsRec);
-MenuUI InitMenuUI();
-#pragma endregion
-
-#pragma region globalVariables
-static float height;
-static float width1;
-
-bool music = true;
-bool sound = true;
-bool debugMode = false;
-bool fullscreen = false;
-
-Texture2D backgroundTexture;
-MenuOptions menuOptions = MenuOptions::menu;
-
-static constexpr Color NEONCYAN = CLITERAL(Color){4, 217, 255, 255};
-static constexpr Color DIFDARKGRAY = CLITERAL(Color){245, 245, 245, 60};
-Image logo;
-static string credits[6];
-
-#pragma endregion
-
-void Menu()
+Menu::Menu()
 {
-    int screenWidth = fullscreen ? 1920 : 720;
-    int screenHeight = fullscreen ? 1080 : 480;
+    menuOptions = MenuInterface::menu;
+    this->screenWidth = fullscreen ? 1920 : 720;
+    this->screenHeight = fullscreen ? 1080 : 480;
     constexpr char Title[] = "Moon Patrol";
 
     InitWindow(screenWidth, screenHeight, Title);
@@ -50,26 +18,26 @@ void Menu()
     width1 = static_cast<float>(GetScreenHeight()) / 15.0f;
     logo = LoadImage("res/asteroids_logo.png");
     SetWindowIcon(logo);
-    while (!WindowShouldClose() && menuOptions != MenuOptions::exit)
+    while (!WindowShouldClose() && menuOptions != MenuInterface::exit)
     {
         switch (menuOptions)
         {
-        case MenuOptions::menu:
+        case MenuInterface::menu:
             MainMenu();
             break;
-        case MenuOptions::play:
+        case MenuInterface::play:
             RunGame();
             break;
-        case MenuOptions::options:
-            OptionsMenu(screenWidth, screenHeight);
+        case MenuInterface::options:
+            OptionsMenu();
             break;
-        case MenuOptions::rules:
+        case MenuInterface::rules:
             RulesMenu();
             break;
-        case MenuOptions::credits:
+        case MenuInterface::credits:
             CreditsMenu();
             break;
-        case MenuOptions::exit:
+        case MenuInterface::exit:
             CloseWindow();
             break;
         default:
@@ -79,7 +47,7 @@ void Menu()
     UnloadTexture(backgroundTexture);
 }
 
-MenuUI InitMenuUI()
+MenuUI Menu::InitMenuUI()
 {
     const int fontSize = GetScreenHeight() / 9;
     const float xPosition = static_cast<float>(GetScreenWidth()) / 25.0f;
@@ -89,17 +57,15 @@ MenuUI InitMenuUI()
     return {fontSize, xPosition, yPosition, xRepos, yRepos};
 }
 
-void MainMenu()
+void Menu::MainMenu()
 {
-    Rectangle menuRectangles[6];
+    const MenuUI menuUI = InitMenuUI();
 
-    MenuUI menuUI = InitMenuUI();
-
-    for (int i = static_cast<int>(MenuOptions::exit); i != static_cast<int>(MenuOptions::menu); --i)
+    for (int i = static_cast<int>(MenuInterface::exit); i != static_cast<int>(MenuInterface::menu); --i)
     {
         menuRectangles[i] = {
             menuUI.xRepos,
-            static_cast<float>(GetScreenHeight()) - menuUI.yPosition * (static_cast<int>(MenuOptions::exit) -
+            static_cast<float>(GetScreenHeight()) - menuUI.yPosition * (static_cast<int>(MenuInterface::exit) -
                 static_cast<float>(i) + 1.45f) + menuUI.yRepos,
             static_cast<float>(menuUI.fontSize) * 3.9f, static_cast<float>(menuUI.fontSize)
         };
@@ -107,40 +73,40 @@ void MainMenu()
 
     Vector2 mousePos = GetMousePosition();
 
-    DrawMainMenu(menuUI, menuRectangles);
+    DrawMainMenu(menuUI);
 
     if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
     {
-        if (CheckCollisionPointRec(mousePos, menuRectangles[static_cast<int>(MenuOptions::play)]))
+        if (CheckCollisionPointRec(mousePos, menuRectangles[static_cast<int>(MenuInterface::play)]))
         {
-            menuOptions = MenuOptions::play;
+            menuOptions = MenuInterface::play;
         }
-        else if (CheckCollisionPointRec(mousePos, menuRectangles[static_cast<int>(MenuOptions::options)]))
+        else if (CheckCollisionPointRec(mousePos, menuRectangles[static_cast<int>(MenuInterface::options)]))
         {
-            menuOptions = MenuOptions::options;
+            menuOptions = MenuInterface::options;
         }
-        else if (CheckCollisionPointRec(mousePos, menuRectangles[static_cast<int>(MenuOptions::rules)]))
+        else if (CheckCollisionPointRec(mousePos, menuRectangles[static_cast<int>(MenuInterface::rules)]))
         {
-            menuOptions = MenuOptions::rules;
+            menuOptions = MenuInterface::rules;
         }
-        else if (CheckCollisionPointRec(mousePos, menuRectangles[static_cast<int>(MenuOptions::credits)]))
+        else if (CheckCollisionPointRec(mousePos, menuRectangles[static_cast<int>(MenuInterface::credits)]))
         {
-            menuOptions = MenuOptions::credits;
+            menuOptions = MenuInterface::credits;
         }
-        else if (CheckCollisionPointRec(mousePos, menuRectangles[static_cast<int>(MenuOptions::exit)]))
+        else if (CheckCollisionPointRec(mousePos, menuRectangles[static_cast<int>(MenuInterface::exit)]))
         {
-            menuOptions = MenuOptions::exit;
+            menuOptions = MenuInterface::exit;
         }
     }
 }
 
-void DrawMainMenu(MenuUI menuUI, Rectangle menuRectangles[])
+void Menu::DrawMainMenu(MenuUI menuUI) const
 {
     BeginDrawing();
     ClearBackground(BLACK);
     DrawBackgroundMenu();
 
-    for (int i = static_cast<int>(MenuOptions::exit); i != static_cast<int>(MenuOptions::menu); --i)
+    for (int i = static_cast<int>(MenuInterface::exit); i != static_cast<int>(MenuInterface::menu); --i)
     {
         if (CheckCollisionPointRec(GetMousePosition(), menuRectangles[i]))
         {
@@ -153,7 +119,7 @@ void DrawMainMenu(MenuUI menuUI, Rectangle menuRectangles[])
 
     string options[] = {"menu", "Play", "Options", "Rules", "Credits", "Exit"};
 
-    for (int i = static_cast<int>(MenuOptions::exit); i != static_cast<int>(MenuOptions::menu); --i)
+    for (int i = static_cast<int>(MenuInterface::exit); i != static_cast<int>(MenuInterface::menu); --i)
     {
         DrawText(options[i].c_str(), static_cast<int>(menuUI.xPosition),
                  static_cast<int>(static_cast<float>(GetScreenHeight()) - menuUI.yPosition * (6.4f - static_cast<float>(
@@ -164,7 +130,8 @@ void DrawMainMenu(MenuUI menuUI, Rectangle menuRectangles[])
 }
 
 static Rectangle debugRec;
-void OptionsMenu(int& screenWidth, int& screenHeight)
+
+void Menu::OptionsMenu()
 {
     const float xPos = static_cast<float>(GetScreenWidth()) / 16.0f;
     const float height2 = static_cast<float>(GetScreenHeight()) / 17.0f;
@@ -181,7 +148,7 @@ void OptionsMenu(int& screenWidth, int& screenHeight)
     {
         if (CheckCollisionPointRec(GetMousePosition(), backRec))
         {
-            menuOptions = MenuOptions::menu;
+            menuOptions = MenuInterface::menu;
         }
         else if (CheckCollisionPointRec(GetMousePosition(), screenSizeA))
         {
@@ -210,8 +177,8 @@ void OptionsMenu(int& screenWidth, int& screenHeight)
     }
 }
 
-void DrawOptions(Rectangle backBackRec, Rectangle screenSizeA, Rectangle screenSizeB, Rectangle bgMusic,
-                 Rectangle soundRec)
+void Menu::DrawOptions(Rectangle backBackRec, Rectangle screenSizeA, Rectangle screenSizeB, Rectangle bgMusic,
+                 Rectangle soundRec) const
 {
     const int xPos = GetScreenWidth() / 15;
     const int fontSize = GetScreenHeight() / 30;
@@ -285,7 +252,7 @@ void DrawOptions(Rectangle backBackRec, Rectangle screenSizeA, Rectangle screenS
     EndDrawing();
 }
 
-void RulesMenu()
+void Menu::RulesMenu()
 {
     const Rectangle backRulesRec = {
         static_cast<float>(GetScreenWidth()) / 16.0f, static_cast<float>(GetScreenHeight()) / 1.7f, width1 * 2.5f,
@@ -298,12 +265,12 @@ void RulesMenu()
     {
         if (CheckCollisionPointRec(GetMousePosition(), backRulesRec))
         {
-            menuOptions = MenuOptions::menu;
+            menuOptions = MenuInterface::menu;
         }
     }
 }
 
-void DrawRules(Rectangle backRulesRec)
+void Menu::DrawRules(Rectangle backRulesRec) const
 {
     const int fontSize = GetScreenHeight() / 30;
     const int xPos = GetScreenWidth() / 15;
@@ -335,11 +302,7 @@ void DrawRules(Rectangle backRulesRec)
     EndDrawing();
 }
 
-static Rectangle linkedinRec;
-static Rectangle itchioRec;
-static Rectangle creditsRec[6];
-
-void CreditsMenu()
+void Menu::CreditsMenu()
 {
     const int xPos = GetScreenWidth() / 15;
     const int fontSize = GetScreenHeight() / 30;
@@ -364,9 +327,10 @@ void CreditsMenu()
     }
 
     DrawCredits(backCreditsRec);
+    
     string creditsUrl[6];
     creditsUrl[0] = "https://www.vhv.rs/viewpic/iobbxmo_heart-pixel-art-hd-png-download/";
-    creditsUrl[1] = "http://millionthvector.blogspot.com/p/free-sprites.html";
+    creditsUrl[1] = "https://millionthvector.blogspot.com/p/free-sprites.html";
     creditsUrl[2] = "https://www.reddit.com/r/PixelArt/comments/a4fp0e/supermassive_black_hole/";
     creditsUrl[3] = "https://www.kindpng.com/imgv/wmmowx_pixel-art-asteroid-sprite-hd-png-download/";
     creditsUrl[4] = "https://mixkit.co/free-sound-effects/space-shooter/";
@@ -376,7 +340,7 @@ void CreditsMenu()
     {
         if (CheckCollisionPointRec(GetMousePosition(), backCreditsRec))
         {
-            menuOptions = MenuOptions::menu;
+            menuOptions = MenuInterface::menu;
         }
         else if (CheckCollisionPointRec(GetMousePosition(), linkedinRec))
         {
@@ -399,7 +363,7 @@ void CreditsMenu()
     }
 }
 
-void DrawCredits(Rectangle backCreditsRec)
+void Menu::DrawCredits(Rectangle backCreditsRec) const
 {
     const int xPos = GetScreenWidth() / 15;
 
@@ -416,7 +380,6 @@ void DrawCredits(Rectangle backCreditsRec)
     const string creditsCredit = "LeandroRiquelme";
     const string creditsLinkedin = "Linkedin";
     const string creditsItchio = "Itchio";
-    
     const string rulesBack = "Back";
 
     if (CheckCollisionPointRec(GetMousePosition(), backCreditsRec))
@@ -462,7 +425,7 @@ void DrawCredits(Rectangle backCreditsRec)
     EndDrawing();
 }
 
-void DrawBackgroundMenu()
+void Menu::DrawBackgroundMenu() const
 {
     const float frameWidth = static_cast<float>(GetScreenWidth());
     const float frameHeight = static_cast<float>(GetScreenHeight());
