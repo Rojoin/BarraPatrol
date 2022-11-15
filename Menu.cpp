@@ -20,12 +20,16 @@ Menu::Menu()
     SetWindowIcon(logo);
     while (!WindowShouldClose() && menuOptions != MenuInterface::exit)
     {
+        
         switch (menuOptions)
         {
         case MenuInterface::menu:
             MainMenu();
             break;
-        case MenuInterface::play:
+        case MenuInterface::play1Player:
+            RunGame();
+            break;  
+        case MenuInterface::play2Player:
             RunGame();
             break;
         case MenuInterface::options:
@@ -49,10 +53,10 @@ Menu::Menu()
 
 MenuUI Menu::InitMenuUI()
 {
-    const int fontSize = GetScreenHeight() / 9;
+    const int fontSize = GetScreenHeight() / 10;
     const float xPosition = static_cast<float>(GetScreenWidth()) / 25.0f;
-    const float yPosition = static_cast<float>(GetScreenHeight()) / 9.0f;
-    const float xRepos = xPosition - xPosition / 5;
+    const float yPosition = static_cast<float>(GetScreenHeight()) / 8.0f;
+    const float xRepos = xPosition - xPosition / 6;
     const float yRepos = yPosition / 20;
     return {fontSize, xPosition, yPosition, xRepos, yRepos};
 }
@@ -63,11 +67,7 @@ void Menu::MainMenu()
 
     for (int i = static_cast<int>(MenuInterface::exit); i != static_cast<int>(MenuInterface::menu); --i)
     {
-        menuRectangles[i] = {
-            menuUI.xRepos,
-            static_cast<float>(GetScreenHeight()) - menuUI.yPosition * (static_cast<int>(MenuInterface::exit) -
-                static_cast<float>(i) + 1.45f) + menuUI.yRepos,
-            static_cast<float>(menuUI.fontSize) * 3.9f, static_cast<float>(menuUI.fontSize)
+        menuRectangles[i] = {menuUI.xRepos,static_cast<float>(GetScreenHeight()) - menuUI.yPosition * (static_cast<int>(MenuInterface::exit) -    static_cast<float>(i) + 1.45f) + menuUI.yRepos,static_cast<float>(menuUI.fontSize) * 3.9f, static_cast<float>(menuUI.fontSize)
         };
     }
 
@@ -85,7 +85,6 @@ void Menu::MainMenu()
         {
             menuOptions = MenuInterface::play2Player;
         }
-
         else if (CheckCollisionPointRec(mousePos, menuRectangles[static_cast<int>(MenuInterface::options)]))
         {
             menuOptions = MenuInterface::options;
@@ -122,12 +121,12 @@ void Menu::DrawMainMenu(MenuUI menuUI) const
     DrawText("Moon patrol", GetScreenWidth() / 2 - MeasureText("Moon patrol", GetScreenHeight() / 7) / 2,
              GetScreenHeight() / 25, GetScreenHeight() / 7, WHITE);
 
-    string options[] = {"menu", "Play", "Options", "Rules", "Credits", "Exit"};
+    string options[] = { "Play","PlayV2", "Options", "Rules", "Credits", "Exit"," "};
 
-    for (int i = static_cast<int>(MenuInterface::exit); i != static_cast<int>(MenuInterface::menu); --i)
+    for (int i = static_cast<int>(MenuInterface::exit); i > static_cast<int>(MenuInterface::menu)-1; --i)
     {
         DrawText(options[i].c_str(), static_cast<int>(menuUI.xPosition),
-                 static_cast<int>(static_cast<float>(GetScreenHeight()) - menuUI.yPosition * (6.4f - static_cast<float>(
+                 static_cast<int>(static_cast<float>(GetScreenHeight()) - menuUI.yPosition * (6.4f -(
                      i))),menuUI.fontSize, NEONCYAN);
     }
 

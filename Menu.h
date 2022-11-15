@@ -57,5 +57,5 @@ private:
     Rectangle linkedinRec;
     Rectangle itchioRec;
     Rectangle creditsRec[6];
-    Rectangle menuRectangles[6];
+    Rectangle menuRectangles[7];
 };
