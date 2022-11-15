@@ -77,10 +77,15 @@ void Menu::MainMenu()
 
     if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
     {
-        if (CheckCollisionPointRec(mousePos, menuRectangles[static_cast<int>(MenuInterface::play)]))
+        if (CheckCollisionPointRec(mousePos, menuRectangles[static_cast<int>(MenuInterface::play1Player)]))
         {
-            menuOptions = MenuInterface::play;
+            menuOptions = MenuInterface::play1Player;
         }
+        else if (CheckCollisionPointRec(mousePos, menuRectangles[static_cast<int>(MenuInterface::play2Player)]))
+        {
+            menuOptions = MenuInterface::play2Player;
+        }
+
         else if (CheckCollisionPointRec(mousePos, menuRectangles[static_cast<int>(MenuInterface::options)]))
         {
             menuOptions = MenuInterface::options;

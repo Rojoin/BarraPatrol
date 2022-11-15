@@ -19,7 +19,8 @@ public:
     enum class MenuInterface
     {
         menu,
-        play,
+        play1Player,
+        play2Player,
         options,
         rules,
         credits,
