@@ -6,13 +6,7 @@
 class Bullet
 {
 public:
-    enum Shooter
-    {
-        player,
-        helicopter,
-        truck
-    };
-    Bullet(Shooter shooter, Vector2 direction, Vector2 position, float radius, float rotation, float speed);
+
     Bullet();
     ~Bullet();
     Vector2 GetPosition() const;
@@ -20,13 +14,17 @@ public:
     void IsOutOfBounds();
     bool IsActive() const;
     void Move();
-    void Draw(Texture2D texture) const;
+    void draw() const;
     
 private:
-    bool isActive;
-    Shooter shooter;
     Vector2 direction;
-    float rotation;
     Circle body;
+    Texture2D texture;
+    Sound sound;
+    float rotation;
+    bool isActive;
+    float scale;
     float speed;
+
+
 };
