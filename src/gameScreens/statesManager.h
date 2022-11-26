@@ -10,6 +10,7 @@ public:
 	statesManager();
 	~statesManager();
 	void initProgram();
+	void exitProgram();
 	void logicProgram();
 	void drawProgram();
 	void loadAudios();
