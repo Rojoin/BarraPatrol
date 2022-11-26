@@ -9,7 +9,6 @@ Player::Player(Rectangle body, float speed)
     this->body = body;
     this->speed = speed;
     jumpState = false;
-    jumpTimer = 0;
     deadState = true;
     gravity = 200.0f;
 }
@@ -17,7 +16,6 @@ Player::Player(Rectangle body, float speed)
 Player::Player()
 {
     jumpState = false;
-    jumpTimer = 0;
     speed = 400.0f;
     deadState = true;
 
@@ -66,35 +64,6 @@ void Player::update()
         body.y = 600.0f;
     }
 }
-
-bool lineLine(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4)
-{
-    // calculate the distance to intersection point
-    float uA = ((x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3)) / ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1));
-    float uB = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1));
-
-    // if uA and uB are between 0-1, lines are colliding
-    return uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1;
-}
-
-bool Player::IsGrounded() const
-{
-    extern float florLevel;
-    /*
-    bool bot =  lineLine(0, florLevel,static_cast<float>(GetScreenWidth()),florLevel, body.x,body.y+body.height, body.x+body.width,body.y+body.height);
-    bool left =   lineLine(0, florLevel,static_cast<float>(GetScreenWidth()),florLevel, body.x,body.y,body.x, body.y+body.height);
-    bool right =  lineLine(0, florLevel,static_cast<float>(GetScreenWidth()),florLevel, body.x+body.width,body.y, body.x+body.width,body.y+body.height);
-    bool top =    lineLine(0, florLevel,static_cast<float>(GetScreenWidth()),florLevel, body.x,body.y, body.x+body.width,body.y);
-     return left || right || top || bot;
-    */
-    return static_cast<int>(florLevel) == static_cast<int>(body.y);
-}
-
-void Player::MoveDown()
-{
-    body.y += speed / 1.5f * GetFrameTime();
-}
-
 
 
 Rectangle Player::getBody() const

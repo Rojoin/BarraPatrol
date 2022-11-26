@@ -13,7 +13,6 @@ private:
 	float gravity;
 	float speed;
 	Texture2D texture;
-	bool IsGrounded() const;
 	Rectangle body;
 
 public:
@@ -24,7 +23,6 @@ public:
 	void MoveLeft();
 	void jump();
 	void update();
-	void MoveDown();
 	Bullet ShootUp() const;
 	void draw();
 	Rectangle getBody() const;
