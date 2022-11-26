@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\gameLogic\mouseInputs.cpp" />
     <ClCompile Include="src\gameObjects\Bullet.cpp" />
     <ClCompile Include="src\gameObjects\Enemy.cpp" />
     <ClCompile Include="src\gameObjects\player.cpp" />
@@ -28,10 +29,12 @@
     <ClCompile Include="src\gameScreens\RunGame.cpp" />
     <ClCompile Include="src\gameScreens\statesManager.cpp" />
     <ClCompile Include="src\system\button.cpp" />
+    <ClCompile Include="src\system\collisionFunctions.cpp" />
     <ClCompile Include="src\system\draw.cpp" />
     <ClCompile Include="src\system\MoonPatrol.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\gameLogic\mouseInputs.h" />
     <ClInclude Include="src\gameObjects\Bullet.h" />
     <ClInclude Include="src\gameObjects\Enemy.h" />
     <ClInclude Include="src\gameObjects\player.h" />
@@ -42,6 +45,7 @@
     <ClInclude Include="src\gameScreens\statesManager.h" />
     <ClInclude Include="src\system\button.h" />
     <ClInclude Include="src\system\Circle.h" />
+    <ClInclude Include="src\system\collisionFunctions.h" />
     <ClInclude Include="src\system\draw.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
