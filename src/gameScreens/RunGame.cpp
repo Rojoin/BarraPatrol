@@ -35,7 +35,7 @@ static Texture2D background;
 static Texture2D midground;
 static Texture2D foreground;
 static Texture2D playerCar;
-static Texture2D playerBullet;
+extern Texture2D bulletTexture;
 static Texture2D enemyBike;
 
 static float scrollingBack = 0.0f;
@@ -70,7 +70,7 @@ void RunGame::Start()
     InitPlayerBody();
     florLevel = static_cast<float>(foreground.height) * 0.792f;
     this->version = 0.2;
-    enemies[0].SetBody({0, florLevel * .97f, player->GetBody().width});
+    enemies[0].SetBody({0, florLevel * .97f, player->getBody().width});
     enemies[0].SetSpeed(static_cast<float>(GetScreenWidth()) / 7.f);
 }
 
@@ -88,7 +88,7 @@ void LoadTextures()
     }
     midground = LoadTexture("res/pixel_middleground.png");
     playerCar = LoadTexture("res/entities/player_car.png");
-    playerBullet = LoadTexture("res/entities/player_bullet.png");
+    bulletTexture = LoadTexture("res/entities/player_bullet.png");
     enemyBike = LoadTexture("res/entities/enemy_bike.png");
 }
 
@@ -123,10 +123,10 @@ void RunGame::PlayerBullets()
 {
     for (auto& bullet : bullets)
     {
-        if (bullet.IsActive())
+        if (bullet.isActive())
         {
-            bullet.Move();
-            bullet.IsOutOfBounds();
+            bullet.move();
+            bullet.isOutOfBounds();
         }
     }
 }
@@ -134,7 +134,7 @@ void RunGame::PlayerBullets()
 void RunGame::ObstacleBehaviour()
 {
     enemies[0].MoveRight();
-    if (enemies[0].GetBody().x < 0 - enemies[0].GetBody().radius * 2)
+    if (enemies[0].getBody().position.x < 0 - enemies[0].getBody().radius * 2)
     {
         enemies[0].SetX(static_cast<float>(GetScreenWidth()));
         enemies[0].SetY(static_cast<float>(GetScreenHeight()) / 2);
@@ -188,16 +188,16 @@ void RunGame::Draw() const
         }
     }
     
-    player->Draw(playerCar);
+    player->draw(playerCar);
     for (auto& bullet : bullets)
     {
-        if (bullet.IsActive())
+        if (bullet.isActive())
         {
-            bullet.Draw(playerBullet);
+            bullet.draw();
         }
     }
     
-    const int florHeight = static_cast<int>(florLevel + player->GetBody().height);
+    const int florHeight = static_cast<int>(florLevel + player->getBody().height);
     if (debugMode) DrawLine(0, florHeight, GetScreenWidth(), florHeight, WHITE);
 
     PrintTexture(foreground, scrollingFore);
@@ -225,9 +225,9 @@ void DrawBackground()
 
 void RunGame::CheckCollisions() const
 {
-    RecRecCollision(player->GetBody(), {
-                        enemies[0].GetBody().x, enemies[0].GetBody().y, enemies[0].GetBody().radius,
-                        enemies[0].GetBody().radius
+    RecRecCollision(player->getBody(), {
+                        enemies[0].getBody().position.x, enemies[0].getBody().position.y, enemies[0].getBody().radius,
+                        enemies[0].getBody().radius
                     });
 }
 
@@ -248,7 +248,7 @@ void RunGame::PlayerBehaviour()
 
 void RunGame::PlayerGravity() const
 {
-    if (player->GetBody().y > florLevel)
+    if (player->getBody().y > florLevel)
     {
         player->SetY(florLevel);
     }
@@ -264,13 +264,13 @@ void RunGame::PlayerControls()
     if (IsKeyDown(KEY_A)) player->MoveLeft();
     if (IsKeyReleased(KEY_W)) bullets[0] = player->ShootUp();
     if (IsKeyReleased(KEY_F)) bullets[1] = player->ShootRight();
-    player->Jump();
+    player->jump();
 }
 
 void RunGame::PlayerWarp() const
 {
-    if (player->GetBody().x < 0.f + player->GetBody().x / 2) player->SetX(static_cast<float>(GetScreenWidth()));
-    if (player->GetBody().x > static_cast<float>(GetScreenWidth())) player->SetX(0.f);
+    if (player->getBody().x < 0.f + player->getBody().x / 2) player->SetX(static_cast<float>(GetScreenWidth()));
+    if (player->getBody().x > static_cast<float>(GetScreenWidth())) player->SetX(0.f);
 }
 
 void UnloadTextures()
