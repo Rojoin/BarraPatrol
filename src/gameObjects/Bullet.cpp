@@ -29,7 +29,7 @@ Bullet::~Bullet()
 
 Vector2 Bullet::GetPosition() const
 {
-    return {body.x, body.y};
+    return {body.position.x, body.position.y};
 }
 
 Circle Bullet::GetBody() const
@@ -39,7 +39,7 @@ Circle Bullet::GetBody() const
 
 void Bullet::IsOutOfBounds()
 {
-    isActive = !(body.x > static_cast<float>(GetScreenWidth())) || !(body.y > static_cast<float>(GetScreenHeight()));
+    isActive = !(body.position.x > static_cast<float>(GetScreenWidth())) || !(body.position.y > static_cast<float>(GetScreenHeight()));
 }
 
 bool Bullet::IsActive() const
@@ -49,8 +49,8 @@ bool Bullet::IsActive() const
 
 void Bullet::Move()
 {
-    body.x += direction.x * speed * GetFrameTime();
-    body.y += direction.y * speed * GetFrameTime();
+    body.position.x += direction.x * speed * GetFrameTime();
+    body.position.y += direction.y * speed * GetFrameTime();
 }
 
 void Bullet::Draw(Texture2D bulletTexture) const
@@ -60,6 +60,6 @@ void Bullet::Draw(Texture2D bulletTexture) const
     const Rectangle sourceRec = { 0,0,frameWidth,frameHeight};
     const Vector2 origin = {body.radius , body.radius};
     
-    DrawTexturePro(bulletTexture, sourceRec, {body.x, body.y, body.radius*2, body.radius*2}, origin, rotation, RAYWHITE);
+    DrawTexturePro(bulletTexture, sourceRec, {body.position.x, body.position.y, body.radius*2, body.radius*2}, origin, rotation, RAYWHITE);
 
 }
