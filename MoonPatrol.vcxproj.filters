@@ -19,6 +19,9 @@
     <ClCompile Include="src\gameScreens\RunGame.cpp">
       <Filter>gameScreens</Filter>
     </ClCompile>
+    <ClCompile Include="src\system\draw.cpp">
+      <Filter>system</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\gameObjects\player.h">
@@ -38,6 +41,9 @@
     </ClInclude>
     <ClInclude Include="src\gameScreens\RunGame.h">
       <Filter>gameScreens</Filter>
+    </ClInclude>
+    <ClInclude Include="src\system\draw.h">
+      <Filter>system</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

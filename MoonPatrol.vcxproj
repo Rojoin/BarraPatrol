@@ -24,6 +24,7 @@
     <ClCompile Include="src\gameObjects\player.cpp" />
     <ClCompile Include="src\gameScreens\Menu.cpp" />
     <ClCompile Include="src\gameScreens\RunGame.cpp" />
+    <ClCompile Include="src\system\draw.cpp" />
     <ClCompile Include="src\system\MoonPatrol.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -33,6 +34,7 @@
     <ClInclude Include="src\gameScreens\Menu.h" />
     <ClInclude Include="src\gameScreens\RunGame.h" />
     <ClInclude Include="src\system\Circle.h" />
+    <ClInclude Include="src\system\draw.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
