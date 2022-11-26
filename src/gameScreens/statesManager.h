@@ -15,6 +15,8 @@ public:
 	void loadAudios();
 	void loadTextures();
 	void loadResources();
-
+	void unLoadAudio();
+	void unLoadTextures();
+	void unLoadResources();
 };
 
