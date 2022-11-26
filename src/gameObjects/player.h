@@ -12,6 +12,7 @@ private:
 	bool jumpState;
 	float gravity;
 	float speed;
+	float scale;
 	Texture2D texture;
 	Rectangle body;
 
