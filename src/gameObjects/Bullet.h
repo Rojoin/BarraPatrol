@@ -9,11 +9,11 @@ public:
 
     Bullet();
     ~Bullet();
-    Vector2 GetPosition() const;
-    Circle GetBody() const;
-    void IsOutOfBounds();
-    bool IsActive() const;
-    void Move();
+    Vector2 getPosition() const;
+    Circle getBody() const;
+    void isOutOfBounds();
+    bool isActive() const;
+    void move();
     void draw() const;
     
 private:

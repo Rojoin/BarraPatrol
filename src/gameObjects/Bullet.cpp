@@ -4,14 +4,18 @@
 
 #include "system/draw.h"
 
-
+Texture2D bulletTexture;
+Sound bulletSound;
 Bullet::Bullet()
 {
-    this->isActive = false;
-    this->direction = {0, 0};
+    this->activeState = false;
+    this->texture = bulletTexture;
+    this->sound = bulletSound;
+    this->scale = 1.0f;
+    this->direction = {0, 90};
     this->rotation = 0;
-    this->body = {0, 0, 0};
-    this->speed = 0;
+    this->body = {0, 0 , 10 };
+    this->speed = 300;
 }
 
 Bullet::~Bullet()
@@ -19,30 +23,30 @@ Bullet::~Bullet()
     std::cout << "Bullet was destroyed." << std::endl;
 }
 
-Vector2 Bullet::GetPosition() const
+Vector2 Bullet::getPosition() const
 {
     return {body.position.x, body.position.y};
 }
 
-Circle Bullet::GetBody() const
+Circle Bullet::getBody() const
 {
     return body;
 }
 
-void Bullet::IsOutOfBounds()
+void Bullet::isOutOfBounds()
 {
-    isActive = !(body.position.x > static_cast<float>(GetScreenWidth())) || !(body.position.y > static_cast<float>(GetScreenHeight()));
+    activeState = !(body.position.x > static_cast<float>(GetScreenWidth())) || !(body.position.y > static_cast<float>(GetScreenHeight()));
 }
 
-bool Bullet::IsActive() const
+bool Bullet::isActive() const
 {
-    return isActive;
+    return activeState;
 }
 
-void Bullet::Move()
+void Bullet::move()
 {
-    body.position.x += direction.x * speed * GetFrameTime();
-    body.position.y += direction.y * speed * GetFrameTime();
+    body.position.x += direction.x * speed * GetFrameTime();  //Agregar multiplicador por screen
+    body.position.y += direction.y * speed * GetFrameTime();  //Agregar multiplicador por screen
 }
 
 void Bullet::draw() const
@@ -53,6 +57,6 @@ void Bullet::draw() const
     Rectangle dest{ body.position.x  ,body.position.y,static_cast<float>(texture.width) * scale,static_cast<float>(texture.height) * scale };
     const Rectangle sourceRec = { 0,0,frameWidth,frameHeight};
     const Vector2 origin = {body.radius , body.radius};
-    
+    DrawCircle(static_cast<int>(body.position.x), static_cast<int>(body.position.y), body.radius, BLUE);
     drawTexture(texture, source, dest, { static_cast<float>(texture.width) / 2.0f,static_cast<float>(texture.height) / 2.0f }, rotation, scale, WHITE);
 }
