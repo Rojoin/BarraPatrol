@@ -28,6 +28,12 @@
     <ClCompile Include="src\gameScreens\gameStates.cpp">
       <Filter>gameScreens</Filter>
     </ClCompile>
+    <ClCompile Include="src\gameScreens\menuState.cpp">
+      <Filter>gameScreens</Filter>
+    </ClCompile>
+    <ClCompile Include="src\system\button.cpp">
+      <Filter>system</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\gameObjects\player.h">
@@ -56,6 +62,12 @@
     </ClInclude>
     <ClInclude Include="src\gameScreens\gameStates.h">
       <Filter>gameScreens</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameScreens\menuState.h">
+      <Filter>gameScreens</Filter>
+    </ClInclude>
+    <ClInclude Include="src\system\button.h">
+      <Filter>system</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
