@@ -20,6 +20,19 @@ statesManager::statesManager()
 
 statesManager::~statesManager()
 {
-	
 }
+
+void statesManager::initProgram()
+{
+	while (!WindowShouldClose() && isProgramRunning)
+	{
+		logicProgram();
+		drawProgram();
+	}
+	unLoadResources();
+	CloseWindow();
+	CloseAudioDevice();
+}
+
+
 
