@@ -29,10 +29,14 @@ void statesManager::initProgram()
 		logicProgram();
 		drawProgram();
 	}
+
+}
+
+void statesManager::exitProgram()
+{
 	unLoadResources();
 	CloseWindow();
 	CloseAudioDevice();
 }
-
 
 
