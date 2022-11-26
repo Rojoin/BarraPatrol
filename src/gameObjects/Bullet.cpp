@@ -2,20 +2,12 @@
 #include "raylib.h"
 #include <iostream>
 
-Bullet::Bullet(Shooter shooter, Vector2 direction, Vector2 position, float radius, float rotation, float speed)
-{
-    this->shooter = shooter;
-    this->direction = direction;
-    this->rotation = rotation;
-    this->body = {position.x, position.y, radius};
-    this->speed = speed;
-    isActive = true;
-}
+#include "system/draw.h"
+
 
 Bullet::Bullet()
 {
     this->isActive = false;
-    this->shooter = player;
     this->direction = {0, 0};
     this->rotation = 0;
     this->body = {0, 0, 0};
@@ -53,13 +45,14 @@ void Bullet::Move()
     body.position.y += direction.y * speed * GetFrameTime();
 }
 
-void Bullet::Draw(Texture2D bulletTexture) const
+void Bullet::draw() const
 {
-    const auto frameWidth = static_cast<float>(bulletTexture.width);
-    const auto frameHeight = static_cast<float>(bulletTexture.height);
+    const auto frameWidth = static_cast<float>(texture.width);
+    const auto frameHeight = static_cast<float>(texture.height);
+    Rectangle source{ 0,0,static_cast<float>(texture.width),static_cast<float>(texture.height) };
+    Rectangle dest{ body.position.x  ,body.position.y,static_cast<float>(texture.width) * scale,static_cast<float>(texture.height) * scale };
     const Rectangle sourceRec = { 0,0,frameWidth,frameHeight};
     const Vector2 origin = {body.radius , body.radius};
     
-    DrawTexturePro(bulletTexture, sourceRec, {body.position.x, body.position.y, body.radius*2, body.radius*2}, origin, rotation, RAYWHITE);
-
+    drawTexture(texture, source, dest, { static_cast<float>(texture.width) / 2.0f,static_cast<float>(texture.height) / 2.0f }, rotation, scale, WHITE);
 }
