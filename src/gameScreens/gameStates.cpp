@@ -1,7 +1,7 @@
 #include "GameStates.h"
 
-extern GameStates gameStates;
-void setGameState(GameStates newState)
+
+GameStates setGameState(GameStates newState)
 {
-	gameStates = newState;
+	return newState;
 }
