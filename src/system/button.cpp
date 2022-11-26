@@ -11,8 +11,8 @@ void drawButton(Button button)
 	int segments = 8;
 	DrawRectangleRounded(button.rec, roundness, segments, button.color);
 
-	drawText(button.buttonTittle, button.rec.x, button.rec.y + button.rec.height / 3, 25, BLACK, customFont);
-
+	//drawText(button.buttonTittle, button.rec.x, button.rec.y + button.rec.height / 3, 25, BLACK, customFont);
+	drawText(button.buttonTittle,(int)button.rec.x, (int)(button.rec.y + button.rec.height) / 3, 25, BLACK);
 	if (button.isOverThisButton)
 	{
 		DrawRectangleRoundedLines(button.rec, roundness, segments, 5, BLACK);
@@ -29,12 +29,14 @@ void drawButtonTranslucent(Button button)
 	int segments = 8;
 
 	DrawRectangleRounded(button.rec, roundness, segments, translucentButton);
-	drawText(button.buttonTittle, button.rec.x , button.rec.y + button.rec.height / 3 , 25 *static_cast<float>(GetScreenHeight()) / 768, translucentFont, customFont);
+	//drawText(button.buttonTittle, button.rec.x , button.rec.y + button.rec.height / 3 , 25 *static_cast<float>(GetScreenHeight()) / 768, translucentFont, customFont);
+	drawText(button.buttonTittle, (int)button.rec.x , (int)(button.rec.y + button.rec.height) / 3 , (int)(25.1f *static_cast<float>(GetScreenHeight() / 768)), translucentFont);
 
 	if (button.isOverThisButton)
 	{
 		DrawRectangleRounded(button.rec, roundness, segments, button.color);
-		drawText(button.buttonTittle, button.rec.x , button.rec.y + button.rec.height / 3 , 25 *static_cast<float>(GetScreenHeight()) / 768, BLACK, customFont);
+		//drawText(button.buttonTittle, button.rec.x , button.rec.y + button.rec.height / 3 , 25 *static_cast<float>(GetScreenHeight()) / 768, BLACK, customFont);
+		drawText(button.buttonTittle, (int)button.rec.x , (int)(button.rec.y + button.rec.height) / 3 , (int)( 25.1f *static_cast<float>(GetScreenHeight() / 768)), BLACK);
 		DrawRectangleRoundedLines(button.rec, roundness, segments, 5, BLACK);
 	}
 }
