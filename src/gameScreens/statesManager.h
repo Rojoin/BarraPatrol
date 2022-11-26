@@ -4,7 +4,7 @@
 class statesManager
 {
 private:
-	
+	bool isProgramRunning;
 
 public:
 	statesManager();
