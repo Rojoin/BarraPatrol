@@ -3,6 +3,7 @@
 #include <ctime>
 
 #include "GameStates.h"
+#include "system/draw.h"
 
 StatesManager::StatesManager()
 {
@@ -38,5 +39,35 @@ void StatesManager::exitProgram()
 	CloseAudioDevice();
 }
 
+void StatesManager::logicProgram()
+{
+	mousePosX = GetMouseX();
+	mousePosY = GetMouseY();
+	updateScale();
+	switch (gameState)
+	{
+	case GameStates::InitialAnimation:
 
+		break;
+	case GameStates::Menu:
+
+		break;
+	case GameStates::Game:
+
+		break;
+	case GameStates::Rules:
+
+		break;
+	case GameStates::Options:
+
+		break;
+	case GameStates::Credits:
+
+		break;
+	case GameStates::Exit:
+		isProgramRunning = false;
+		break;
+
+	}
+}
 
