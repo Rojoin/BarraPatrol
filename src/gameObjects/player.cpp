@@ -95,15 +95,7 @@ void Player::MoveDown()
     body.y += speed / 1.5f * GetFrameTime();
 }
 
-void Player::SetY(float y_)
-{
-    this->body.y = y_;
-}
 
-void Player::SetX(float x_)
-{
-    this->body.x = x_;
-}
 
 Rectangle Player::getBody() const
 {
