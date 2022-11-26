@@ -70,4 +70,34 @@ void StatesManager::logicProgram()
 
 	}
 }
+void StatesManager::drawProgram()
+{
+	BeginDrawing();
+	ClearBackground(BLACK);
+	switch (gameState)
+	{
+	case GameStates::InitialAnimation:
+
+		break;
+	case GameStates::Menu:
+
+		break;
+	case GameStates::Game:
+
+		break;
+	case GameStates::Rules:
+
+		break;
+	case GameStates::Options:
+
+		break;
+	case GameStates::Credits:
+
+		break;
+	case GameStates::Exit:
+		break;
+	}
+	EndDrawing();
+}
+
 
