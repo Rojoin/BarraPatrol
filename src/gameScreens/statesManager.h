@@ -12,7 +12,9 @@ public:
 	void initProgram();
 	void logicProgram();
 	void drawProgram();
-
+	void loadAudios();
+	void loadTextures();
+	void loadResources();
 
 };
 
