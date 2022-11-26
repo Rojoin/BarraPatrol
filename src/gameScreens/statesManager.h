@@ -5,12 +5,6 @@ class statesManager
 {
 private:
 	bool isProgramRunning;
-
-public:
-	statesManager();
-	~statesManager();
-	void initProgram();
-	void exitProgram();
 	void logicProgram();
 	void drawProgram();
 	void loadAudios();
@@ -19,5 +13,11 @@ public:
 	void unLoadAudio();
 	void unLoadTextures();
 	void unLoadResources();
+
+public:
+	statesManager();
+	~statesManager();
+	void initProgram();
+	void exitProgram();
 };
 
