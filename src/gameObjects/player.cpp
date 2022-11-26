@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "Bullet.h"
+#include "system/draw.h"
 
 Player::Player(Rectangle body, float speed)
 {
@@ -74,9 +75,10 @@ Rectangle Player::getBody() const
 
 void Player::draw()
 {
-    const Rectangle carRec = {0,0, static_cast<float>(texture.width), static_cast<float>(texture.height)};
-    DrawTextureRec(texture, carRec, {body.x, body.y-texture.height/2}, RAYWHITE);
-    //DrawRectangleRec(body, BLACK);
+
+    Rectangle source{ 0,0,(float)texture.width,(float)texture.height };
+    Rectangle dest{ body.x  ,body.y,(float)texture.width * scale / 2,(float)texture.height * scale / 2 };
+    drawTexture(texture, source, dest, { static_cast<float>(texture.width) / 2.0f,static_cast<float>(texture.height) / 2.0f }, 0, scale / 2, WHITE);
 }
 
 Bullet Player::ShootUp() const
