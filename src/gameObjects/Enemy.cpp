@@ -12,7 +12,7 @@ Enemy::Enemy()
         static_cast<float>(GetScreenWidth()) / 2.f, static_cast<float>(GetScreenHeight()) / 2,
         static_cast<float>(GetScreenWidth()) / 30
     };
-    isAlive = true;
+    deadState = true;
     speed = static_cast<float>(GetScreenWidth()) / 7.f;
     name = "GenericEnemy";
     type = ground;
@@ -21,7 +21,7 @@ Enemy::Enemy()
 Enemy::Enemy(int hp, Circle body, float speed, std::string name, EnemyType type)
 {
     this->hp = hp;
-    isAlive = true;
+    deadState = true;
     this->body = body;
     this->speed = speed;
     this->name = name;

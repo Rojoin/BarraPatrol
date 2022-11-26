@@ -32,7 +32,7 @@ public:
     EnemyType GetType() const;
 private:
     int hp;
-    bool isAlive;
+    bool deadState;
     Circle body{};
     float speed;
     std::string name;
