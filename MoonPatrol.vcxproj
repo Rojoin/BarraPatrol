@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\gameLogic\keyboardInputs.cpp" />
     <ClCompile Include="src\gameLogic\mouseInputs.cpp" />
     <ClCompile Include="src\gameObjects\Bullet.cpp" />
     <ClCompile Include="src\gameObjects\Enemy.cpp" />
@@ -34,6 +35,7 @@
     <ClCompile Include="src\system\MoonPatrol.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\gameLogic\keyboardInputs.h" />
     <ClInclude Include="src\gameLogic\mouseInputs.h" />
     <ClInclude Include="src\gameObjects\Bullet.h" />
     <ClInclude Include="src\gameObjects\Enemy.h" />
