@@ -11,7 +11,7 @@ Player::Player(Rectangle body, float speed)
     jumpState = false;
     jumpTimer = 0;
     deadState = true;
-
+    gravity = 200.0f;
 }
 
 Player::Player()
@@ -40,29 +40,30 @@ void Player::MoveLeft()
 
 void Player::jump()
 {
-    if (IsGrounded() && IsKeyPressed(KEY_SPACE))
-    {
-        jumpState = true;
-        jumpTimer = jumpTime;
-        body.y -= speed * GetFrameTime() * 1.5f;
-    }
+    jumpState = true;
+}
 
-    if (IsKeyDown(KEY_SPACE) && jumpState)
+void Player::update()
+{
+    static float jumpTimer = 0.8f;
+
+    if (jumpState)
     {
-        if (jumpTimer > 0)
-        {
-            body.y -= speed * GetFrameTime() * 1.5f;
-            jumpTimer -= GetFrameTime();
-        }
-        else
+        jumpTimer -= GetFrameTime();
+        body.y += GetFrameTime() * -gravity;
+        if (jumpTimer <= 0)
         {
             jumpState = false;
+            jumpTimer = 0.8f;
         }
     }
-
-    if (IsKeyUp(KEY_SPACE))
+    else if (body.y <= 600.0f)
     {
-        jumpState = false;
+        body.y += GetFrameTime() * gravity;
+    }
+    else if (body.y > 600.0f)
+    {
+        body.y = 600.0f;
     }
 }
 
