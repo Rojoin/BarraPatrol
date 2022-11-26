@@ -18,6 +18,22 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\gameObjects\Bullet.cpp" />
+    <ClCompile Include="src\gameObjects\Enemy.cpp" />
+    <ClCompile Include="src\gameObjects\player.cpp" />
+    <ClCompile Include="src\gameScreens\Menu.cpp" />
+    <ClCompile Include="src\gameScreens\RunGame.cpp" />
+    <ClCompile Include="src\system\MoonPatrol.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\gameObjects\Bullet.h" />
+    <ClInclude Include="src\gameObjects\Enemy.h" />
+    <ClInclude Include="src\gameObjects\player.h" />
+    <ClInclude Include="src\gameScreens\Menu.h" />
+    <ClInclude Include="src\gameScreens\RunGame.h" />
+    <ClInclude Include="src\system\Circle.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{C6C66245-8D2C-4020-949A-D2D5A411BB03}</ProjectGuid>
@@ -96,7 +112,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)/lib/raylib/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src;$(SolutionDir)/lib/raylib/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
@@ -132,6 +148,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(SolutionDir)src;$(SolutionDir)/lib/raylib/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -159,22 +176,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="Bullet.cpp" />
-    <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="Menu.cpp" />
-    <ClCompile Include="MoonPatrol.cpp" />
-    <ClCompile Include="player.cpp" />
-    <ClCompile Include="RunGame.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Bullet.h" />
-    <ClInclude Include="Circle.h" />
-    <ClInclude Include="Enemy.h" />
-    <ClInclude Include="Menu.h" />
-    <ClInclude Include="player.h" />
-    <ClInclude Include="RunGame.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

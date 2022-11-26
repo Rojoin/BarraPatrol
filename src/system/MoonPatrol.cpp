@@ -1,5 +1,4 @@
-#include "menu.h"
-#include "RunGame.h"
+#include "gameScreens/menu.h"
 
 int main()
 {

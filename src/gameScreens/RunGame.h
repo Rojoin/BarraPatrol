@@ -1,6 +1,6 @@
 ﻿#pragma once
-#include "Enemy.h"
-#include "player.h"
+#include "gameObjects/Enemy.h"
+#include "gameObjects/player.h"
 
 class RunGame
 {

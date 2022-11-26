@@ -1,11 +1,10 @@
 ﻿#include "RunGame.h"
 
 #include <iostream>
-
-#include "Enemy.h"
-#include "player.h"
+#include "gameObjects/Enemy.h"
+#include "gameObjects/player.h"
 #include "raylib.h"
-#include "menu.h"
+
 
 #pragma region delarations
 

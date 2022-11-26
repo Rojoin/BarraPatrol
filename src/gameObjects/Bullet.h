@@ -1,7 +1,7 @@
 #pragma once
 #include <raylib.h>
 
-#include "Circle.h"
+#include "system/Circle.h"
 
 class Bullet
 {

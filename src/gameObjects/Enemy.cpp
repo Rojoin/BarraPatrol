@@ -3,6 +3,8 @@
 #include <iostream>
 #include <raylib.h>
 
+#include "system/Circle.h"
+
 Enemy::Enemy()
 {
     hp = 3;
