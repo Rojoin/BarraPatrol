@@ -1,5 +1,5 @@
 #include "Bullet.h"
-
+#include "raylib.h"
 #include <iostream>
 
 Bullet::Bullet(Shooter shooter, Vector2 direction, Vector2 position, float radius, float rotation, float speed)

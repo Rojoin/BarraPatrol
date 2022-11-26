@@ -1,7 +1,7 @@
 ﻿#include "menu.h"
 #include <iostream>
 #include "RunGame.h"
-
+#include "raylib.h"
 using namespace std;
 
 Menu::Menu()
