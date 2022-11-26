@@ -4,24 +4,23 @@
 
 #include "Bullet.h"
 
-Player::Player(Rectangle body, std::string name, float speed)
+Player::Player(Rectangle body, float speed)
 {
     this->body = body;
-    this->name = name;
     this->speed = speed;
-    isJumping = false;
+    jumpState = false;
     jumpTimer = 0;
-    isAlive = true;
-    hp = 3;
+    deadState = true;
+
 }
 
 Player::Player()
 {
-    isJumping = false;
+    jumpState = false;
     jumpTimer = 0;
     speed = 400.0f;
-    isAlive = true;
-    hp = 3;
+    deadState = true;
+
 }
 
 Player::~Player()
@@ -39,16 +38,16 @@ void Player::MoveLeft()
     body.x -= speed * GetFrameTime();
 }
 
-void Player::Jump()
+void Player::jump()
 {
     if (IsGrounded() && IsKeyPressed(KEY_SPACE))
     {
-        isJumping = true;
+        jumpState = true;
         jumpTimer = jumpTime;
         body.y -= speed * GetFrameTime() * 1.5f;
     }
 
-    if (IsKeyDown(KEY_SPACE) && isJumping)
+    if (IsKeyDown(KEY_SPACE) && jumpState)
     {
         if (jumpTimer > 0)
         {
@@ -57,13 +56,13 @@ void Player::Jump()
         }
         else
         {
-            isJumping = false;
+            jumpState = false;
         }
     }
 
     if (IsKeyUp(KEY_SPACE))
     {
-        isJumping = false;
+        jumpState = false;
     }
 }
 
@@ -105,25 +104,16 @@ void Player::SetX(float x_)
     this->body.x = x_;
 }
 
-Rectangle Player::GetBody() const
+Rectangle Player::getBody() const
 {
     return body;
 }
 
-void Player::SetHp(int hpModifier)
-{
-    this->hp += hpModifier;
-}
 
-void Player::SetSpeed(float speed_)
+void Player::draw()
 {
-    this->speed = speed_;
-}
-
-void Player::Draw(Texture2D playerTexture) const
-{
-    const Rectangle carRec = {0,0, static_cast<float>(playerTexture.width), static_cast<float>(playerTexture.height)};
-    DrawTextureRec(playerTexture, carRec, {body.x, body.y-playerTexture.height/2}, RAYWHITE);
+    const Rectangle carRec = {0,0, static_cast<float>(texture.width), static_cast<float>(texture.height)};
+    DrawTextureRec(texture, carRec, {body.x, body.y-texture.height/2}, RAYWHITE);
     //DrawRectangleRec(body, BLACK);
 }
 
@@ -131,12 +121,6 @@ Bullet Player::ShootUp() const
 {
     const float size = body.width*1.3f;
     const float bulletSpeed = speed * 1.f;
-    return Bullet(Bullet::player, {0,-1}, {body.x + body.width/2, body.y}, size, 90.f, bulletSpeed);
+    return Bullet();
 }
 
-Bullet Player::ShootRight() const
-{
-    const float size = body.width*1.3f;
-    const float bulletSpeed = speed * 1.f;
-    return Bullet(Bullet::player, {1,0}, {body.x + body.width/2, body.y}, size, 0.f, bulletSpeed);
-}
