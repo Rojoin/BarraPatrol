@@ -35,37 +35,37 @@ Enemy::~Enemy()
 
 void Enemy::MoveRight()
 {
-    body.x += speed * GetFrameTime();
+    body.position.x += speed * GetFrameTime();
 }
 
 void Enemy::MoveLeft()
 {
-    body.x -= speed * GetFrameTime();
+    body.position.x -= speed * GetFrameTime();
 }
 
 void Enemy::SinusoidalMovement()
 {
-    body.y += sin(body.x / 6) * GetFrameTime() * static_cast<float>(GetScreenWidth()) / 2;
+    body.position.y += sin(body.position.x / 6) * GetFrameTime() * static_cast<float>(GetScreenWidth()) / 2;
 }
 
 void Enemy::MoveUp()
 {
-    body.x -= speed * GetFrameTime();
+    body.position.x -= speed * GetFrameTime();
 }
 
 void Enemy::MoveDown()
 {
-    body.y += speed * GetFrameTime();
+    body.position.y += speed * GetFrameTime();
 }
 
 void Enemy::SetY(float y_)
 {
-    body.y = y_;
+    body.position.y = y_;
 }
 
 void Enemy::SetX(float x_)
 {
-    this->body.x = x_;
+    this->body.position.x = x_;
 }
 
 void Enemy::SetBody(Circle body_)
@@ -73,7 +73,7 @@ void Enemy::SetBody(Circle body_)
     this->body = body_;
 }
 
-Circle Enemy::GetBody() const
+Circle Enemy::getBody() const
 {
     return body;
 }
@@ -91,7 +91,7 @@ void Enemy::SetSpeed(float speed_)
 void Enemy::Draw(Texture2D bike) const
 {
     const Rectangle bikeRec = {0,0, static_cast<float>(bike.width), static_cast<float>(bike.height)};
-    DrawTextureRec(bike, bikeRec, {body.x, body.y-bikeRec.height/2}, RAYWHITE);
+    DrawTextureRec(bike, bikeRec, {body.position.x, body.position.y-bikeRec.height/2}, RAYWHITE);
     //DrawCircle(static_cast<int>(body.x), static_cast<int>(body.y), body.radius, BLACK);
 }
 

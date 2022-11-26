@@ -25,7 +25,7 @@ public:
     void SetY(float y_);
     void SetX(float x_);
     void SetBody(Circle body_);
-    Circle GetBody() const;
+    Circle getBody() const;
     void SetHp(int hpModifier);
     void SetSpeed(float speed_);
     void Draw(Texture2D bike) const;
