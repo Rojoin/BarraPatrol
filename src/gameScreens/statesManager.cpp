@@ -4,7 +4,7 @@
 
 #include "GameStates.h"
 
-statesManager::statesManager()
+StatesManager::StatesManager()
 {
 
 	this->isProgramRunning = true;
@@ -18,25 +18,25 @@ statesManager::statesManager()
 	SetWindowMinSize(1024, 768);
 }
 
-statesManager::~statesManager()
+StatesManager::~StatesManager()
 {
 }
 
-void statesManager::initProgram()
+void StatesManager::initProgram()
 {
 	while (!WindowShouldClose() && isProgramRunning)
 	{
 		logicProgram();
 		drawProgram();
 	}
-
 }
 
-void statesManager::exitProgram()
+void StatesManager::exitProgram()
 {
 	unLoadResources();
 	CloseWindow();
 	CloseAudioDevice();
 }
+
 
 

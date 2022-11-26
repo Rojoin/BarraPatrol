@@ -1,7 +1,7 @@
 #pragma once
 #include "menu.h"
 
-class statesManager
+class StatesManager
 {
 private:
 	bool isProgramRunning;
@@ -15,8 +15,8 @@ private:
 	void unLoadResources();
 
 public:
-	statesManager();
-	~statesManager();
+	StatesManager();
+	~StatesManager();
 	void initProgram();
 	void exitProgram();
 };
