@@ -7,6 +7,8 @@ class StatesManager
 private:
 	bool isProgramRunning;
 	GameStates gameState;
+	int mousePosX;
+	int mousePosY;
 	void logicProgram();
 	void drawProgram();
 	void loadAudios();
