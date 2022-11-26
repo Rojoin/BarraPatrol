@@ -22,7 +22,7 @@ private:
     Texture2D texture;
     Sound sound;
     float rotation;
-    bool isActive;
+    bool activeState;
     float scale;
     float speed;
 
