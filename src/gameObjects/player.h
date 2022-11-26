@@ -11,6 +11,7 @@ private:
 	bool deadState;
 	bool jumpState;
 	float jumpTime = 0.18f;
+	float gravity;
 	float jumpTimer;
 	float speed;
 	Texture2D texture;
@@ -24,6 +25,7 @@ public:
 	void MoveRight();
 	void MoveLeft();
 	void jump();
+	void update();
 	void MoveDown();
 	Bullet ShootUp() const;
 	void draw();
