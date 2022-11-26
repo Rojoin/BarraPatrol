@@ -1,7 +1,12 @@
 #include "gameScreens/menu.h"
+#include "gameScreens/statesManager.h"
 
 int main()
 {
-    Menu();
+    //Menu();
+    StatesManager* statesManager = new StatesManager();
+
+    statesManager->initProgram();
+    statesManager->exitProgram();
     return 0;
 }
