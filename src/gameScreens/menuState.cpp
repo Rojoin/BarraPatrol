@@ -15,6 +15,7 @@ Vector2 middleScreen = { GetScreenWidth() / 2.0f,GetScreenHeight() / 2.0f };
 
 
 Button playButton = createButton("     PLAY", DARKGREEN);
+Button play2PButton = createButton("   2PPLAY", DARKGREEN);
 Button howToPlayButton = createButton("   RULES", YELLOW);
 Button optionsButton = createButton("  OPTIONS ", YELLOW);
 Button creditsButton = createButton("  CREDITS ", YELLOW);
@@ -26,11 +27,12 @@ void statesMenu(GameStates& gamestate)
 {
 
 	middleScreen = { static_cast<float> (GetScreenWidth()) / 2.0f,static_cast<float>(GetScreenHeight()) / 2.0f };
-	playButton = createButton(middleScreen.x - playButton.rec.width / 2, middleScreen.y - playButton.rec.height / 2, "   PLAY", DARKGREEN);
-	howToPlayButton = createButton(middleScreen.x - howToPlayButton.rec.width / 2, playButton.rec.y + howToPlayButton.rec.height * 2, howToPlayButton.buttonTittle, howToPlayButton.color);
-	optionsButton = createButton(middleScreen.x - optionsButton.rec.width / 2, howToPlayButton.rec.y + optionsButton.rec.height * 2, optionsButton.buttonTittle, optionsButton.color);
-	creditsButton = createButton(middleScreen.x - creditsButton.rec.width / 2, optionsButton.rec.y + creditsButton.rec.height * 2, creditsButton.buttonTittle, creditsButton.color);
-	exitButton = createButton(middleScreen.x - exitButton.rec.width / 2, creditsButton.rec.y + exitButton.rec.height * 2, exitButton.buttonTittle, exitButton.color);
+	playButton = createButton( playButton.rec.width / 2, middleScreen.y -playButton.rec.height*2 , "   PLAY", DARKGREEN);
+	play2PButton = createButton( play2PButton.rec.width / 2, playButton.rec.y + play2PButton.rec.height * 2, "   PLAY 2P", DARKGREEN);
+	howToPlayButton = createButton( howToPlayButton.rec.width / 2, play2PButton.rec.y + howToPlayButton.rec.height * 2, howToPlayButton.buttonTittle, howToPlayButton.color);
+	optionsButton = createButton( optionsButton.rec.width / 2, howToPlayButton.rec.y + optionsButton.rec.height * 2, optionsButton.buttonTittle, optionsButton.color);
+	creditsButton = createButton( creditsButton.rec.width / 2, optionsButton.rec.y + creditsButton.rec.height * 2, creditsButton.buttonTittle, creditsButton.color);
+	exitButton = createButton(exitButton.rec.width / 2, creditsButton.rec.y + exitButton.rec.height * 2, exitButton.buttonTittle, exitButton.color);
 	Vector2 mousePoint = Inputs::getMouseInput();
 
 	if (isPointRecColliding(mousePoint, playButton.rec))
@@ -41,12 +43,27 @@ void statesMenu(GameStates& gamestate)
 		if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
 		{
 			gamestate = GameStates::Game;
-			initTextures();
+			initGame(false);
 		}
 	}
 	else
 	{
 		playButton.isOverThisButton = false;
+	}
+	if (isPointRecColliding(mousePoint, play2PButton.rec))
+	{
+		play2PButton.isOverThisButton = true;
+
+
+		if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
+		{
+			gamestate = GameStates::Game;
+			initGame(true);
+		}
+	}
+	else
+	{
+		play2PButton.isOverThisButton = false;
 	}
 	if (isPointRecColliding(mousePoint, howToPlayButton.rec))
 	{
@@ -105,6 +122,7 @@ void drawMenu()
 	int width = (GetScreenWidth());
 	int height = (GetScreenHeight());
 	drawButton(playButton);
+	drawButton(play2PButton);
 	drawButton(howToPlayButton);
 	drawButton(optionsButton);
 	drawButton(creditsButton);
