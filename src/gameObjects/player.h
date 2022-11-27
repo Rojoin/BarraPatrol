@@ -8,6 +8,7 @@ class Player
 {
 private:
 	Bullet* bullets[10];
+	int bulletIndex;
 	bool deadState;
 	bool jumpState;
 	float gravity;

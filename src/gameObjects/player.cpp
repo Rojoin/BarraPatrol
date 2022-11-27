@@ -13,6 +13,7 @@ Player::Player()
     this->body = { 200.0f,600.0f,50,50 };
     this->texture = bodyTexture;
     this->speed = 400;
+    this->bulletIndex = 10;
     jumpState = false;
     deadState = false;
     gravity = 200.0f;
