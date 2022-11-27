@@ -49,7 +49,8 @@ void Bullet::move()
     body.position.y += direction.y * speed * GetFrameTime();  //Agregar multiplicador por screen
 }
 
-void Bullet::draw() const
+
+void Bullet::draw()
 {
  
     DrawCircle(static_cast<int>(body.position.x), static_cast<int>(body.position.y), body.radius, BLUE);
