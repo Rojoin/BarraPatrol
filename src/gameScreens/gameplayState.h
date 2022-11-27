@@ -4,4 +4,4 @@
 
 void stateGame(GameStates& gameStates);
 void drawGame();
-void initTextures();
+void initGame(bool secondPlayer = false);
