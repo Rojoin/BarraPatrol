@@ -46,6 +46,18 @@
     <ClCompile Include="src\gameObjects\Obstacle.cpp">
       <Filter>gameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="src\gameScreens\initialAnimationScreen.cpp">
+      <Filter>gameScreens</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameScreens\optionState.cpp">
+      <Filter>gameScreens</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameScreens\rulesState.cpp">
+      <Filter>gameScreens</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameScreens\creditsState.cpp">
+      <Filter>gameScreens</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\gameObjects\player.h">
@@ -92,6 +104,18 @@
     </ClInclude>
     <ClInclude Include="src\gameObjects\Obstacle.h">
       <Filter>gameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameScreens\creditsState.h">
+      <Filter>gameScreens</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameScreens\initialAnimationScreen.h">
+      <Filter>gameScreens</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameScreens\optionsState.h">
+      <Filter>gameScreens</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameScreens\rulesState.h">
+      <Filter>gameScreens</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
