@@ -28,9 +28,7 @@
     <ClCompile Include="src\gameObjects\player.cpp" />
     <ClCompile Include="src\gameScreens\gameplayState.cpp" />
     <ClCompile Include="src\gameScreens\gameStates.cpp" />
-    <ClCompile Include="src\gameScreens\Menu.cpp" />
     <ClCompile Include="src\gameScreens\menuState.cpp" />
-    <ClCompile Include="src\gameScreens\RunGame.cpp" />
     <ClCompile Include="src\gameScreens\statesManager.cpp" />
     <ClCompile Include="src\system\button.cpp" />
     <ClCompile Include="src\system\collisionFunctions.cpp" />
@@ -47,9 +45,7 @@
     <ClInclude Include="src\gameObjects\player.h" />
     <ClInclude Include="src\gameScreens\gameplayState.h" />
     <ClInclude Include="src\gameScreens\gameStates.h" />
-    <ClInclude Include="src\gameScreens\Menu.h" />
     <ClInclude Include="src\gameScreens\menuState.h" />
-    <ClInclude Include="src\gameScreens\RunGame.h" />
     <ClInclude Include="src\gameScreens\statesManager.h" />
     <ClInclude Include="src\system\button.h" />
     <ClInclude Include="src\system\Circle.h" />

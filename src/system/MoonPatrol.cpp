@@ -1,4 +1,4 @@
-#include "gameScreens/menu.h"
+
 #include "gameScreens/statesManager.h"
 
 int main()
