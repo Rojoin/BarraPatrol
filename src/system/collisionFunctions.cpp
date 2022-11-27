@@ -1,7 +1,6 @@
-#include "collisionFunctions.h"
-
 #include <iostream>
-
+#include "Circle.h"
+#include "system/collisionFunctions.h"
 #include  "cmath"
 
 bool isCircleCircleColliding(Circle circle1, Circle circle2)
@@ -56,4 +55,25 @@ bool isRecRecColliding(Rectangle rec, Rectangle rec2)
 		return true;
 	}
 	return false;
+}
+
+bool isCircleRecColliding(Circle circle, Rectangle rec)
+{
+
+		float testX = circle.position.x;
+		float testY = circle.position.y;
+
+		if (circle.position.x < rec.x)         testX = rec.x;     
+		else if (circle.position.x > rec.x + rec.width) testX = rec.x + rec.width;   
+		if (circle.position.y < rec.y)         testY = rec.y;    
+		else if (circle.position.y > rec.y + rec.height) testY = rec.y + rec.height;
+
+		float distX = circle.position.x - testX;
+		float distY = circle.position.y - testY;
+		float distance = sqrt((distX * distX) + (distY * distY));
+
+		if (distance <= circle.radius) {
+			return true;
+		}
+		return false;
 }
