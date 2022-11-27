@@ -1,16 +1,21 @@
 #include "gameplayState.h"
-
 #include <iostream>
 
+#include "gameLogic/gameLogic.h"
 #include "gameLogic/keyboardInputs.h"
+#include "gameObjects/Enemy.h"
+#include "gameObjects/Obstacle.h"
 #include "system/draw.h"
 
 #include "gameObjects/player.h"
-#include "gameScreens/gameStates.h"
+
 
 Player* character = new Player();
-//Obstacle* obstacle = new Obstacle();
+Obstacle* obstacle = new Obstacle();
+Enemy* enemy;
 
+const char* playerScore;
+const char* maxScore;
 bool firstTime = true;
 Texture2D paralaxBackground;
 Texture2D paralaxMidground;
@@ -44,17 +49,41 @@ void stateGame(GameStates& gameStates)
 		{
 			character->jump();
 		}
+		if (Inputs::isKeyBoardKeyDown(KEY_A))
+		{
+			character->moveLeft();
+		}
+		if (Inputs::isKeyBoardKeyDown(KEY_D))
+		{
+			character->moveRight();
+		}
+		if (Inputs::isKeyBoardKeyPressed(KEY_W))
+		{
+			character->ShootUp();
+		}
+		enemy->sinusoidalMovement();
+		enemy->moveRight();
 		character->update();
-	//obstacle->changePosX();
+		character->updateBullet();
+	obstacle->changePosX();
+		if (isBulletEnemyColliding(character->getBullet(),enemy))
+		{
+			character->getBullet()->setActiveState(false);
+			character->scoreUp(100);
+			delete enemy;//cambiar por metodo reset
+
+		}
+	
 	}
 	else
 	{
 		gameStates = setGameState(GameStates::Menu);
 		delete character;
+		obstacle->reset();
 		firstTime = true;
 		unloadTextures();
 	}
-	//character->setDeadState(isCharacterObstacleColliding(character, obstacle));
+	character->setDeadState(isCharacterObstacleColliding(character, obstacle));
 }
 
 void backToMenu(GameStates& gameStates)
@@ -63,7 +92,7 @@ void backToMenu(GameStates& gameStates)
 	{
 		gameStates = setGameState(GameStates::Menu);
 		delete character;
-		//obstacle->reset();
+		obstacle->reset();
 		firstTime = true;
 		unloadTextures();
 	}
@@ -73,6 +102,7 @@ void initTextures()
 	paralaxBackground = LoadTexture("res/Cielo-01.png");
 	paralaxMidground = LoadTexture("res/Montanas-01Edited.png");
 	paralaxNearForeground = LoadTexture("res/Tierra-01.png");
+	 enemy = new Enemy();
 }
 
 void unloadTextures()
@@ -81,6 +111,16 @@ void unloadTextures()
 	UnloadTexture(paralaxMidground);
 	UnloadTexture(paralaxNearForeground);
 }
+
+void drawScore()
+{
+	 playerScore = TextFormat("Score:%0.0F", static_cast<double>(character->getScore()));
+	maxScore = TextFormat("Max:%0.0F", static_cast<double>(character->getScore()));
+	int maxScoreMeasure = MeasureText( maxScore, 50);
+	drawText(playerScore, 0, 0, 50 * static_cast<int>(GetScreenWidth() / 1024), BLACK);
+	drawText(maxScore, GetScreenWidth() - maxScoreMeasure * 1 * (GetScreenWidth()) / 1024, 0, 50 * (GetScreenHeight()) / 768, BLACK);
+}
+
 void drawGame()
 {
 	drawTexture(paralaxBackground, { scrollingBack, 0 }, 0.0f, 0.20f, WHITE);
@@ -90,11 +130,12 @@ void drawGame()
 	drawTexture(paralaxMidground, { (paralaxMidground.width *0.20f + scrollingMid), 20 }, 0.0f, 0.20f, WHITE);
 
 	character->draw();
-	//obstacle->draw();
-	
+	character->drawBullet();
+	obstacle->draw();
 	drawTexture(paralaxNearForeground, { scrollingFore, -120 }, 0.0f, 0.20f, WHITE);
 	drawTexture(paralaxNearForeground, { paralaxNearForeground.width* 0.20f + scrollingFore, -120 }, 0.0f, 0.20f, WHITE);
-	
+	enemy->draw();
+	drawScore();
 
 
 }
