@@ -1,12 +1,12 @@
 #pragma once
 #include "GameStates.h"
-#include "menu.h"
+
 
 class StatesManager
 {
 private:
-	bool isProgramRunning;
 	GameStates gameState;
+	bool isProgramRunning;
 	int mousePosX;
 	int mousePosY;
 	void logicProgram();
