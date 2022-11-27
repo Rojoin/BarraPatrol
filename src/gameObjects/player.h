@@ -7,28 +7,33 @@
 class Player
 {
 private:
-	Bullet* bullets[10];
-	int bulletIndex;
+
+	Bullet* bullet;
 	bool deadState;
 	bool jumpState;
 	float gravity;
 	float speed;
+	Rectangle body;
 	float scale;
 	Texture2D texture;
 
+
+
 public:
-	Rectangle body;
 	Player();
 	~Player();
-	void MoveRight();
-	void MoveLeft();
+	Rectangle getBody();
+	void moveRight();
+	void moveLeft();
 	void jump();
 	void update();
 	bool isDead();
 	void setDeadState(bool state);
-	Rectangle getBody();
-	Bullet ShootUp() const;
+	Bullet* getBullet();
+	void updateBullet();
+	void drawBullet();
 	void draw();
-	Rectangle getBody() const;
+	void ShootUp();
+
 
 };

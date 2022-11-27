@@ -13,14 +13,11 @@ Player::Player()
     this->body = { 200.0f,600.0f,50,50 };
     this->texture = bodyTexture;
     this->speed = 400;
-    this->bulletIndex = 10;
     jumpState = false;
     deadState = false;
     gravity = 200.0f;
-	for (Bullet* index : bullets)
-	{
-		index = new Bullet(body.x,body.y);
-	}
+ bullet =  new Bullet(body.x,body.y);
+	
 }
 
 Player::~Player()
@@ -28,12 +25,12 @@ Player::~Player()
     std::cout << "Player has been destroyed." << std::endl;
 }
 
-void Player::MoveRight()
+void Player::moveRight()
 {
     body.x += speed * GetFrameTime();
 }
 
-void Player::MoveLeft()
+void Player::moveLeft()
 {
     body.x -= speed * GetFrameTime();
 }
@@ -77,16 +74,44 @@ void Player::setDeadState(bool state)
     this->deadState = state;
 }
 
+void Player::updateBullet()
+{
+    
+    if (bullet->isActive())
+    {
+        bullet->move();
+        if (bullet->getPosition().y <= 0-bullet->getBody().radius)
+        {
+            bullet->setActiveState(false);
+        }
+	}
+    else
+    {
+        bullet->setPosition(body.x, body.y);
+    }
+}
+
+void Player::drawBullet()
+{
+    
+	    if (bullet->isActive())
+	    {
+        bullet->draw();
+	    }
+    
+}
+
 Rectangle Player::getBody()
 {
     return this->body;
 }
 
-
-Rectangle Player::getBody() const
+Bullet* Player::getBullet()
 {
-    return body;
+    return bullet;
 }
+
+
 
 
 void Player::draw()
@@ -99,10 +124,14 @@ void Player::draw()
     drawTexture(texture, source, dest, { static_cast<float>(texture.width) / 2.0f,static_cast<float>(texture.height) / 2.0f }, 0, scale / 2, WHITE);
 }
 
-Bullet Player::ShootUp() const
+void Player::ShootUp() 
 {
-    const float size = body.width*1.3f;
-    const float bulletSpeed = speed * 1.f;
-    return Bullet();
+    if (!bullet->isActive())
+    {
+        bullet->setDirection({ 0,-1 });
+        bullet->setActiveState(true);
+    }
 }
+
+
 
