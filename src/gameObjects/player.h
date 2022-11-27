@@ -35,6 +35,8 @@ public:
 	void drawBullet();
 	void draw();
 	void ShootUp();
+	void scoreUp(float point);
+	float getScore();
 
 
 };
