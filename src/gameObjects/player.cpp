@@ -5,15 +5,18 @@
 #include "Bullet.h"
 #include "system/draw.h"
 
-Texture2D bodyTexture;
+Texture2D playerTexture;
 
 
 Player::Player()
 {
     this->body = { 200.0f,600.0f,50,50 };
-    this->texture = bodyTexture;
+    this->texture = playerTexture;
     this->speed = 400;
     this->score = 0;
+    this->scale = 0.10f;
+    this->animIndex = 0;
+    this->animTimer = 1.0f;
     jumpState = false;
     deadState = false;
     gravity = 200.0f;
@@ -64,6 +67,19 @@ void Player::update()
     {
         body.y = 600.0f;
     }
+
+    animTimer -= GetFrameTime();
+    if (animTimer <= 0)
+    {
+        animIndex++;
+        if (animIndex > 1.0f)
+        {
+            animIndex = 0;
+        }
+        animTimer = 1.0f;
+    }
+    std::cout << animIndex;
+   
 }
 
 bool Player::isDead()
@@ -89,7 +105,7 @@ void Player::updateBullet()
 	}
     else
     {
-        bullet->setPosition(body.x, body.y);
+        bullet->setPosition(body.x+texture.width/8*scale, body.y);
     }
 }
 
@@ -118,12 +134,15 @@ Bullet* Player::getBullet()
 
 void Player::draw()
 {
-    Rectangle source{ 0,0,(float)texture.width,(float)texture.height};
-    Rectangle dest{ body.x  ,body.y,(float)texture.width * scale / 2,(float)texture.height * scale / 2 };
+    float textureWidth = static_cast<float>(texture.width) / 2.0f;
+    
+
+    Rectangle source{ textureWidth*animIndex,0,textureWidth,(float)texture.height};
+    Rectangle dest{ body.x+ textureWidth * scale / 4   ,body.y+ texture.height/2 * scale / 4,(float)texture.width/2 * scale/2 ,(float)texture.height *scale/2};
 
     DrawRectangleRec(body, RED);
 
-    drawTexture(texture, source, dest, { static_cast<float>(texture.width) / 2.0f,static_cast<float>(texture.height) / 2.0f }, 0, scale / 2, WHITE);
+    drawTexture(texture, source, dest, { static_cast<float>(texture.width) /4.0f,static_cast<float>(texture.height) / 2.0f }, 0, scale/2, WHITE);
 }
 
 void Player::ShootUp() 
@@ -137,7 +156,7 @@ void Player::ShootUp()
 
 void Player::scoreUp(float point)
 {
-    score += point;
+     score += point;
 }
 
 float Player::getScore()

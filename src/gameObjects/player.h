@@ -14,11 +14,11 @@ private:
 	float gravity;
 	float speed;
 	float score;
+	int animIndex;
+	float animTimer;
 	Rectangle body;
 	float scale;
 	Texture2D texture;
-
-
 
 public:
 	Player();
@@ -35,7 +35,7 @@ public:
 	void drawBullet();
 	void draw();
 	void ShootUp();
-	void scoreUp(float point);
+	void  scoreUp(float point);
 	float getScore();
 
 
