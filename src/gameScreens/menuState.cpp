@@ -14,7 +14,6 @@
 Vector2 middleScreen = { GetScreenWidth() / 2.0f,GetScreenHeight() / 2.0f };
 
 
-Vector2 Screen = { GetScreenWidth() / 2.0f,GetScreenHeight() / 2.0f };
 Button playButton = createButton("     PLAY", DARKGREEN);
 Button howToPlayButton = createButton("   RULES", YELLOW);
 Button optionsButton = createButton("  OPTIONS ", YELLOW);
@@ -54,7 +53,7 @@ void statesMenu(GameStates& gamestate)
 		howToPlayButton.isOverThisButton = true;
 		if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
 		{
-			setGameState(GameStates::Rules);
+			gamestate = setGameState(GameStates::Rules);
 		}
 	}
 	else
@@ -66,7 +65,7 @@ void statesMenu(GameStates& gamestate)
 		optionsButton.isOverThisButton = true;
 		if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
 		{
-			setGameState(GameStates::Options);
+			gamestate = setGameState(GameStates::Options);
 
 		}
 	}
@@ -80,7 +79,7 @@ void statesMenu(GameStates& gamestate)
 		creditsButton.isOverThisButton = true;
 		if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
 		{
-			setGameState(GameStates::Credits);
+			gamestate = setGameState(GameStates::Credits);
 		}
 	}
 	else
@@ -103,17 +102,17 @@ void statesMenu(GameStates& gamestate)
 }
 void drawMenu()
 {
-	//float width = static_cast<float>(GetScreenWidth());
-	//float height = static_cast<float>(GetScreenHeight());
+	int width = (GetScreenWidth());
+	int height = (GetScreenHeight());
 	drawButton(playButton);
 	drawButton(howToPlayButton);
 	drawButton(optionsButton);
 	drawButton(creditsButton);
 	drawButton(exitButton);
-	float fontSize ;
-	fontSize = 16.0f * static_cast<float>(GetScreenHeight()) / 728.0f;
-	std::string titleScreen = "The Last Slice";
-	//drawText(titleScreen.c_str(), width / 2.0f - static_cast<float>(titleScreen.length())* fontSize * 1.5f, (height / 8.0f), fontSize * 8.0f, BLACK, customFont);
+	int fontSize ;
+	fontSize = 14 * static_cast<int>(GetScreenHeight()) / 728;
+	std::string titleScreen = "Tactical Llama";
+	drawText(titleScreen.c_str(), width / 4 - static_cast<int>(titleScreen.length())* fontSize * 1, (height / 8), fontSize * 8, BLACK);
 	//drawTexture(titleTexture, { width / 3.0f - static_cast<float>(titleScreen.length())* fontSize * 1.5f,height / 16.0f }, 0, 0.17f * (GetScreenHeight()) / 728, WHITE);
 
 }
