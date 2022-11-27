@@ -14,6 +14,9 @@
 extern Texture2D enemyTexture;
 extern Texture2D creditsTexture;
 extern Texture2D rulesTexture;
+extern Texture2D playerTexture;
+extern Texture2D bulletTexture;
+extern Texture2D obstacleTexture;
 
 StatesManager::StatesManager()
 {
@@ -121,7 +124,10 @@ void StatesManager::loadAudios()
 
 void StatesManager::loadTextures()
 {
+	obstacleTexture = LoadTexture("res/Cactus_1.png");
+	bulletTexture = LoadTexture("res/bullet.png");
 	enemyTexture = LoadTexture("res/OVNI.png");
+	playerTexture = LoadTexture("res/llamaSpriteSheet.png");
 	rulesTexture  = LoadTexture("res/Rules.png");
 	creditsTexture= LoadTexture("res/Credits.png");
 	GenTextureMipmaps(&creditsTexture);

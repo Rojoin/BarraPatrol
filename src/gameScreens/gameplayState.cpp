@@ -32,6 +32,7 @@ bool isGameOver = false;
 Texture2D paralaxBackground;
 Texture2D paralaxMidground;
 Texture2D paralaxNearForeground;
+
 float scrollingBack = 0.0f;
 float scrollingMid = 0.0f;
 float scrollingFore = 0.0f;

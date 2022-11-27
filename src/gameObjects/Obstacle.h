@@ -5,6 +5,8 @@ class Obstacle
 private:
 	Rectangle rec;
 	bool jumped;
+	Texture2D texture;
+	float scale;
 
 public:
 	Obstacle();
