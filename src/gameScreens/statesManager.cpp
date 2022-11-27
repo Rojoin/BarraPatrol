@@ -111,7 +111,7 @@ void StatesManager::drawProgram()
 	case GameStates::Exit:
 		break;
 	}
-	drawText("Version:0.2", 720, 720, 40, RED);
+	drawText("Version:0.3", 720, 720, 40, RED);
 	EndDrawing();
 }
 
