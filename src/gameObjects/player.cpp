@@ -5,21 +5,21 @@
 #include "Bullet.h"
 #include "system/draw.h"
 
-Player::Player(Rectangle body, float speed)
-{
-    this->body = body;
-    this->speed = speed;
-    jumpState = false;
-    deadState = true;
-    gravity = 200.0f;
-}
+Texture2D bodyTexture;
+
 
 Player::Player()
 {
+    this->body = { 200.0f,600.0f,50,50 };
+    this->texture = bodyTexture;
+    this->speed = 400;
     jumpState = false;
-    speed = 400.0f;
-    deadState = true;
-
+    deadState = false;
+    gravity = 200.0f;
+	for (Bullet* index : bullets)
+	{
+		index = new Bullet(body.x,body.y);
+	}
 }
 
 Player::~Player()
@@ -66,6 +66,21 @@ void Player::update()
     }
 }
 
+bool Player::isDead()
+{
+    return deadState;
+}
+
+void Player::setDeadState(bool state)
+{
+    this->deadState = state;
+}
+
+Rectangle Player::getBody()
+{
+    return this->body;
+}
+
 
 Rectangle Player::getBody() const
 {
@@ -75,9 +90,11 @@ Rectangle Player::getBody() const
 
 void Player::draw()
 {
-
-    Rectangle source{ 0,0,(float)texture.width,(float)texture.height };
+    Rectangle source{ 0,0,(float)texture.width,(float)texture.height};
     Rectangle dest{ body.x  ,body.y,(float)texture.width * scale / 2,(float)texture.height * scale / 2 };
+#if _DEBUG
+    DrawRectangleRec(body, RED);
+#endif
     drawTexture(texture, source, dest, { static_cast<float>(texture.width) / 2.0f,static_cast<float>(texture.height) / 2.0f }, 0, scale / 2, WHITE);
 }
 
