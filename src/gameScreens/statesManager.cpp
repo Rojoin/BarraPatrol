@@ -2,13 +2,19 @@
 
 #include <ctime>
 
+#include "creditsState.h"
 #include "gameplayState.h"
 #include "GameStates.h"
 #include "menuState.h"
+#include "optionsState.h"
+#include "rulesState.h"
 
 #include "system/draw.h"
 
 extern Texture2D enemyTexture;
+extern Texture2D creditsTexture;
+extern Texture2D rulesTexture;
+
 StatesManager::StatesManager()
 {
 
@@ -60,12 +66,14 @@ void StatesManager::logicProgram()
 		stateGame(gameState);
 		break;
 	case GameStates::Rules:
-
+		statesRules(gameState);
 		break;
 	case GameStates::Options:
+		statesOptions(gameState);
 
 		break;
 	case GameStates::Credits:
+		statesCredits(gameState);
 
 		break;
 	case GameStates::Exit:
@@ -90,12 +98,14 @@ void StatesManager::drawProgram()
 		drawGame();
 		break;
 	case GameStates::Rules:
-
+		drawRules();
 		break;
 	case GameStates::Options:
+		drawOptions();
 
 		break;
 	case GameStates::Credits:
+		drawCredits();
 
 		break;
 	case GameStates::Exit:
@@ -112,10 +122,18 @@ void StatesManager::loadAudios()
 void StatesManager::loadTextures()
 {
 	enemyTexture = LoadTexture("res/OVNI.png");
+	rulesTexture  = LoadTexture("res/Rules.png");
+	creditsTexture= LoadTexture("res/Credits.png");
+	GenTextureMipmaps(&creditsTexture);
+	SetTextureFilter(creditsTexture, TEXTURE_FILTER_ANISOTROPIC_16X);
+	GenTextureMipmaps(&rulesTexture);
+	SetTextureFilter(rulesTexture, TEXTURE_FILTER_ANISOTROPIC_16X);
+
 }
 
 void StatesManager::loadResources()
 {
+
 }
 
 void StatesManager::unLoadAudio()
