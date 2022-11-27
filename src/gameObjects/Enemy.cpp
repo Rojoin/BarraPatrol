@@ -41,10 +41,16 @@ void Enemy::moveLeft()
     }
 }
 
+void Enemy::reset()
+{
+    body.x = 0-texture.width*scale;
+    
+}
+
 void Enemy::sinusoidalMovement()
 {
   static bool down = true;
-    float  sinMov = sin(2.0f * GetFrameTime()*50) * 4;
+    float sinMov = sin(2.0f * GetFrameTime()*50) * 4;
 	if (body.y > 400 && down)
 	{
         down = false;

@@ -13,6 +13,7 @@ public:
     ~Enemy();
     void moveRight();
     void moveLeft();
+    void reset();
     void sinusoidalMovement();
     Rectangle getBody();
 
