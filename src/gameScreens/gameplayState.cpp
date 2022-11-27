@@ -83,6 +83,13 @@ void stateGame(GameStates& gameStates)
 		firstTime = true;
 		unloadTextures();
 	}
+	if (!isCharacterObstacleColliding(character, obstacle))
+	{
+		if (obstacle->checkCharacterPosition(character->getBody().x +character->getBody().width/2))
+		{
+			character->scoreUp(100);
+		}
+	}
 	character->setDeadState(isCharacterObstacleColliding(character, obstacle));
 }
 
