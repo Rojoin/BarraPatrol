@@ -9,6 +9,7 @@
 #include  "gameLogic/mouseInputs.h"
 #include "system/button.h"
 #include "system/draw.h"
+#include "gameplayState.h"
 
 Vector2 middleScreen = { GetScreenWidth() / 2.0f,GetScreenHeight() / 2.0f };
 
@@ -41,6 +42,7 @@ void statesMenu(GameStates& gamestate)
 		if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
 		{
 			gamestate = GameStates::Game;
+			initTextures();
 		}
 	}
 	else
