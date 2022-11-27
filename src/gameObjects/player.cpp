@@ -139,5 +139,10 @@ void Player::scoreUp(float point)
     score += point;
 }
 
+float Player::getScore()
+{
+    return score;
+}
+
 
 
