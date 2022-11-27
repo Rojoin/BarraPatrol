@@ -120,9 +120,9 @@ void Player::draw()
 {
     Rectangle source{ 0,0,(float)texture.width,(float)texture.height};
     Rectangle dest{ body.x  ,body.y,(float)texture.width * scale / 2,(float)texture.height * scale / 2 };
-#if _DEBUG
+
     DrawRectangleRec(body, RED);
-#endif
+
     drawTexture(texture, source, dest, { static_cast<float>(texture.width) / 2.0f,static_cast<float>(texture.height) / 2.0f }, 0, scale / 2, WHITE);
 }
 
