@@ -7,15 +7,17 @@ class Bullet
 {
 public:
 
-    Bullet();
+    Bullet(float x, float y);
     ~Bullet();
-    Vector2 getPosition() const;
-    Circle getBody() const;
+    Vector2 getPosition();
+    Circle getBody();
     void isOutOfBounds();
-    bool isActive() const;
+    bool isActive() ;
     void move();
-    void draw() const;
-    
+    void draw();
+    void setActiveState(bool state);
+    void setDirection(Vector2 dir);
+    void setPosition(float x, float y);
 private:
     Vector2 direction;
     Circle body;
