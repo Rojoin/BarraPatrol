@@ -24,6 +24,7 @@ Player::Player()
 Player::~Player()
 {
     std::cout << "Player has been destroyed." << std::endl;
+    delete bullet;
 }
 
 void Player::moveRight()
