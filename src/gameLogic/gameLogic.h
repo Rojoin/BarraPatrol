@@ -1,7 +1,5 @@
-#include"gameObjects/Character.h"
+#pragma once
 #include"gameObjects/Obstacle.h"
-#include "system/collisionFunctions.h"
+#include "gameObjects/player.h"
 
-
-
-bool isCharacterObstacleColliding(Character* character, Obstacle* obstacle);
+bool isCharacterObstacleColliding(Player* character, Obstacle* obstacle);
