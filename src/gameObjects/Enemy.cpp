@@ -4,98 +4,81 @@
 #include "raylib.h"
 
 #include "system/Circle.h"
+#include "system/draw.h"
+
+Texture2D enemyTexture;
 
 Enemy::Enemy()
 {
-    hp = 3;
-    body = {
-        static_cast<float>(GetScreenWidth()) / 2.f, static_cast<float>(GetScreenHeight()) / 2,
-        static_cast<float>(GetScreenWidth()) / 30
-    };
-    deadState = true;
-    speed = static_cast<float>(GetScreenWidth()) / 7.f;
-    name = "GenericEnemy";
-    type = ground;
+    body = {400, 50,120,40};
+    deadState = false;
+    speed = 200;
+    texture = enemyTexture;
+    scale = 0.10f;
 }
 
-Enemy::Enemy(int hp, Circle body, float speed, std::string name, EnemyType type)
-{
-    this->hp = hp;
-    deadState = true;
-    this->body = body;
-    this->speed = speed;
-    this->name = name;
-    this->type = type;
-}
 
 Enemy::~Enemy()
 {
     std::cout << "Enemy has been destoyed." << std::endl;
 }
 
-void Enemy::MoveRight()
+void Enemy::moveRight()
 {
-    body.position.x += speed * GetFrameTime();
+    body.x += speed * GetFrameTime();
+    if (body.x - body.width >= 1280)
+    {
+        body.x = 0- body.width;
+    }
 }
 
-void Enemy::MoveLeft()
+void Enemy::moveLeft()
 {
-    body.position.x -= speed * GetFrameTime();
+    body.x -= speed * GetFrameTime();
+    if (body.x+body.width <=0)
+    {
+        body.x = 1280;
+    }
 }
 
-void Enemy::SinusoidalMovement()
+void Enemy::sinusoidalMovement()
 {
-    body.position.y += sin(body.position.x / 6) * GetFrameTime() * static_cast<float>(GetScreenWidth()) / 2;
+  static bool down = true;
+    float  sinMov = sin(2.0f * GetFrameTime()*50) * 4;
+	if (body.y > 400 && down)
+	{
+        down = false;
+	}
+  if (body.y < 0 && !down)
+  {
+      down = true;
+  }
+  if (down)
+  {
+      body.y += sinMov;
+  }
+  else
+  {
+      body.y -= sinMov;
+  }
+ 
 }
 
-void Enemy::MoveUp()
-{
-    body.position.x -= speed * GetFrameTime();
-}
-
-void Enemy::MoveDown()
-{
-    body.position.y += speed * GetFrameTime();
-}
-
-void Enemy::SetY(float y_)
-{
-    body.position.y = y_;
-}
-
-void Enemy::SetX(float x_)
-{
-    this->body.position.x = x_;
-}
-
-void Enemy::SetBody(Circle body_)
-{
-    this->body = body_;
-}
-
-Circle Enemy::getBody() const
+Rectangle Enemy::getBody()
 {
     return body;
 }
 
-void Enemy::SetHp(int hpModifier)
+
+void Enemy::draw()
 {
-    this->hp += hpModifier;
+    Rectangle source{ 0,0,(float)texture.width,(float)texture.height };
+    Rectangle dest{ body.x ,body.y,(float)texture.width * scale ,(float)texture.height * scale };
+#if _DEBUG
+    DrawRectangleRec(body, RED);
+#endif
+    drawTexture(texture, source, dest, { static_cast<float>(texture.width) / 16.0f,static_cast<float>(texture.height) / 4.0f }, 0, scale , WHITE);
+
 }
 
-void Enemy::SetSpeed(float speed_)
-{
-    this->speed = speed_;
-}
 
-void Enemy::Draw(Texture2D bike) const
-{
-    const Rectangle bikeRec = {0,0, static_cast<float>(bike.width), static_cast<float>(bike.height)};
-    DrawTextureRec(bike, bikeRec, {body.position.x, body.position.y-bikeRec.height/2}, RAYWHITE);
-    //DrawCircle(static_cast<int>(body.x), static_cast<int>(body.y), body.radius, BLACK);
-}
-
-Enemy::EnemyType Enemy::GetType() const
-{
-    return type;
-}

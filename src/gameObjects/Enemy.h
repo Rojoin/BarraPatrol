@@ -7,34 +7,22 @@
 class Enemy
 {
 public:
-    enum EnemyType
-    {
-        ground,
-        groundObstacle,
-        air,
-        airSinusoidal
-    };
-    Enemy(int hp, Circle body, float speed, std::string name, EnemyType type);
+   
+
     Enemy();
     ~Enemy();
-    void MoveRight();
-    void MoveLeft();
-    void SinusoidalMovement();
-    void MoveUp();
-    void MoveDown();
-    void SetY(float y_);
-    void SetX(float x_);
-    void SetBody(Circle body_);
-    Circle getBody() const;
-    void SetHp(int hpModifier);
-    void SetSpeed(float speed_);
-    void Draw(Texture2D bike) const;
-    EnemyType GetType() const;
+    void moveRight();
+    void moveLeft();
+    void sinusoidalMovement();
+    Rectangle getBody();
+
+
+    void draw();
+
 private:
-    int hp;
     bool deadState;
-    Circle body{};
+    Rectangle body{};
     float speed;
-    std::string name;
-    EnemyType type;
+    Texture2D texture;
+    float scale;
 };
