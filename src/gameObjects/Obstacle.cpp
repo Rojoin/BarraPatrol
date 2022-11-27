@@ -20,7 +20,7 @@ void Obstacle::reset()
 void Obstacle::changePosX()
 {
 	rec.x -= 200 * GetFrameTime();
-	if (rec.x < 0)
+	if (rec.x < 0 - rec.width)
 	{
 		rec.x = (float)GetScreenWidth();
 		setJumpedState(false);
