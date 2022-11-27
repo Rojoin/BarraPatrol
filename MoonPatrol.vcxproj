@@ -19,11 +19,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\gameLogic\gameLogic.cpp" />
     <ClCompile Include="src\gameLogic\keyboardInputs.cpp" />
     <ClCompile Include="src\gameLogic\mouseInputs.cpp" />
     <ClCompile Include="src\gameObjects\Bullet.cpp" />
     <ClCompile Include="src\gameObjects\Enemy.cpp" />
+    <ClCompile Include="src\gameObjects\Obstacle.cpp" />
     <ClCompile Include="src\gameObjects\player.cpp" />
+    <ClCompile Include="src\gameScreens\gameplayState.cpp" />
     <ClCompile Include="src\gameScreens\gameStates.cpp" />
     <ClCompile Include="src\gameScreens\Menu.cpp" />
     <ClCompile Include="src\gameScreens\menuState.cpp" />
@@ -35,11 +38,14 @@
     <ClCompile Include="src\system\MoonPatrol.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\gameLogic\gameLogic.h" />
     <ClInclude Include="src\gameLogic\keyboardInputs.h" />
     <ClInclude Include="src\gameLogic\mouseInputs.h" />
     <ClInclude Include="src\gameObjects\Bullet.h" />
     <ClInclude Include="src\gameObjects\Enemy.h" />
+    <ClInclude Include="src\gameObjects\Obstacle.h" />
     <ClInclude Include="src\gameObjects\player.h" />
+    <ClInclude Include="src\gameScreens\gameplayState.h" />
     <ClInclude Include="src\gameScreens\gameStates.h" />
     <ClInclude Include="src\gameScreens\Menu.h" />
     <ClInclude Include="src\gameScreens\menuState.h" />

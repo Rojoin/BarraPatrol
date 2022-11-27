@@ -34,6 +34,24 @@
     <ClCompile Include="src\system\button.cpp">
       <Filter>system</Filter>
     </ClCompile>
+    <ClCompile Include="src\system\collisionFunctions.cpp">
+      <Filter>system</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameLogic\mouseInputs.cpp">
+      <Filter>gameLogic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameLogic\keyboardInputs.cpp">
+      <Filter>gameLogic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameScreens\gameplayState.cpp">
+      <Filter>gameScreens</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameLogic\gameLogic.cpp">
+      <Filter>gameLogic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameObjects\Obstacle.cpp">
+      <Filter>gameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\gameObjects\player.h">
@@ -68,6 +86,24 @@
     </ClInclude>
     <ClInclude Include="src\system\button.h">
       <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="src\system\collisionFunctions.h">
+      <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameLogic\mouseInputs.h">
+      <Filter>gameLogic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameLogic\keyboardInputs.h">
+      <Filter>gameLogic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameScreens\gameplayState.h">
+      <Filter>gameScreens</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameLogic\gameLogic.h">
+      <Filter>gameLogic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameObjects\Obstacle.h">
+      <Filter>gameObjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
