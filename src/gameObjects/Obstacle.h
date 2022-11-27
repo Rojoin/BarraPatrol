@@ -4,6 +4,7 @@ class Obstacle
 {
 private:
 	Rectangle rec;
+	bool jumped;
 
 public:
 	Obstacle();
@@ -11,5 +12,8 @@ public:
 	void reset();
 	void changePosX();
 	void draw();
+	bool checkCharacterPosition(float x);
+	bool hasBeenJumped();
+	void setJumpedState(bool state);
 	Rectangle getRec();
 };
