@@ -11,7 +11,7 @@ Bullet::Bullet(float x, float y)
     this->activeState = false;
     this->texture = bulletTexture;
     this->sound = bulletSound;
-    this->scale = 1.0f;
+    this->scale = 0.5f;
     this->direction = {0, 0};
     this->rotation = 0;
     this->body = {x, y , 10 };
@@ -52,8 +52,16 @@ void Bullet::move()
 
 void Bullet::draw()
 {
- 
+
+    Rectangle source{ 0,0,static_cast<float>(texture.width),static_cast<float>(texture.height) };
+    Rectangle dest{ body.position.x  ,body.position.y,static_cast<float>(texture.width) * scale,static_cast<float>(texture.height) * scale };
+
+#if _DEBUG
+
     DrawCircle(static_cast<int>(body.position.x), static_cast<int>(body.position.y), body.radius, BLUE);
+#endif
+    drawTexture(texture, source, dest, { static_cast<float>(texture.width) / 2.0f,static_cast<float>(texture.height) / 2.0f }, rotation, scale, WHITE);
+
   
 }
 
