@@ -13,6 +13,7 @@ private:
 	bool jumpState;
 	float gravity;
 	float speed;
+	float score;
 	Rectangle body;
 	float scale;
 	Texture2D texture;

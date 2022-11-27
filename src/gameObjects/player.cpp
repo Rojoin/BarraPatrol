@@ -13,6 +13,7 @@ Player::Player()
     this->body = { 200.0f,600.0f,50,50 };
     this->texture = bodyTexture;
     this->speed = 400;
+    this->score = 0;
     jumpState = false;
     deadState = false;
     gravity = 200.0f;
@@ -131,6 +132,11 @@ void Player::ShootUp()
         bullet->setDirection({ 0,-1 });
         bullet->setActiveState(true);
     }
+}
+
+void Player::scoreUp(float point)
+{
+    score += point;
 }
 
 
