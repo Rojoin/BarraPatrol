@@ -6,15 +6,16 @@
 
 Texture2D bulletTexture;
 Sound bulletSound;
+extern Vector2 screenSize;
 Bullet::Bullet(float x, float y)
 {
     this->activeState = false;
     this->texture = bulletTexture;
     this->sound = bulletSound;
-    this->scale = 0.5f;
+    this->scale = 0.5f*screenSize.x;
     this->direction = {0, 0};
     this->rotation = 0;
-    this->body = {x, y , 10 };
+    this->body = {x, y , 10 * screenSize.x };
     this->speed = 500;
 }
 
@@ -33,10 +34,6 @@ Circle Bullet::getBody()
     return body;
 }
 
-void Bullet::isOutOfBounds()
-{
-    activeState = !(body.position.x > static_cast<float>(GetScreenWidth())) || !(body.position.y > static_cast<float>(GetScreenHeight()));
-}
 
 bool Bullet::isActive() 
 {
@@ -45,8 +42,8 @@ bool Bullet::isActive()
 
 void Bullet::move()
 {
-    body.position.x += direction.x * speed * GetFrameTime();  //Agregar multiplicador por screen
-    body.position.y += direction.y * speed * GetFrameTime();  //Agregar multiplicador por screen
+    body.position.x += direction.x * speed *screenSize.x* GetFrameTime();  
+    body.position.y += direction.y * speed * screenSize.y * GetFrameTime();
 }
 
 
@@ -73,6 +70,7 @@ void Bullet::setActiveState(bool state)
 void Bullet::setDirection(Vector2 dir)
 {
     this->direction = dir;
+    PlaySound(sound);
 }
 
 void Bullet::setPosition(float x, float y)
