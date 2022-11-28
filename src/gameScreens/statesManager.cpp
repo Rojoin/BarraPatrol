@@ -118,6 +118,7 @@ void StatesManager::drawProgram()
 		break;
 	case GameStates::Menu:
 		drawMenu();
+	drawText("Version:1.0", 720, 720, 40, RED);
 		break;
 	case GameStates::Game:
 		drawGame();
@@ -137,7 +138,6 @@ void StatesManager::drawProgram()
 		break;
 	}
 
-	drawText("Version:0.4", 720, 720, 40, RED);
 	EndDrawing();
 }
 
