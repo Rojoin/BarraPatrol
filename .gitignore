@@ -424,3 +424,4 @@ obj/debug/vc142.idb
 obj/debug/vc142.pdb
 bin/debug/MoonPatrol.pdb
 *.xml
+storage.data
