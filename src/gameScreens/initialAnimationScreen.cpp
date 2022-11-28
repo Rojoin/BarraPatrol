@@ -15,7 +15,7 @@ float maxTime = 12.0f;
 int currentAlpha = 0;
 int maxAlpha = 255;
 Color transparency ={255,255,255,0};
-void statesInitialAnimation()
+void statesInitialAnimation(GameStates& gamestate)
 {
 	normalizedTime = timePlayed / maxTime;
 	timePlayed += GetFrameTime();
@@ -25,7 +25,7 @@ void statesInitialAnimation()
 		currentAlpha = static_cast<int>(normalizedTime *255*4);
 		if (currentAlpha == maxAlpha)
 		{
-			setGameState(GameStates::Menu);
+			gamestate =setGameState(GameStates::Menu);
 		}
 	}
 	transparency.a = static_cast<unsigned char>(currentAlpha);
@@ -33,11 +33,11 @@ void statesInitialAnimation()
 
 void drawInitialAnimation()
 {
-	float width = static_cast<float>(GetScreenWidth());
-	float height = static_cast<float>(GetScreenHeight());
+	int width = (GetScreenWidth());
+	int height = (GetScreenHeight());
 	ClearBackground(BLACK);
-	float fontSize = 3 * width / 190;
+	int fontSize = 3 * width / 350;
 	const std::string GamePresentTittle = "Rojoin presents:";
-	drawText(GamePresentTittle.c_str(), width / 2.0f - static_cast<float>(GamePresentTittle.length()) * 1.5f * fontSize, height / 40, fontSize * 8.0f, DARKBROWN, customFont);
-	drawTexture(splashScreen, { 0,0 }, 0, 0.5f, transparency);
+	drawText(GamePresentTittle.c_str(), width / 2 - static_cast<int>(GamePresentTittle.length()) * fontSize, height / 40, fontSize * 8, DARKBROWN);
+	drawTexture(splashScreen, {(float) width/4,(float)height/4 }, 0, 0.5f, transparency);
 }

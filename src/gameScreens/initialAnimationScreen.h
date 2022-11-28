@@ -1,5 +1,6 @@
 #pragma once
+#include "GameStates.h"
 
 
-void statesInitialAnimation();
+void statesInitialAnimation(GameStates& gamestate);
 void drawInitialAnimation();
