@@ -1,9 +1,9 @@
 #include "button.h"
 #include "raylib.h"
-#include "string"
 #include "system/draw.h"
 
 Font customFont;
+extern Vector2 screenSize;
 
 void drawButton(Button button)
 {
@@ -44,7 +44,7 @@ Button createButton(const char* buttonTitle, Color color)
 {
 	Button button;
 
-	button.rec = { static_cast<float>(GetScreenWidth() / 2 - buttonWidth / 2),  static_cast<float>(GetScreenHeight() / 3), buttonWidth * static_cast<float>(GetScreenWidth()) / 102, buttonHeight * static_cast<float>(GetScreenHeight()) / 768 };
+	button.rec = { static_cast<float>(GetScreenWidth() / 2 - buttonWidth / 2) ,  static_cast<float>(GetScreenHeight() / 3), buttonWidth * static_cast<float>(GetScreenWidth()) / 1024 , buttonHeight * static_cast<float>(GetScreenHeight()) / 768  };
 	button.buttonTittle = buttonTitle;
 	button.isSelected = false;
 	button.isOverThisButton = false;
@@ -56,7 +56,7 @@ Button createButton(float x, float y, const char* buttonTitle, Color color)
 {
 	Button button;
 
-	button.rec = { x,y, buttonWidth * static_cast<float>(GetScreenWidth()) / 1024, buttonHeight * static_cast<float>(GetScreenHeight()) / 768 };
+	button.rec = { x ,y , buttonWidth * static_cast<float>(GetScreenWidth()) / 1024 , buttonHeight * static_cast<float>(GetScreenHeight()) / 768  };
 	button.buttonTittle = buttonTitle;
 	button.isSelected = false;
 	button.isOverThisButton = false;
@@ -68,7 +68,7 @@ Button createButton(float x, float y, float width, float height, const char* but
 {
 	Button button;
 
-	button.rec = { x,y, width * static_cast<float>(GetScreenWidth()) / 1024, height * static_cast<float>(GetScreenHeight()) / 768 };
+	button.rec = { x ,y , width * static_cast<float>(GetScreenWidth()) / 1024 , height * static_cast<float>(GetScreenHeight()) / 768  };
 	button.buttonTittle = buttonTitle;
 	button.isSelected = false;
 	button.isOverThisButton = false;
