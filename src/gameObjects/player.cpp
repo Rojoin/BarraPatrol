@@ -6,7 +6,7 @@
 #include "system/draw.h"
 
 Texture2D playerTexture;
-
+Sound playerSound;
 
 Player::Player()
 {
@@ -17,6 +17,7 @@ Player::Player()
     this->scale = 0.10f;
     this->animIndex = 0;
     this->animTimer = 1.0f;
+    this->sound = playerSound;
     jumpState = false;
     deadState = false;
     gravity = 200.0f;
@@ -42,7 +43,12 @@ void Player::moveLeft()
 
 void Player::jump()
 {
+	if (body.y >= 600.0f)
+	{
     jumpState = true;
+    PlaySound(sound);
+		
+	}
 }
 
 void Player::update()
@@ -130,8 +136,6 @@ Bullet* Player::getBullet()
 }
 
 
-
-
 void Player::draw()
 {
     float textureWidth = static_cast<float>(texture.width) / 2.0f;
@@ -140,7 +144,10 @@ void Player::draw()
     Rectangle source{ textureWidth*animIndex,0,textureWidth,(float)texture.height};
     Rectangle dest{ body.x+ textureWidth * scale / 4   ,body.y+ texture.height/2 * scale / 4,(float)texture.width/2 * scale/2 ,(float)texture.height *scale/2};
 
+#if _DEBUG
+
     DrawRectangleRec(body, RED);
+#endif
 
     drawTexture(texture, source, dest, { static_cast<float>(texture.width) /4.0f,static_cast<float>(texture.height) / 2.0f }, 0, scale/2, WHITE);
 }
