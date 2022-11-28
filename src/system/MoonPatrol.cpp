@@ -8,5 +8,6 @@ int main()
 
     statesManager->initProgram();
     statesManager->exitProgram();
+    delete statesManager;
     return 0;
 }
