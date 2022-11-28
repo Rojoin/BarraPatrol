@@ -16,6 +16,7 @@ private:
 	float score;
 	int animIndex;
 	float animTimer;
+	Sound sound;
 	Rectangle body;
 	float scale;
 	Texture2D texture;
