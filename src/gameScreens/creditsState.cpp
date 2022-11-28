@@ -4,7 +4,7 @@
 #include "system/draw.h"
 #include "system/button.h"
 
-extern Font customFont;
+
 Texture2D creditsTexture;
 extern Button escapeButton;
 void statesCredits(GameStates& gameStates)
