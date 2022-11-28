@@ -16,6 +16,7 @@
 Player* character1;
 Player* character2;
 Obstacle* obstacle;
+
 Enemy* enemy;
 Enemy* enemy2;
 
@@ -99,7 +100,9 @@ void stateGame(GameStates& gameStates)
 		scrollingFore -= 1.0f * GetFrameTime() * 800.0f * screenSize.x;
 
 		enemy->sinusoidalMovement();
+		enemy2->sinusoidalMovement();
 		enemy->moveRight();
+		enemy2->moveRight();
 		obstacle->changePosX();
 
 		if (scrollingFore <= -(paralaxNearForeground.width * 0.20f)) scrollingFore = 0;
@@ -148,6 +151,13 @@ void stateGame(GameStates& gameStates)
 				enemy->reset();
 
 			}
+			if (isBulletEnemyColliding(character1->getBullet(), enemy2))
+			{
+				character1->getBullet()->setActiveState(false);
+				character1->scoreUp(100);
+				enemy2->reset();
+
+			}
 			if (!isCharacterObstacleColliding(character1, obstacle))
 			{
 				if (obstacle->checkCharacterPosition(character1->getBody().x + character1->getBody().width / 2))
@@ -155,6 +165,7 @@ void stateGame(GameStates& gameStates)
 					character1->scoreUp(100);
 				}
 			}
+		
 			character1->setDeadState(isCharacterObstacleColliding(character1, obstacle));
 			isGameOver = character1->isDead();
 		}
@@ -188,6 +199,13 @@ void stateGame(GameStates& gameStates)
 					enemy->reset();
 
 				}
+				if (isBulletEnemyColliding(character2->getBullet(), enemy2))
+				{
+					character2->getBullet()->setActiveState(false);
+					character2->scoreUp(100);
+					enemy2->reset();
+
+				}
 				if (!isCharacterObstacleColliding(character2, obstacle))
 				{
 					if (obstacle->checkCharacterPosition(character2->getBody().x + character2->getBody().width / 2))
@@ -196,6 +214,7 @@ void stateGame(GameStates& gameStates)
 					}
 				}
 				character2->setDeadState(isCharacterObstacleColliding(character2, obstacle));
+
 				totalScore = character1->getScore() + character2->getScore();
 			}
 
@@ -278,6 +297,7 @@ void initGame(bool secondPlayer)
 {
 	paralaxNearForeground = LoadTexture("res/Tierra-01.png");
 	enemy = new Enemy();
+	enemy2 = new Enemy(-400);
 	character1 = new Player();
 	if (secondPlayer)
 	{
@@ -349,6 +369,7 @@ void drawGame()
 	drawTexture(paralaxNearForeground, { scrollingFore * screenSize.x, -120 * screenSize.x }, 0.0f, 0.20f * screenSize.x, WHITE);
 	drawTexture(paralaxNearForeground, { paralaxNearForeground.width * 0.20f + scrollingFore * screenSize.x, -120 * screenSize.x }, 0.0f, 0.20f * screenSize.x, WHITE);
 	enemy->draw();
+	enemy2->draw();
 	drawScore();
 	if (isGameOver)
 	{

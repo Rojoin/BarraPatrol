@@ -10,6 +10,7 @@ public:
    
 
     Enemy();
+    Enemy(float offSetX);
     ~Enemy();
     void moveRight();
     void moveLeft();
@@ -21,6 +22,7 @@ public:
     void draw();
 
 private:
+    bool facingDown;
     bool deadState;
     Rectangle body{};
     float speed;

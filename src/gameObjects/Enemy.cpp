@@ -13,6 +13,17 @@ Enemy::Enemy()
     body = {400, 50,120,40};
     deadState = false;
     speed = 200;
+    facingDown = true;
+    texture = enemyTexture;
+    scale = 0.10f;
+}
+
+Enemy::Enemy(float offSetX)
+{
+    body = { 400.1f+offSetX, 400,120,40 };
+    deadState = false;
+    facingDown = true;
+    speed = 200;
     texture = enemyTexture;
     scale = 0.10f;
 }
@@ -43,23 +54,23 @@ void Enemy::moveLeft()
 
 void Enemy::reset()
 {
-    body.x = 0-texture.width*scale;
+    body.x = 40-texture.width*scale;
     
 }
 
 void Enemy::sinusoidalMovement()
 {
-  static bool down = true;
+
     float sinMov = sin(2.0f * GetFrameTime()*50) * 4;
-	if (body.y > 400 && down)
+	if (body.y > 400 && facingDown)
 	{
-        down = false;
+        facingDown = false;
 	}
-  if (body.y < 0 && !down)
+  if (body.y < 0 && !facingDown)
   {
-      down = true;
+      facingDown = true;
   }
-  if (down)
+  if (facingDown)
   {
       body.y += sinMov;
   }
