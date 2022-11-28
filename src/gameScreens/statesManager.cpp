@@ -1,14 +1,13 @@
 #include "statesManager.h"
 
 #include <ctime>
-
 #include "creditsState.h"
 #include "gameplayState.h"
 #include "GameStates.h"
+#include "initialAnimationScreen.h"
 #include "menuState.h"
 #include "optionsState.h"
 #include "rulesState.h"
-
 #include "system/draw.h"
 
 extern Texture2D enemyTexture;
@@ -17,29 +16,43 @@ extern Texture2D rulesTexture;
 extern Texture2D playerTexture;
 extern Texture2D bulletTexture;
 extern Texture2D obstacleTexture;
+extern Texture2D splashScreen;
+extern Sound playerSound;
+extern Sound bulletSound;
+Texture2D paralaxBackground;
+Texture2D paralaxMidground;
+Music musicStream;
+float scrollingBack = 0.0f;
+float scrollingMid = 0.0f;
 
 StatesManager::StatesManager()
 {
 
 	this->isProgramRunning = true;
-	gameState = setGameState(GameStates::Menu);
+	gameState = setGameState(GameStates::InitialAnimation);
 	SetRandomSeed(static_cast<unsigned int>(time(NULL)));
 	InitWindow(1024, 768, "Tactical Llama");
-	//HideCursor();
 	InitAudioDevice();
+	musicStream = LoadMusicStream("res/music.mp3");
+	//HideCursor();
+	SetMusicVolume(musicStream, 0.5);
+	PlayMusicStream(musicStream);
 	SetExitKey(NULL);
 	SetWindowMinSize(1024, 768);
 }
 
 StatesManager::~StatesManager()
 {
+
 }
 
 void StatesManager::initProgram()
 {
 	loadTextures();
+	loadAudios();
 	while (!WindowShouldClose() && isProgramRunning)
 	{
+		UpdateMusicStream(musicStream);
 		logicProgram();
 		drawProgram();
 	}
@@ -56,11 +69,15 @@ void StatesManager::logicProgram()
 {
 	mousePosX = GetMouseX();
 	mousePosY = GetMouseY();
+	scrollingBack -= 0.1f * GetFrameTime() * 800.0f;
+	scrollingMid -= 0.5f * GetFrameTime() * 800.0f;
+	if (scrollingBack <= -(paralaxBackground.width * 0.20f)) scrollingBack = 0;
+	if (scrollingMid <= -(paralaxMidground.width * 0.20f)) scrollingMid = 0;
 	updateScale();
 	switch (gameState)
 	{
 	case GameStates::InitialAnimation:
-
+		statesInitialAnimation(gameState);
 		break;
 	case GameStates::Menu:
 		statesMenu(gameState);
@@ -89,10 +106,15 @@ void StatesManager::drawProgram()
 {
 	BeginDrawing();
 	ClearBackground(WHITE);
+	drawTexture(paralaxBackground, { scrollingBack , 0 }, 0.0f, 0.20f, WHITE);
+	drawTexture(paralaxBackground, { paralaxBackground.width * 0.20f + scrollingBack, 0 }, 0.0f, 0.20f, WHITE);
+
+	drawTexture(paralaxMidground, { scrollingMid , 20 }, 0.0f, 0.20f, WHITE);
+	drawTexture(paralaxMidground, { (paralaxMidground.width * 0.20f + scrollingMid), 20 }, 0.0f, 0.20f, WHITE);
 	switch (gameState)
 	{
 	case GameStates::InitialAnimation:
-
+		drawInitialAnimation();
 		break;
 	case GameStates::Menu:
 		drawMenu();
@@ -114,22 +136,29 @@ void StatesManager::drawProgram()
 	case GameStates::Exit:
 		break;
 	}
+
 	drawText("Version:0.4", 720, 720, 40, RED);
 	EndDrawing();
 }
 
 void StatesManager::loadAudios()
 {
+	playerSound = LoadSound("res/jump.wav");
+	bulletSound = LoadSound("res/bullet.wav");
 }
 
 void StatesManager::loadTextures()
 {
+	paralaxBackground = LoadTexture("res/Cielo-01.png");
+	paralaxMidground = LoadTexture("res/Montanas-01Edited.png");
+	splashScreen = LoadTexture("res/SplashScreen.png");
 	obstacleTexture = LoadTexture("res/Cactus_1.png");
 	bulletTexture = LoadTexture("res/bullet.png");
 	enemyTexture = LoadTexture("res/OVNI.png");
 	playerTexture = LoadTexture("res/llamaSpriteSheet.png");
-	rulesTexture  = LoadTexture("res/Rules.png");
-	creditsTexture= LoadTexture("res/Credits.png");
+	rulesTexture = LoadTexture("res/Rules.png");
+	creditsTexture = LoadTexture("res/Credits.png");
+
 	GenTextureMipmaps(&creditsTexture);
 	SetTextureFilter(creditsTexture, TEXTURE_FILTER_ANISOTROPIC_16X);
 	GenTextureMipmaps(&rulesTexture);
@@ -139,19 +168,34 @@ void StatesManager::loadTextures()
 
 void StatesManager::loadResources()
 {
-
+	loadTextures();
+	loadAudios();
 }
 
 void StatesManager::unLoadAudio()
 {
+	UnloadSound(playerSound);
+	UnloadSound(bulletSound);
+	UnloadMusicStream(musicStream);
 }
 
 void StatesManager::unLoadTextures()
 {
+	UnloadTexture(paralaxBackground);
+	UnloadTexture(paralaxMidground);
+	UnloadTexture(splashScreen);
+	UnloadTexture(obstacleTexture);
+	UnloadTexture(bulletTexture);
+	UnloadTexture(enemyTexture);
+	UnloadTexture(playerTexture);
+	UnloadTexture(rulesTexture);
+	UnloadTexture(creditsTexture);
 }
 
 void StatesManager::unLoadResources()
 {
+	unLoadTextures();
+	unLoadAudio();
 }
 
 

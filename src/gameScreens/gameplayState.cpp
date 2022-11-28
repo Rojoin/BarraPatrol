@@ -17,6 +17,7 @@ Player* character1;
 Player* character2;
 Obstacle* obstacle;
 Enemy* enemy;
+Enemy* enemy2;
 
 Button pauseMenuButton;
 Button continueMenuButton;
@@ -25,22 +26,21 @@ Button exitMenuButton;
 
 const char* playerScore;
 const char* maxScore;
+float highScore = 0.0f;
 bool firstTime = true;
 bool secondPlayerActivate = false;
 bool isGamePaused = false;
 bool isGameOver = false;
-Texture2D paralaxBackground;
-Texture2D paralaxMidground;
+
 Texture2D paralaxNearForeground;
 
-float scrollingBack = 0.0f;
-float scrollingMid = 0.0f;
+
 float scrollingFore = 0.0f;
 float totalScore = 0.0f;
 
 void unloadTextures();
 void backToMenu();
-
+extern Vector2 screenSize;
 void stateGame(GameStates& gameStates)
 {
 
@@ -85,18 +85,23 @@ void stateGame(GameStates& gameStates)
 		{
 			restartMenuButton.isOverThisButton = false;
 		}
+		if (totalScore > highScore)
+		{
+			highScore = totalScore;
+			if (SaveStorageValue(0, static_cast<int>(highScore)))
+			{
+			}
+		}
 	}
 	else if (!isGamePaused)
 	{
-		scrollingBack -= 0.1f * GetFrameTime() * 800.0f;
-		scrollingMid -= 0.5f * GetFrameTime() * 800.0f;
-		scrollingFore -= 1.0f * GetFrameTime() * 800.0f;
+
+		scrollingFore -= 1.0f * GetFrameTime() * 800.0f * screenSize.x;
 
 		enemy->sinusoidalMovement();
 		enemy->moveRight();
 		obstacle->changePosX();
-		if (scrollingBack <= -(paralaxBackground.width * 0.20f)) scrollingBack = 0;
-		if (scrollingMid <= -(paralaxMidground.width * 0.20f)) scrollingMid = 0;
+
 		if (scrollingFore <= -(paralaxNearForeground.width * 0.20f)) scrollingFore = 0;
 
 		if (isPointRecColliding(Inputs::getMouseInput(), pauseMenuButton.rec))
@@ -271,8 +276,6 @@ void backToMenu()
 }
 void initGame(bool secondPlayer)
 {
-	paralaxBackground = LoadTexture("res/Cielo-01.png");
-	paralaxMidground = LoadTexture("res/Montanas-01Edited.png");
 	paralaxNearForeground = LoadTexture("res/Tierra-01.png");
 	enemy = new Enemy();
 	character1 = new Player();
@@ -280,7 +283,7 @@ void initGame(bool secondPlayer)
 	{
 		character2 = new Player();
 	}
-		secondPlayerActivate = secondPlayer;
+	secondPlayerActivate = secondPlayer;
 	totalScore = 0;
 	obstacle = new Obstacle();
 	firstTime = false;
@@ -293,19 +296,20 @@ void initGame(bool secondPlayer)
 	restartMenuButton = createButton(width / 3 + width / 4 - buttonWidth / 2 * static_cast<float>(GetScreenWidth()) / 1024, height / 2.0f - buttonHeight * static_cast<float>(GetScreenHeight()) / 768, buttonWidth, buttonHeight, " RESTART", DARKPURPLE);
 	exitMenuButton = createButton(width / 3 + width / 8 - buttonWidth * static_cast<float>(GetScreenWidth()) / 1024, height / 2.0f - buttonHeight * static_cast<float>(GetScreenHeight()) / 768, buttonWidth, buttonHeight, "   EXIT", RED);
 	pauseMenuButton = createButton(width / 2 - buttonWidth / 2 * static_cast<float>(GetScreenWidth()) / 1024, 0 + buttonHeight / 2 * static_cast<float>(GetScreenHeight()) / 768, buttonWidth, buttonHeight, "  PAUSE", DARKGREEN);
+	highScore = static_cast<float>(LoadStorageValue(0));
+
 }
 
 void unloadTextures()
 {
-	UnloadTexture(paralaxBackground);
-	UnloadTexture(paralaxMidground);
+
 	UnloadTexture(paralaxNearForeground);
 }
 
 void drawScore()
 {
 	playerScore = TextFormat("Score:%0.0F", static_cast<double>(totalScore));
-	maxScore = TextFormat("Max:%0.0F", static_cast<double>(totalScore));
+	maxScore = TextFormat("Max:%0.0F", static_cast<double>(highScore));
 	int maxScoreMeasure = MeasureText(maxScore, 50);
 	drawText(playerScore, 0, 0, 50 * static_cast<int>(GetScreenWidth() / 1024), BLACK);
 	drawText(maxScore, GetScreenWidth() - maxScoreMeasure * 1 * (GetScreenWidth()) / 1024, 0, 50 * (GetScreenHeight()) / 768, BLACK);
@@ -313,15 +317,12 @@ void drawScore()
 
 void drawPauseMenu()
 {
-
-
 	drawButton(continueMenuButton);
 	drawButton(restartMenuButton);
 	drawButton(exitMenuButton);
 }
 void drawEndMenu()
 {
-
 	playerScore = TextFormat("Score:%0.0F", static_cast<double>(totalScore));
 	int playerScoreMeasure = MeasureText(playerScore, 50);
 	drawText(playerScore, GetScreenWidth() / 2 - playerScoreMeasure * (GetScreenWidth()) / 1024, GetScreenHeight() / 2 - playerScoreMeasure, 50 * static_cast<int>(GetScreenWidth() / 1024), BLACK);
@@ -330,18 +331,11 @@ void drawEndMenu()
 }
 void drawGame()
 {
-	drawTexture(paralaxBackground, { scrollingBack, 0 }, 0.0f, 0.20f, WHITE);
-	drawTexture(paralaxBackground, { paralaxBackground.width * 0.20f + scrollingBack, 0 }, 0.0f, 0.20f, WHITE);
-
-	drawTexture(paralaxMidground, { scrollingMid, 20 }, 0.0f, 0.20f, WHITE);
-	drawTexture(paralaxMidground, { (paralaxMidground.width * 0.20f + scrollingMid), 20 }, 0.0f, 0.20f, WHITE);
-
 	if (!character1->isDead())
 	{
 		character1->draw();
 		character1->drawBullet();
 	}
-
 	if (secondPlayerActivate)
 	{
 		if (!character2->isDead())
@@ -352,8 +346,8 @@ void drawGame()
 	}
 	obstacle->draw();
 	drawButtonTranslucent(pauseMenuButton);
-	drawTexture(paralaxNearForeground, { scrollingFore, -120 }, 0.0f, 0.20f, WHITE);
-	drawTexture(paralaxNearForeground, { paralaxNearForeground.width * 0.20f + scrollingFore, -120 }, 0.0f, 0.20f, WHITE);
+	drawTexture(paralaxNearForeground, { scrollingFore * screenSize.x, -120 * screenSize.x }, 0.0f, 0.20f * screenSize.x, WHITE);
+	drawTexture(paralaxNearForeground, { paralaxNearForeground.width * 0.20f + scrollingFore * screenSize.x, -120 * screenSize.x }, 0.0f, 0.20f * screenSize.x, WHITE);
 	enemy->draw();
 	drawScore();
 	if (isGameOver)
@@ -364,6 +358,4 @@ void drawGame()
 	{
 		drawPauseMenu();
 	}
-
-
 }
