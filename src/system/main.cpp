@@ -3,11 +3,8 @@
 
 int main()
 {
-    //Menu();
     StatesManager* statesManager = new StatesManager();
-
-    statesManager->initProgram();
-    statesManager->exitProgram();
+    statesManager->runProgram();
     delete statesManager;
     return 0;
 }
