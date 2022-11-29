@@ -6,10 +6,10 @@
 const int SCREEN_SIZE_X = 1024;
 const int SCREEN_SIZE_Y = 768;
 
+static float roundness = 10;
+static int segments = 8;
 void drawButton(Button button)
 {
-	float roundness = 10;
-	int segments = 8;
 	DrawRectangleRounded(button.rec, roundness, segments, button.color);
 
 	drawText(button.buttonTittle,(int)button.rec.x, (int)(button.rec.y + (button.rec.height) / 3), 25, BLACK);
@@ -21,12 +21,11 @@ void drawButton(Button button)
 }
 void drawButtonTranslucent(Button button)
 {
-	Color translucentButton = button.color;
-	Color translucentFont = BLACK;
+	static Color translucentButton = button.color;
+	static Color translucentFont = BLACK;
 	translucentButton.a /= 2;
 	translucentFont.a /= 2;
-	float roundness = 10;
-	int segments = 8;
+
 
 	DrawRectangleRounded(button.rec, roundness, segments, translucentButton);
 

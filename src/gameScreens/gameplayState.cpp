@@ -31,22 +31,22 @@ Button exitMenuButton;
 
 const char* playerScore;
 const char* maxScore;
-float highScore = 0.0f;
+static float highScore = 0.0f;
 const int SCREEN_SIZE_X = 1024;
 const int SCREEN_SIZE_Y = 768;
 const float WALLPAPER_SCALE = 0.20f;
 const float SCROLLING_SPEED = 800.0f;
 const float FORE_SCROLLIN_SPEED = 1.0f;
-bool firstTime = true;
-bool secondPlayerActivate = false;
-bool isGamePaused = false;
-bool isGameOver = false;
+static bool firstTime = true;
+static bool secondPlayerActivate = false;
+static bool isGamePaused = false;
+static bool isGameOver = false;
 
-Texture2D paralaxNearForeground;
+static Texture2D paralaxNearForeground;
 
 
-float scrollingFore = 0.0f;
-float totalScore = 0.0f;
+static float scrollingFore = 0.0f;
+static float totalScore = 0.0f;
 
 void unloadTextures();
 void backToMenu();

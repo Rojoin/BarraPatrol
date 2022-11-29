@@ -9,11 +9,11 @@
 
 
 Texture2D splashScreen;
-float normalizedTime = 0.0f;
+static float normalizedTime = 0.0f;
 const float halfNormalizedTime = 0.5f;
-float timePlayed = 0.0f;
+static float timePlayed = 0.0f;
 const float maxTime = 12.0f;
-int currentAlpha = 0;
+static int currentAlpha = 0;
 const int maxAlpha = 255;
 const int alphaPower = 4;
 Color transparency ={255,255,255,0};

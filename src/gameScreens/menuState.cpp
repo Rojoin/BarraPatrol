@@ -11,7 +11,7 @@
 #include "system/draw.h"
 #include "gameplayState.h"
 
-Vector2 middleScreen = { GetScreenWidth() / 2.0f,GetScreenHeight() / 2.0f };
+static Vector2 middleScreen = { GetScreenWidth() / 2.0f,GetScreenHeight() / 2.0f };
 
 
 Button playButton = createButton("     PLAY", DARKGREEN);

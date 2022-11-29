@@ -9,7 +9,6 @@ Button backButton = createButton(" GO BACK", RED);
 Button fullScreen;
 
 
-Vector2 screenSize = {1, 1}; 
 void statesOptions(GameStates& gameStates)
 {
 
@@ -46,12 +45,6 @@ void statesOptions(GameStates& gameStates)
 	}
 
 
-	
-
-		float height = 1;
-		float width = 1;
-
-		screenSize= { width, height };
 	
 
 }
