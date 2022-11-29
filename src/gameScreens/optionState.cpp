@@ -1,6 +1,7 @@
 #include "optionsState.h"
 
 #include <raylib.h>
+
 #include "gameStates.h"
 #include "system/button.h"
 

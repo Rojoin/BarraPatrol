@@ -1,7 +1,8 @@
 #include  "rulesState.h"
 
 #include <raylib.h>
-#include  "gameStates.h"
+
+#include "gameStates.h"
 #include "system/draw.h"
 #include "system/button.h"
 

@@ -8,6 +8,8 @@
 
 using namespace OBJ;
 
+
+
 bool isCharacterObstacleColliding(Player* character, Obstacle* obstacle)
 {
 	if (isRecRecColliding(character->getBody(),obstacle->getRec()))
@@ -24,5 +26,6 @@ bool isBulletEnemyColliding(Bullet* bullet, Enemy* enemy)
 	}
 	return false;
 }
+
 
 

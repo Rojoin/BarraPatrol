@@ -1,9 +1,10 @@
 #include <string>
 
+#include "raylib.h"
 
 #include "GameStates.h"
 #include "menuState.h"
-#include "raylib.h"
+
 
 #include "system/collisionFunctions.h"
 #include "gameLogic/mouseInputs.h"

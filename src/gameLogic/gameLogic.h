@@ -6,5 +6,7 @@
 
 using namespace OBJ;
 
-bool isCharacterObstacleColliding(Player* character, Obstacle* obstacle);
-bool isBulletEnemyColliding(Bullet* bullet, Enemy* enemy);
+
+
+	bool isCharacterObstacleColliding(Player* character, Obstacle* obstacle);
+	bool isBulletEnemyColliding(Bullet* bullet, Enemy* enemy);
