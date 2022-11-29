@@ -37,7 +37,7 @@
     <ClCompile Include="src\system\button.cpp" />
     <ClCompile Include="src\system\collisionFunctions.cpp" />
     <ClCompile Include="src\system\draw.cpp" />
-    <ClCompile Include="src\system\MoonPatrol.cpp" />
+    <ClCompile Include="src\system\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\gameLogic\gameLogic.h" />

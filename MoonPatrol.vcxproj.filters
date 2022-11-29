@@ -10,9 +10,6 @@
     <ClCompile Include="src\gameObjects\player.cpp">
       <Filter>gameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="src\system\MoonPatrol.cpp">
-      <Filter>system</Filter>
-    </ClCompile>
     <ClCompile Include="src\system\draw.cpp">
       <Filter>system</Filter>
     </ClCompile>
@@ -58,6 +55,7 @@
     <ClCompile Include="src\gameScreens\creditsState.cpp">
       <Filter>gameScreens</Filter>
     </ClCompile>
+    <ClCompile Include="src\system\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\gameObjects\player.h">
