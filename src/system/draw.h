@@ -9,4 +9,4 @@ void drawText(const char* text, float posX, float posY, float fontSize, Color co
 void drawText(const char* text, int posX, int posY, int fontSize, Color color);
 int  getScaleWidth();
 int getScaleHeight();
-void updateScale();
+

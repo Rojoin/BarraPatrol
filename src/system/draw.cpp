@@ -4,11 +4,7 @@
 static int width;
 static int height;
 
-void updateScale()
-{
-	width=	GetScreenWidth() * 1 / 1024	 ;
-	height =GetScreenHeight() * 1 / 768	 ;
-}
+
 void drawTexture(Texture2D texture,Vector2 position,float rotation,float scale,Color tint)
 {
 
