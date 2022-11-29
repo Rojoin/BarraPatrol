@@ -1,4 +1,5 @@
 #include "Obstacle.h"
+
 #include "raylib.h"
 #include "system/draw.h"
 

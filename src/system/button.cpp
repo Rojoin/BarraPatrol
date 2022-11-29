@@ -1,9 +1,10 @@
 #include "button.h"
+
 #include "raylib.h"
 #include "system/draw.h"
 
 Font customFont;
-extern Vector2 screenSize;
+
 
 void drawButton(Button button)
 {

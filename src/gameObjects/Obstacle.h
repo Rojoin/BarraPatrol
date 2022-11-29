@@ -1,5 +1,6 @@
 #pragma once
 #include "raylib.h"
+
 class Obstacle
 {
 private:

@@ -1,7 +1,7 @@
-#include <iostream>
+
 #include "Circle.h"
 #include "system/collisionFunctions.h"
-#include  "cmath"
+#include  <cmath>
 
 bool isCircleCircleColliding(Circle circle1, Circle circle2)
 {
@@ -18,7 +18,7 @@ bool isCircleCircleColliding(Circle circle1, Circle circle2)
 	
 }
 
-bool isPointRecColliding(Vector2 mouse, Rectangle rec) //Check if works
+bool isPointRecColliding(Vector2 mouse, Rectangle rec) 
 {
 	float rightEdge = rec.x + rec.width ;
 	float leftEdge = rec.x;
@@ -48,10 +48,10 @@ bool isRecRecColliding(Rectangle rec, Rectangle rec2)
 	float rec2UpEdge = rec2.y;
 	float rec2DownEdge = rec2.y + rec2.height;
 
-	if (rec1RightEdge >= rec2LeftEdge &&     // r1 right edge past r2 left
-		rec1LeftEdge <= rec2RightEdge &&       // r1 left edge past r2 right
-		rec1DownEdge >= rec2UpEdge &&       // r1 top edge past r2 bottom
-		rec1UpEdge <= rec2DownEdge) {       // r1 bottom edge past r2 top
+	if (rec1RightEdge >= rec2LeftEdge &&   
+		rec1LeftEdge <= rec2RightEdge &&   
+		rec1DownEdge >= rec2UpEdge &&      
+		rec1UpEdge <= rec2DownEdge) {      
 		return true;
 	}
 	return false;

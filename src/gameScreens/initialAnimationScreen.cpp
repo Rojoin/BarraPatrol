@@ -1,13 +1,13 @@
 #include  "initialAnimationScreen.h"
 
-#include "gameLogic/mouseInputs.h"
-#include <raylib.h>
 
+#include <raylib.h>
+#include <string>
 #include  "gameStates.h"
 #include "system/draw.h"
 
 
-extern Font customFont;
+
 Texture2D splashScreen;
 float normalizedTime = 0.0f;
 float timePlayed = 0.0f;

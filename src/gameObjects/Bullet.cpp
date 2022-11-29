@@ -1,8 +1,12 @@
 #include "Bullet.h"
-#include "raylib.h"
-#include <iostream>
 
+#include "system/Circle.h"
+#include "raylib.h"
 #include "system/draw.h"
+#if _DEBUG
+#include <iostream>
+#endif 
+
 
 Texture2D bulletTexture;
 Sound bulletSound;

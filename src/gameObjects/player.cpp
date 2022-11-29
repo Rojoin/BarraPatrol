@@ -1,7 +1,9 @@
 ﻿#include "player.h"
-#include "raylib.h"
+#if _DEBUG
 #include <iostream>
+#endif 
 
+#include "raylib.h"
 #include "Bullet.h"
 #include "system/draw.h"
 

@@ -11,7 +11,6 @@ public:
     ~Bullet();
     Vector2 getPosition();
     Circle getBody();
-    void isOutOfBounds();
     bool isActive() ;
     void move();
     void draw();

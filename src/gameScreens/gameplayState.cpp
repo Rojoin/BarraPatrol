@@ -1,5 +1,7 @@
 #include "gameplayState.h"
+#if _DEBUG
 #include <iostream>
+#endif 
 
 #include "gameLogic/gameLogic.h"
 #include "gameLogic/keyboardInputs.h"
@@ -9,6 +11,7 @@
 #include "system/draw.h"
 
 #include "gameObjects/player.h"
+#include "gameObjects/Bullet.h"
 #include "system/button.h"
 #include "system/collisionFunctions.h"
 

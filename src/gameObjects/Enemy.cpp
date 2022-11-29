@@ -1,8 +1,10 @@
 ﻿#include "Enemy.h"
 
+#if _DEBUG
 #include <iostream>
-#include "raylib.h"
+#endif 
 
+#include "raylib.h"
 #include "system/Circle.h"
 #include "system/draw.h"
 

@@ -1,4 +1,5 @@
 #include "mouseInputs.h"
+
 #include "raylib.h"
 
 namespace Inputs

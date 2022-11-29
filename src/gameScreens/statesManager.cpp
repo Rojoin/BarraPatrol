@@ -1,6 +1,6 @@
 #include "statesManager.h"
 
-#include <ctime>
+#include <time.h>
 #include "creditsState.h"
 #include "gameplayState.h"
 #include "GameStates.h"
