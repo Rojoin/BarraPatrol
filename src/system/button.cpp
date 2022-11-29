@@ -3,8 +3,8 @@
 #include "raylib.h"
 #include "system/draw.h"
 
-Font customFont;
-
+const int SCREEN_SIZE_X = 1024;
+const int SCREEN_SIZE_Y = 768;
 
 void drawButton(Button button)
 {
@@ -12,7 +12,6 @@ void drawButton(Button button)
 	int segments = 8;
 	DrawRectangleRounded(button.rec, roundness, segments, button.color);
 
-	//drawText(button.buttonTittle, button.rec.x, button.rec.y + button.rec.height / 3, 25, BLACK, customFont);
 	drawText(button.buttonTittle,(int)button.rec.x, (int)(button.rec.y + (button.rec.height) / 3), 25, BLACK);
 	if (button.isOverThisButton)
 	{
@@ -30,14 +29,13 @@ void drawButtonTranslucent(Button button)
 	int segments = 8;
 
 	DrawRectangleRounded(button.rec, roundness, segments, translucentButton);
-	//drawText(button.buttonTittle, button.rec.x , button.rec.y + button.rec.height / 3 , 25 *static_cast<float>(GetScreenHeight()) / 768, translucentFont, customFont);
-	drawText(button.buttonTittle, (int)button.rec.x , (int)(button.rec.y + (button.rec.height) / 3), (int)(25.1f *static_cast<float>(GetScreenHeight() / 768)), translucentFont);
+
+	drawText(button.buttonTittle, (int)button.rec.x , (int)(button.rec.y + (button.rec.height) / 3), (int)(25.1f *static_cast<float>(GetScreenHeight() / SCREEN_SIZE_Y)), translucentFont);
 
 	if (button.isOverThisButton)
 	{
 		DrawRectangleRounded(button.rec, roundness, segments, button.color);
-		//drawText(button.buttonTittle, button.rec.x , button.rec.y + button.rec.height / 3 , 25 *static_cast<float>(GetScreenHeight()) / 768, BLACK, customFont);
-		drawText(button.buttonTittle, (int)button.rec.x , (int)(button.rec.y + (button.rec.height) / 3), (int)( 25.1f *static_cast<float>(GetScreenHeight() / 768)), BLACK);
+		drawText(button.buttonTittle, (int)button.rec.x , (int)(button.rec.y + (button.rec.height) / 3), (int)( 25.1f *static_cast<float>(GetScreenHeight() / SCREEN_SIZE_Y)), BLACK);
 		DrawRectangleRoundedLines(button.rec, roundness, segments, 5, BLACK);
 	}
 }
@@ -45,7 +43,7 @@ Button createButton(const char* buttonTitle, Color color)
 {
 	Button button;
 
-	button.rec = { static_cast<float>(GetScreenWidth() / 2 - buttonWidth / 2) ,  static_cast<float>(GetScreenHeight() / 3), buttonWidth * static_cast<float>(GetScreenWidth()) / 1024 , buttonHeight * static_cast<float>(GetScreenHeight()) / 768  };
+	button.rec = { static_cast<float>(GetScreenWidth() / 2 - buttonWidth / 2) ,  static_cast<float>(GetScreenHeight() / 3), buttonWidth * static_cast<float>(GetScreenWidth()) / SCREEN_SIZE_X , buttonHeight * static_cast<float>(GetScreenHeight()) / SCREEN_SIZE_Y };
 	button.buttonTittle = buttonTitle;
 	button.isSelected = false;
 	button.isOverThisButton = false;
@@ -57,7 +55,7 @@ Button createButton(float x, float y, const char* buttonTitle, Color color)
 {
 	Button button;
 
-	button.rec = { x ,y , buttonWidth * static_cast<float>(GetScreenWidth()) / 1024 , buttonHeight * static_cast<float>(GetScreenHeight()) / 768  };
+	button.rec = { x ,y , buttonWidth * static_cast<float>(GetScreenWidth()) / SCREEN_SIZE_X , buttonHeight * static_cast<float>(GetScreenHeight()) / SCREEN_SIZE_Y };
 	button.buttonTittle = buttonTitle;
 	button.isSelected = false;
 	button.isOverThisButton = false;
@@ -69,7 +67,7 @@ Button createButton(float x, float y, float width, float height, const char* but
 {
 	Button button;
 
-	button.rec = { x ,y , width * static_cast<float>(GetScreenWidth()) / 1024 , height * static_cast<float>(GetScreenHeight()) / 768  };
+	button.rec = { x ,y , width * static_cast<float>(GetScreenWidth()) / SCREEN_SIZE_X , height * static_cast<float>(GetScreenHeight()) / SCREEN_SIZE_Y };
 	button.buttonTittle = buttonTitle;
 	button.isSelected = false;
 	button.isOverThisButton = false;
