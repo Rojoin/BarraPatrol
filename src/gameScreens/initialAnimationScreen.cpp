@@ -10,19 +10,21 @@
 
 Texture2D splashScreen;
 float normalizedTime = 0.0f;
+const float halfNormalizedTime = 0.5f;
 float timePlayed = 0.0f;
-float maxTime = 12.0f;
+const float maxTime = 12.0f;
 int currentAlpha = 0;
-int maxAlpha = 255;
+const int maxAlpha = 255;
+const int alphaPower = 4;
 Color transparency ={255,255,255,0};
 void statesInitialAnimation(GameStates& gamestate)
 {
 	normalizedTime = timePlayed / maxTime;
 	timePlayed += GetFrameTime();
 
-	if (timePlayed < maxTime/2 && normalizedTime <0.5f)
+	if (timePlayed < maxTime/2 && normalizedTime < halfNormalizedTime)
 	{
-		currentAlpha = static_cast<int>(normalizedTime *255*4);
+		currentAlpha = static_cast<int>(normalizedTime *maxAlpha* alphaPower);
 		if (currentAlpha == maxAlpha)
 		{
 			gamestate =setGameState(GameStates::Menu);
