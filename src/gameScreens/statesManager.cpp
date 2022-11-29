@@ -34,7 +34,6 @@ StatesManager::StatesManager()
 	InitWindow(1024, 768, "Tactical Llama");
 	InitAudioDevice();
 	musicStream = LoadMusicStream("res/music.mp3");
-	//HideCursor();
 	SetMusicVolume(musicStream, 0.5);
 	PlayMusicStream(musicStream);
 	SetExitKey(NULL);
@@ -73,8 +72,8 @@ void StatesManager::exitProgram()
 
 void StatesManager::logicProgram()
 {
-	mousePosX = GetMouseX();
-	mousePosY = GetMouseY();
+
+
 	scrollingBack -= 0.1f * GetFrameTime() * 800.0f;
 	scrollingMid -= 0.5f * GetFrameTime() * 800.0f;
 	if (scrollingBack <= -(paralaxBackground.width * 0.20f)) scrollingBack = 0;
