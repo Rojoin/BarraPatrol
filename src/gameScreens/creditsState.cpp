@@ -9,6 +9,9 @@
 
 Texture2D creditsTexture;
 extern Button escapeButton;
+
+
+const int SCREEN_SIZE_Y = 768;
 void statesCredits(GameStates& gameStates)
 {
 	Vector2 mousePoint = GetMousePosition();
@@ -30,9 +33,9 @@ void statesCredits(GameStates& gameStates)
 void drawCredits()
 {
 
-	float width = static_cast<float>(GetScreenWidth());
+	static float width = static_cast<float>(GetScreenWidth());
 	ClearBackground(BLACK);
-	float scale = 0.12f * GetScreenHeight() / 768;
+	static float scale = 0.12f * GetScreenHeight() / SCREEN_SIZE_Y;
 	drawTexture(creditsTexture, { width / 2.0f -(creditsTexture.width/2.0f)* scale, 0}, 0, scale, WHITE);
 	drawButton(escapeButton);
 
