@@ -3,6 +3,9 @@
 
 #include "system/Circle.h"
 
+namespace OBJ
+{
+
 class Enemy
 {
 public:
@@ -34,3 +37,5 @@ private:
     const int MAGNITUDE = 4;
     const int MAX_SINMOV_SPEED = 50;
 };
+
+}

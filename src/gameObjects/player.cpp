@@ -7,6 +7,8 @@
 #include "Bullet.h"
 #include "system/draw.h"
 
+using namespace OBJ;
+
 Texture2D playerTexture;
 Sound playerSound;
 

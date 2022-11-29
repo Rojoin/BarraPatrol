@@ -8,7 +8,10 @@
 #include "system/Circle.h"
 #include "system/draw.h"
 
+using namespace OBJ;
+
 Texture2D enemyTexture;
+
 
 Enemy::Enemy()
 {

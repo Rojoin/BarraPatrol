@@ -6,6 +6,7 @@
 #include "gameObjects/Enemy.h"
 #include "gameObjects/Bullet.h"
 
+using namespace OBJ;
 
 bool isCharacterObstacleColliding(Player* character, Obstacle* obstacle)
 {

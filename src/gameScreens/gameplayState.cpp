@@ -15,6 +15,7 @@
 #include "system/button.h"
 #include "system/collisionFunctions.h"
 
+using namespace OBJ;
 
 Player* character1;
 Player* character2;

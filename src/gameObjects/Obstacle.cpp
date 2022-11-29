@@ -3,7 +3,10 @@
 #include "raylib.h"
 #include "system/draw.h"
 
+using namespace OBJ;
+
 Texture2D obstacleTexture;
+
 Obstacle::Obstacle()
 {
 	rec = { SPAWN_POSITION_X,SPAWN_POSITION_y,80 ,600 };

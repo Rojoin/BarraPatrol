@@ -7,6 +7,7 @@
 #include <iostream>
 #endif 
 
+using namespace OBJ;
 
 Texture2D bulletTexture;
 Sound bulletSound;
