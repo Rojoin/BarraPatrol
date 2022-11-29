@@ -1,4 +1,5 @@
 #include "draw.h"
+
 #include "raylib.h"
 
 static int width;

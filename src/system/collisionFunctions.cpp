@@ -1,7 +1,10 @@
 #include "system/collisionFunctions.h"
 
-#include "Circle.h"
 #include  <math.h>
+
+#include "raylib.h"
+
+#include "Circle.h"
 
 bool isCircleCircleColliding(Circle circle1, Circle circle2)
 {

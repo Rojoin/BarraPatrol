@@ -1,5 +1,6 @@
-#include <raylib.h>
 #include "creditsState.h"
+
+#include <raylib.h>
 
 #include "gameStates.h"
 #include "system/draw.h"
