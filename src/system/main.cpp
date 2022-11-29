@@ -1,5 +1,5 @@
 
-#include "gameScreens/statesManager.h"
+#include "system/statesManager.h"
 using namespace GAME;
 int main()
 {
