@@ -21,6 +21,7 @@ private:
 public:
 	StatesManager();
 	~StatesManager();
+	void runProgram();
 	void initProgram();
 	void exitProgram();
 };

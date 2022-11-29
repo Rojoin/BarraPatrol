@@ -46,6 +46,12 @@ StatesManager::~StatesManager()
 
 }
 
+void StatesManager::runProgram()
+{
+	initProgram();
+	exitProgram();
+}
+
 void StatesManager::initProgram()
 {
 	loadTextures();
