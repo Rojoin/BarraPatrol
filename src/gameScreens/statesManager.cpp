@@ -24,6 +24,13 @@ Texture2D paralaxMidground;
 Music musicStream;
 float scrollingBack = 0.0f;
 float scrollingMid = 0.0f;
+const float SCROLLING_SPEED = 800.0f;
+const float WALLPAPER_SCALE = 0.20f;
+const float MID_SCROLLIN_SPEED = 0.5f;
+const float BACK_SCROLLIN_SPEED = 0.1f;
+const int SCREEN_SIZE_X = 1024;
+const int SCREEN_SIZE_Y = 768;
+const float MAX_VOLUME = 0.5f;
 
 StatesManager::StatesManager()
 {
@@ -31,13 +38,13 @@ StatesManager::StatesManager()
 	this->isProgramRunning = true;
 	gameState = setGameState(GameStates::InitialAnimation);
 	SetRandomSeed(static_cast<unsigned int>(time(NULL)));
-	InitWindow(1024, 768, "Tactical Llama");
+	InitWindow(SCREEN_SIZE_X, SCREEN_SIZE_Y, "Tactical Llama");
 	InitAudioDevice();
 	musicStream = LoadMusicStream("res/music.mp3");
-	SetMusicVolume(musicStream, 0.5);
+	SetMusicVolume(musicStream, MAX_VOLUME);
 	PlayMusicStream(musicStream);
 	SetExitKey(NULL);
-	SetWindowMinSize(1024, 768);
+	SetWindowMinSize(SCREEN_SIZE_X, SCREEN_SIZE_Y);
 }
 
 StatesManager::~StatesManager()
@@ -74,11 +81,10 @@ void StatesManager::logicProgram()
 {
 
 
-	scrollingBack -= 0.1f * GetFrameTime() * 800.0f;
-	scrollingMid -= 0.5f * GetFrameTime() * 800.0f;
-	if (scrollingBack <= -(paralaxBackground.width * 0.20f)) scrollingBack = 0;
-	if (scrollingMid <= -(paralaxMidground.width * 0.20f)) scrollingMid = 0;
-	updateScale();
+	scrollingBack -= BACK_SCROLLIN_SPEED * GetFrameTime() * SCROLLING_SPEED;
+	scrollingMid -= MID_SCROLLIN_SPEED * GetFrameTime() * SCROLLING_SPEED;
+	if (scrollingBack <= -(paralaxBackground.width * WALLPAPER_SCALE)) scrollingBack = 0;
+	if (scrollingMid <= -(paralaxMidground.width * WALLPAPER_SCALE)) scrollingMid = 0;
 	switch (gameState)
 	{
 	case GameStates::InitialAnimation:
@@ -111,11 +117,11 @@ void StatesManager::drawProgram()
 {
 	BeginDrawing();
 	ClearBackground(WHITE);
-	drawTexture(paralaxBackground, { scrollingBack , 0 }, 0.0f, 0.20f, WHITE);
-	drawTexture(paralaxBackground, { paralaxBackground.width * 0.20f + scrollingBack, 0 }, 0.0f, 0.20f, WHITE);
+	drawTexture(paralaxBackground, { scrollingBack , 0 }, 0.0f, WALLPAPER_SCALE, WHITE);
+	drawTexture(paralaxBackground, { paralaxBackground.width * WALLPAPER_SCALE + scrollingBack, 0 }, 0.0f, WALLPAPER_SCALE, WHITE);
 
-	drawTexture(paralaxMidground, { scrollingMid , 20 }, 0.0f, 0.20f, WHITE);
-	drawTexture(paralaxMidground, { (paralaxMidground.width * 0.20f + scrollingMid), 20 }, 0.0f, 0.20f, WHITE);
+	drawTexture(paralaxMidground, { scrollingMid , 20 }, 0.0f, WALLPAPER_SCALE, WHITE);
+	drawTexture(paralaxMidground, { (paralaxMidground.width * WALLPAPER_SCALE + scrollingMid), 20 }, 0.0f, WALLPAPER_SCALE, WHITE);
 	switch (gameState)
 	{
 	case GameStates::InitialAnimation:
