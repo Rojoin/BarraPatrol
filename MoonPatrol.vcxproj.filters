@@ -47,13 +47,13 @@
       <Filter>gameScreens</Filter>
     </ClCompile>
     <ClCompile Include="src\system\main.cpp" />
-    <ClCompile Include="src\gameObjects\Bulleta.cpp">
+    <ClCompile Include="src\gameObjects\bullet.cpp">
       <Filter>gameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="src\gameObjects\Enemya.cpp">
+    <ClCompile Include="src\gameObjects\enemy.cpp">
       <Filter>gameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="src\gameObjects\Obstaclea.cpp">
+    <ClCompile Include="src\gameObjects\obstacle.cpp">
       <Filter>gameObjects</Filter>
     </ClCompile>
   </ItemGroup>
@@ -103,17 +103,17 @@
     <ClInclude Include="src\gameScreens\rulesState.h">
       <Filter>gameScreens</Filter>
     </ClInclude>
-    <ClInclude Include="src\system\Circlea.h">
+    <ClInclude Include="src\gameObjects\bullet.h">
+      <Filter>gameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameObjects\enemy.h">
+      <Filter>gameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameObjects\obstacle.h">
+      <Filter>gameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\system\circle.h">
       <Filter>system</Filter>
-    </ClInclude>
-    <ClInclude Include="src\gameObjects\Bulleta.h">
-      <Filter>gameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="src\gameObjects\Enemya.h">
-      <Filter>gameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="src\gameObjects\Obstaclea.h">
-      <Filter>gameObjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -22,9 +22,9 @@
     <ClCompile Include="src\gameLogic\gameLogic.cpp" />
     <ClCompile Include="src\gameLogic\keyboardInputs.cpp" />
     <ClCompile Include="src\gameLogic\mouseInputs.cpp" />
-    <ClCompile Include="src\gameObjects\Bulleta.cpp" />
-    <ClCompile Include="src\gameObjects\Enemya.cpp" />
-    <ClCompile Include="src\gameObjects\Obstaclea.cpp" />
+    <ClCompile Include="src\gameObjects\bullet.cpp" />
+    <ClCompile Include="src\gameObjects\enemy.cpp" />
+    <ClCompile Include="src\gameObjects\obstacle.cpp" />
     <ClCompile Include="src\gameObjects\player.cpp" />
     <ClCompile Include="src\gameScreens\creditsState.cpp" />
     <ClCompile Include="src\gameScreens\gameplayState.cpp" />
@@ -43,9 +43,9 @@
     <ClInclude Include="src\gameLogic\gameLogic.h" />
     <ClInclude Include="src\gameLogic\keyboardInputs.h" />
     <ClInclude Include="src\gameLogic\mouseInputs.h" />
-    <ClInclude Include="src\gameObjects\Bulleta.h" />
-    <ClInclude Include="src\gameObjects\Enemya.h" />
-    <ClInclude Include="src\gameObjects\Obstaclea.h" />
+    <ClInclude Include="src\gameObjects\bullet.h" />
+    <ClInclude Include="src\gameObjects\enemy.h" />
+    <ClInclude Include="src\gameObjects\obstacle.h" />
     <ClInclude Include="src\gameObjects\player.h" />
     <ClInclude Include="src\gameScreens\creditsState.h" />
     <ClInclude Include="src\gameScreens\gameplayState.h" />
@@ -56,7 +56,7 @@
     <ClInclude Include="src\gameScreens\rulesState.h" />
     <ClInclude Include="src\gameScreens\statesManager.h" />
     <ClInclude Include="src\system\button.h" />
-    <ClInclude Include="src\system\Circlea.h" />
+    <ClInclude Include="src\system\circle.h" />
     <ClInclude Include="src\system\collisionFunctions.h" />
     <ClInclude Include="src\system\draw.h" />
   </ItemGroup>
