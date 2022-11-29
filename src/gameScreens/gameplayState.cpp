@@ -31,6 +31,11 @@ Button exitMenuButton;
 const char* playerScore;
 const char* maxScore;
 float highScore = 0.0f;
+const int SCREEN_SIZE_X = 1024;
+const int SCREEN_SIZE_Y = 768;
+const float WALLPAPER_SCALE = 0.20f;
+const float SCROLLING_SPEED = 800.0f;
+const float FORE_SCROLLIN_SPEED = 1.0f;
 bool firstTime = true;
 bool secondPlayerActivate = false;
 bool isGamePaused = false;
@@ -44,7 +49,6 @@ float totalScore = 0.0f;
 
 void unloadTextures();
 void backToMenu();
-extern Vector2 screenSize;
 void stateGame(GameStates& gameStates)
 {
 
@@ -100,7 +104,7 @@ void stateGame(GameStates& gameStates)
 	else if (!isGamePaused)
 	{
 
-		scrollingFore -= 1.0f * GetFrameTime() * 800.0f * screenSize.x;
+		scrollingFore -= FORE_SCROLLIN_SPEED * GetFrameTime() * SCROLLING_SPEED;
 
 		enemy->sinusoidalMovement();
 		enemy2->sinusoidalMovement();
@@ -108,7 +112,7 @@ void stateGame(GameStates& gameStates)
 		enemy2->moveRight();
 		obstacle->changePosX();
 
-		if (scrollingFore <= -(paralaxNearForeground.width * 0.20f)) scrollingFore = 0;
+		if (scrollingFore <= -(paralaxNearForeground.width * WALLPAPER_SCALE)) scrollingFore = 0;
 
 		if (isPointRecColliding(Inputs::getMouseInput(), pauseMenuButton.rec))
 		{
@@ -315,10 +319,10 @@ void initGame(bool secondPlayer)
 	float width = static_cast<float>(GetScreenWidth());
 	float height = static_cast<float>(GetScreenHeight());
 	isGamePaused = false;
-	continueMenuButton = createButton(width / 2 - buttonWidth / 2 * static_cast<float>(GetScreenWidth()) / 1024, height / 2 - height / 8 * static_cast<float>(GetScreenHeight()) / 768, buttonWidth, buttonHeight, " CONTINUE", DARKGREEN);
-	restartMenuButton = createButton(width / 3 + width / 4 - buttonWidth / 2 * static_cast<float>(GetScreenWidth()) / 1024, height / 2.0f - buttonHeight * static_cast<float>(GetScreenHeight()) / 768, buttonWidth, buttonHeight, " RESTART", DARKPURPLE);
-	exitMenuButton = createButton(width / 3 + width / 8 - buttonWidth * static_cast<float>(GetScreenWidth()) / 1024, height / 2.0f - buttonHeight * static_cast<float>(GetScreenHeight()) / 768, buttonWidth, buttonHeight, "   EXIT", RED);
-	pauseMenuButton = createButton(width / 2 - buttonWidth / 2 * static_cast<float>(GetScreenWidth()) / 1024, 0 + buttonHeight / 2 * static_cast<float>(GetScreenHeight()) / 768, buttonWidth, buttonHeight, "  PAUSE", DARKGREEN);
+	continueMenuButton = createButton(width / 2 - buttonWidth / 2 * static_cast<float>(GetScreenWidth()) / SCREEN_SIZE_X, height / 2 - height / 8 * static_cast<float>(GetScreenHeight()) / SCREEN_SIZE_Y, buttonWidth, buttonHeight, " CONTINUE", DARKGREEN);
+	restartMenuButton = createButton(width / 3 + width / 4 - buttonWidth / 2 * static_cast<float>(GetScreenWidth()) / SCREEN_SIZE_X, height / 2.0f - buttonHeight * static_cast<float>(GetScreenHeight()) / SCREEN_SIZE_Y, buttonWidth, buttonHeight, " RESTART", DARKPURPLE);
+	exitMenuButton = createButton(width / 3 + width / 8 - buttonWidth * static_cast<float>(GetScreenWidth()) / SCREEN_SIZE_X, height / 2.0f - buttonHeight * static_cast<float>(GetScreenHeight()) / SCREEN_SIZE_Y, buttonWidth, buttonHeight, "   EXIT", RED);
+	pauseMenuButton = createButton(width / 2 - buttonWidth / 2 * static_cast<float>(GetScreenWidth()) / SCREEN_SIZE_X, 0 + buttonHeight / 2 * static_cast<float>(GetScreenHeight()) / SCREEN_SIZE_Y, buttonWidth, buttonHeight, "  PAUSE", DARKGREEN);
 	highScore = static_cast<float>(LoadStorageValue(0));
 
 }
@@ -334,8 +338,8 @@ void drawScore()
 	playerScore = TextFormat("Score:%0.0F", static_cast<double>(totalScore));
 	maxScore = TextFormat("Max:%0.0F", static_cast<double>(highScore));
 	int maxScoreMeasure = MeasureText(maxScore, 50);
-	drawText(playerScore, 0, 0, 50 * static_cast<int>(GetScreenWidth() / 1024), BLACK);
-	drawText(maxScore, GetScreenWidth() - maxScoreMeasure * 1 * (GetScreenWidth()) / 1024, 0, 50 * (GetScreenHeight()) / 768, BLACK);
+	drawText(playerScore, 0, 0, 50 * static_cast<int>(GetScreenWidth() / SCREEN_SIZE_X), BLACK);
+	drawText(maxScore, GetScreenWidth() - maxScoreMeasure * 1 * (GetScreenWidth()) / SCREEN_SIZE_X, 0, 50 * (GetScreenHeight()) / SCREEN_SIZE_Y, BLACK);
 }
 
 void drawPauseMenu()
@@ -348,7 +352,7 @@ void drawEndMenu()
 {
 	playerScore = TextFormat("Score:%0.0F", static_cast<double>(totalScore));
 	int playerScoreMeasure = MeasureText(playerScore, 50);
-	drawText(playerScore, GetScreenWidth() / 2 - playerScoreMeasure * (GetScreenWidth()) / 1024, GetScreenHeight() / 2 - playerScoreMeasure, 50 * static_cast<int>(GetScreenWidth() / 1024), BLACK);
+	drawText(playerScore, GetScreenWidth() / 2 - playerScoreMeasure * (GetScreenWidth()) / SCREEN_SIZE_X, GetScreenHeight() / 2 - playerScoreMeasure, 50 * static_cast<int>(GetScreenWidth() / SCREEN_SIZE_X), BLACK);
 	drawButton(restartMenuButton);
 	drawButton(exitMenuButton);
 }
@@ -369,8 +373,8 @@ void drawGame()
 	}
 	obstacle->draw();
 	drawButtonTranslucent(pauseMenuButton);
-	drawTexture(paralaxNearForeground, { scrollingFore * screenSize.x, -120 * screenSize.x }, 0.0f, 0.20f * screenSize.x, WHITE);
-	drawTexture(paralaxNearForeground, { paralaxNearForeground.width * 0.20f + scrollingFore * screenSize.x, -120 * screenSize.x }, 0.0f, 0.20f * screenSize.x, WHITE);
+	drawTexture(paralaxNearForeground, { scrollingFore , -120  }, 0.0f, WALLPAPER_SCALE, WHITE);
+	drawTexture(paralaxNearForeground, { paralaxNearForeground.width * WALLPAPER_SCALE + scrollingFore , -120  }, 0.0f, WALLPAPER_SCALE, WHITE);
 	enemy->draw();
 	enemy2->draw();
 	drawScore();
