@@ -91,8 +91,8 @@ Rectangle Enemy::getBody()
 
 void Enemy::draw()
 {
-    Rectangle source{ 0,0,(float)texture.width,(float)texture.height };
-    Rectangle dest{ body.x ,body.y,(float)texture.width * scale ,(float)texture.height * scale };
+    Rectangle source{ 0,0,static_cast<float>(texture.width),static_cast<float>(texture.height) };
+    Rectangle dest{ body.x ,body.y,static_cast<float>(texture.width) * scale ,static_cast<float>(texture.height) * scale };
 #if _DEBUG
     DrawRectangleRec(body, RED);
 #endif
