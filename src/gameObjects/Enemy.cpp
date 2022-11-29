@@ -12,9 +12,9 @@ Texture2D enemyTexture;
 
 Enemy::Enemy()
 {
-    body = {400, 50,120,40};
+    body = {SPAWN_POSITION_X, SPAWN_POSITION_Y,120,40};
     deadState = false;
-    speed = 200;
+    speed = MAX_SPEED_FORCE;
     facingDown = true;
     texture = enemyTexture;
     scale = 0.10f;
@@ -22,10 +22,10 @@ Enemy::Enemy()
 
 Enemy::Enemy(float offSetX)
 {
-    body = { 400.1f+offSetX, 400,120,40 };
+    body = { SPAWN_POSITION_X+offSetX, SPAWN_POSITION_Y_OFFSET,120,40 };
     deadState = false;
+    speed = MAX_SPEED_FORCE;
     facingDown = true;
-    speed = 200;
     texture = enemyTexture;
     scale = 0.10f;
 }
@@ -39,7 +39,7 @@ Enemy::~Enemy()
 void Enemy::moveRight()
 {
     body.x += speed * GetFrameTime();
-    if (body.x - body.width >= 1280)
+    if (body.x - body.width >= MAX_SCREEN_SIZE)
     {
         body.x = 0- body.width;
     }
@@ -50,21 +50,21 @@ void Enemy::moveLeft()
     body.x -= speed * GetFrameTime();
     if (body.x+body.width <=0)
     {
-        body.x = 1280;
+        body.x = MAX_SCREEN_SIZE;
     }
 }
 
 void Enemy::reset()
 {
-    body.x = 40-texture.width*scale;
+    body.x = 0-texture.width*scale;
     
 }
 
 void Enemy::sinusoidalMovement()
 {
 
-    float sinMov = sin(2.0f * GetFrameTime()*50) * 4;
-	if (body.y > 400 && facingDown)
+    float sinMov = sin(2.0f * GetFrameTime()* MAX_SINMOV_SPEED) * MAGNITUDE;
+	if (body.y > MAX_POSITION_Y && facingDown)
 	{
         facingDown = false;
 	}
