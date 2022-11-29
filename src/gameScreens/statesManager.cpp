@@ -10,6 +10,8 @@
 #include "rulesState.h"
 #include "system/draw.h"
 
+using namespace GAME;
+
 extern Texture2D enemyTexture;
 extern Texture2D creditsTexture;
 extern Texture2D rulesTexture;
@@ -34,17 +36,9 @@ const float MAX_VOLUME = 0.5f;
 
 StatesManager::StatesManager()
 {
-
 	this->isProgramRunning = true;
 	gameState = setGameState(GameStates::InitialAnimation);
-	SetRandomSeed(static_cast<unsigned int>(time(NULL)));
-	InitWindow(SCREEN_SIZE_X, SCREEN_SIZE_Y, "Tactical Llama");
-	InitAudioDevice();
-	musicStream = LoadMusicStream("res/music.mp3");
-	SetMusicVolume(musicStream, MAX_VOLUME);
-	PlayMusicStream(musicStream);
-	SetExitKey(NULL);
-	SetWindowMinSize(SCREEN_SIZE_X, SCREEN_SIZE_Y);
+	
 }
 
 StatesManager::~StatesManager()
@@ -60,6 +54,15 @@ void StatesManager::runProgram()
 
 void StatesManager::initProgram()
 {
+	SetRandomSeed(static_cast<unsigned int>(time(NULL)));
+	InitWindow(SCREEN_SIZE_X, SCREEN_SIZE_Y, "Tactical Llama");
+	InitAudioDevice();
+	musicStream = LoadMusicStream("res/music.mp3");
+	SetMusicVolume(musicStream, MAX_VOLUME);
+	PlayMusicStream(musicStream);
+	SetExitKey(NULL);
+	SetWindowMinSize(SCREEN_SIZE_X, SCREEN_SIZE_Y);
+
 	loadTextures();
 	loadAudios();
 	while (!WindowShouldClose() && isProgramRunning)
