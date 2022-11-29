@@ -10,75 +10,75 @@
 
 Texture2D bulletTexture;
 Sound bulletSound;
-extern Vector2 screenSize;
+
 Bullet::Bullet(float x, float y)
 {
-    this->activeState = false;
-    this->texture = bulletTexture;
-    this->sound = bulletSound;
-    this->scale = 0.5f*screenSize.x;
-    this->direction = {0, 0};
-    this->rotation = 0;
-    this->body = {x, y , 10 * screenSize.x };
-    this->speed = 500;
+	this->activeState = false;
+	this->texture = bulletTexture;
+	this->sound = bulletSound;
+	this->scale = 0.5f;
+	this->direction = { 0, 0 };
+	this->rotation = 0;
+	this->body = { x, y , MAX_CIRCLE_RADIUS };
+	this->speed = MAX_SPEED_FORCE;
 }
 
 Bullet::~Bullet()
 {
-    std::cout << "Bullet was destroyed." << std::endl;
+	std::cout << "Bullet was destroyed." << std::endl;
 }
 
-Vector2 Bullet::getPosition() 
+Vector2 Bullet::getPosition()
 {
-    return {body.position.x, body.position.y};
+	return { body.position.x, body.position.y };
 }
 
-Circle Bullet::getBody() 
+Circle Bullet::getBody()
 {
-    return body;
+	return body;
 }
 
 
-bool Bullet::isActive() 
+bool Bullet::isActive()
 {
-    return activeState;
+	return activeState;
 }
 
 void Bullet::move()
 {
-    body.position.x += direction.x * speed *screenSize.x* GetFrameTime();  
-    body.position.y += direction.y * speed * screenSize.y * GetFrameTime();
+	body.position.x += direction.x * speed * GetFrameTime();
+	body.position.y += direction.y * speed * GetFrameTime();
 }
 
 
 void Bullet::draw()
 {
 
-    Rectangle source{ 0,0,static_cast<float>(texture.width),static_cast<float>(texture.height) };
-    Rectangle dest{ body.position.x  ,body.position.y,static_cast<float>(texture.width) * scale,static_cast<float>(texture.height) * scale };
+	Rectangle source{ 0,0,static_cast<float>(texture.width),static_cast<float>(texture.height) };
+	Rectangle dest{ body.position.x  ,body.position.y,static_cast<float>(texture.width)* scale,static_cast<float>(texture.height)* scale };
 
 #if _DEBUG
 
-    DrawCircle(static_cast<int>(body.position.x), static_cast<int>(body.position.y), body.radius, BLUE);
+	DrawCircle(static_cast<int>(body.position.x), static_cast<int>(body.position.y), body.radius, BLUE);
 #endif
-    drawTexture(texture, source, dest, { static_cast<float>(texture.width) / 2.0f,static_cast<float>(texture.height) / 2.0f }, rotation, scale, WHITE);
+	drawTexture(texture, source, dest, { static_cast<float>(texture.width) / 2.0f,static_cast<float>(texture.height) / 2.0f }, rotation, scale, WHITE);
 
-  
+
 }
 
 void Bullet::setActiveState(bool state)
 {
-    activeState = state;
+	activeState = state;
 }
 
 void Bullet::setDirection(Vector2 dir)
 {
-    this->direction = dir;
-    PlaySound(sound);
+	this->direction = dir;
+	PlaySound(sound);
 }
 
 void Bullet::setPosition(float x, float y)
 {
-    body.position.x = x;
-    body.position.y = y;
+	body.position.x = x;
+	body.position.y = y;
 }

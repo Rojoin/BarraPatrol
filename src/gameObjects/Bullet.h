@@ -26,6 +26,7 @@ private:
     bool activeState;
     float scale;
     float speed;
-
+    const float MAX_SPEED_FORCE = 500.0f;
+    const float MAX_CIRCLE_RADIUS = 10;
 
 };
