@@ -126,10 +126,7 @@ void drawMenu()
 	drawButton(optionsButton);
 	drawButton(creditsButton);
 	drawButton(exitButton);
-	int fontSize;
-	fontSize = 14 * static_cast<int>(GetScreenHeight()) / 728;
+	int fontSize = 14 * static_cast<int>(GetScreenHeight()) / 728;
 	std::string titleScreen = "Tactical Llama";
-	drawText(titleScreen.c_str(), width / 4 - static_cast<int>(titleScreen.length())* fontSize * 1, (height / 8), fontSize * 8, BLACK);
-	//drawTexture(titleTexture, { width / 3.0f - static_cast<float>(titleScreen.length())* fontSize * 1.5f,height / 16.0f }, 0, 0.17f * (GetScreenHeight()) / 728, WHITE);
-
+	drawText(titleScreen.c_str(), width / 4 - static_cast<int>(titleScreen.length())* fontSize, (height / 8), fontSize * 8, BLACK);
 }
