@@ -6,7 +6,7 @@
 Texture2D obstacleTexture;
 Obstacle::Obstacle()
 {
-	rec = { 1280,600,80 ,600 };
+	rec = { SPAWN_POSITION_X,SPAWN_POSITION_y,80 ,600 };
 	jumped = false;
 	texture = obstacleTexture;
 	scale = 0.07f;
@@ -18,13 +18,13 @@ Obstacle::~Obstacle()
 
 void Obstacle::reset()
 {
-	rec = { 1280,600,80 ,600 };
+	rec = { SPAWN_POSITION_X,SPAWN_POSITION_y,80 ,600 };
 	jumped = false;
 }
 
 void Obstacle::changePosX()
 {
-	rec.x -= 200 * GetFrameTime();
+	rec.x -= MAX_GRAVITY_FORCE * GetFrameTime();
 	if (rec.x < 0 - rec.width)
 	{
 		rec.x = (float)GetScreenWidth();
