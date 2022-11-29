@@ -17,12 +17,12 @@ private:
 	void unLoadAudio();
 	void unLoadTextures();
 	void unLoadResources();
-
+	void initProgram();
+	void exitProgram();
 public:
 	StatesManager();
 	~StatesManager();
 	void runProgram();
-	void initProgram();
-	void exitProgram();
+
 };
 
