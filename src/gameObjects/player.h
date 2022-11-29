@@ -19,7 +19,8 @@ private:
 	Rectangle body;
 	float scale;
 	Texture2D texture;
-
+	const float MAX_GRAVITY_FORCE = 200.0f;
+	const float MAX_SPEED_FORCE = 400.0f;
 public:
 	Player();
 	~Player();

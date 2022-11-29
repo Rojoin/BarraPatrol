@@ -14,7 +14,7 @@ Player::Player()
 {
     this->body = { 200.0f,600.0f,50,50 };
     this->texture = playerTexture;
-    this->speed = 400;
+    this->speed = MAX_SPEED_FORCE;
     this->score = 0;
     this->scale = 0.10f;
     this->animIndex = 0;
@@ -22,8 +22,8 @@ Player::Player()
     this->sound = playerSound;
     jumpState = false;
     deadState = false;
-    gravity = 200.0f;
- bullet =  new Bullet(body.x,body.y);
+    gravity = MAX_GRAVITY_FORCE;
+    bullet =  new Bullet(body.x,body.y);
 	
 }
 
