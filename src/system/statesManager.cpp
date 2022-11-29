@@ -2,14 +2,14 @@
 
 #include <time.h>
 
-#include "creditsState.h"
-#include "gameplayState.h"
-#include "GameStates.h"
-#include "initialAnimationScreen.h"
-#include "menuState.h"
-#include "optionsState.h"
-#include "rulesState.h"
-#include "system/draw.h"
+#include "gameScreens/GameStates.h"
+#include "gameScreens/creditsState.h"
+#include "gameScreens/gameplayState.h"
+#include "gameScreens/initialAnimationScreen.h"
+#include "gameScreens/menuState.h"
+#include "gameScreens/optionsState.h"
+#include "gameScreens/rulesState.h"
+#include "draw.h"
 
 using namespace GAME;
 

@@ -33,11 +33,11 @@
     <ClCompile Include="src\gameScreens\menuState.cpp" />
     <ClCompile Include="src\gameScreens\optionState.cpp" />
     <ClCompile Include="src\gameScreens\rulesState.cpp" />
-    <ClCompile Include="src\gameScreens\statesManager.cpp" />
     <ClCompile Include="src\system\button.cpp" />
     <ClCompile Include="src\system\collisionFunctions.cpp" />
     <ClCompile Include="src\system\draw.cpp" />
     <ClCompile Include="src\system\main.cpp" />
+    <ClCompile Include="src\system\statesManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\gameLogic\gameLogic.h" />
@@ -54,11 +54,11 @@
     <ClInclude Include="src\gameScreens\menuState.h" />
     <ClInclude Include="src\gameScreens\optionsState.h" />
     <ClInclude Include="src\gameScreens\rulesState.h" />
-    <ClInclude Include="src\gameScreens\statesManager.h" />
     <ClInclude Include="src\system\button.h" />
     <ClInclude Include="src\system\circle.h" />
     <ClInclude Include="src\system\collisionFunctions.h" />
     <ClInclude Include="src\system\draw.h" />
+    <ClInclude Include="src\system\statesManager.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

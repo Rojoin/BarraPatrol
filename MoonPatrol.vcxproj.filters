@@ -7,9 +7,6 @@
     <ClCompile Include="src\system\draw.cpp">
       <Filter>system</Filter>
     </ClCompile>
-    <ClCompile Include="src\gameScreens\statesManager.cpp">
-      <Filter>gameScreens</Filter>
-    </ClCompile>
     <ClCompile Include="src\gameScreens\gameStates.cpp">
       <Filter>gameScreens</Filter>
     </ClCompile>
@@ -56,6 +53,9 @@
     <ClCompile Include="src\gameObjects\obstacle.cpp">
       <Filter>gameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="src\system\statesManager.cpp">
+      <Filter>system</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\gameObjects\player.h">
@@ -63,9 +63,6 @@
     </ClInclude>
     <ClInclude Include="src\system\draw.h">
       <Filter>system</Filter>
-    </ClInclude>
-    <ClInclude Include="src\gameScreens\statesManager.h">
-      <Filter>gameScreens</Filter>
     </ClInclude>
     <ClInclude Include="src\gameScreens\gameStates.h">
       <Filter>gameScreens</Filter>
@@ -113,6 +110,9 @@
       <Filter>gameObjects</Filter>
     </ClInclude>
     <ClInclude Include="src\system\circle.h">
+      <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="src\system\statesManager.h">
       <Filter>system</Filter>
     </ClInclude>
   </ItemGroup>
