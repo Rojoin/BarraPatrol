@@ -41,5 +41,5 @@ void drawInitialAnimation()
 	int fontSize = 3 * width / 350;
 	const std::string GamePresentTittle = "Rojoin presents:";
 	drawText(GamePresentTittle.c_str(), width / 2 - static_cast<int>(GamePresentTittle.length()) * fontSize, height / 40, fontSize * 8, DARKBROWN);
-	drawTexture(splashScreen, {(float) width/4,(float)height/4 }, 0, 0.5f, transparency);
+	drawTexture(splashScreen, { static_cast<float>(width/4),static_cast<float>(height/4) }, 0, 0.5f, transparency);
 }
